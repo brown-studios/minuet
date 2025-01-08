@@ -1,0 +1,638 @@
+# ESPHome package for the Minuet fan controller built-in peripherals.
+#
+# Supported hardware revisions: v1
+#
+# Include the contents of this file into your device configuration YAML
+# file as a package like this (recommended):
+#
+# packages:
+#   <<: !include minuet/core.yaml
+#
+# The fan controller makes use of most of the GPIO pins for controlling the
+# motors and the keypad. Please take care when making modifications to this
+# file to prevent malfunction.
+#
+# To extend the capabilities of your Minuet fan controller, you may attach
+# additional peripherals to the I2C bus using the QWIIC connection and
+# use GPIO0, GPIO1, GPIO20 (RXD), GPIO21 (TXD) which are presented at the
+# expansion port header.
+minuet_peripherals:
+  # The I2C bus is used by built-it peripherals and is presented via a
+  # QWIIC connector on the board edge for extension.
+  i2c:
+    - id: minuet_i2c
+      scl: 6
+      sda: 7
+      scan: true
+      frequency: 100kHz
+  # The built-in TCA9554 provides additional 8 GPIO pins, all of which are
+  # used by built-in functions. If you need more GPIO pins, you can attach
+  # another TCA9554 or suitable GPIO expander via the QWIIC port, taking care
+  # to assign it an unused I2C address.
+  pca9554:
+    - id: minuet_xio
+      i2c_id: minuet_i2c
+      address: 0x20
+      pin_count: 8
+  # Built-in peripherals
+  output:
+    - id: minuet_keypad_auto_indicator
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 0
+        mode: output
+        inverted: true
+    - id: minuet_keypad_row_1
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 5
+        mode: output
+        inverted: false
+    - id: minuet_keypad_row_2
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 4
+        mode: output
+        inverted: false
+    - id: minuet_cover_motor_sleep
+      platform: gpio
+      pin:
+        number: 10
+        mode: output
+        inverted: true
+    - id: minuet_cover_motor_enable
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 7
+        mode: output
+        inverted: false
+    - id: minuet_cover_motor_open
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 6
+        mode: output
+        inverted: false
+    - id: minuet_fan_motor_duty_cycle
+      platform: ledc
+      pin:
+        number: 5
+        mode: output
+        inverted: false
+      channel: 5
+      frequency: 15000 Hz
+    - id: minuet_fan_motor_forward
+      platform: gpio
+      pin:
+        number: 4
+        mode: output
+        inverted: false
+  binary_sensor:
+    - id: minuet_keypad_column_2
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 3
+        mode: input
+        inverted: true
+    - id: minuet_keypad_column_3
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 2
+        mode: input
+        inverted: true
+    - id: minuet_keypad_column_4
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 1
+        mode: input
+        inverted: true
+    - id: minuet_cover_motor_fault
+      platform: gpio
+      pin:
+        number: 9
+        mode: input
+        inverted: true
+        ignore_strapping_warning: true
+    - id: minuet_fan_motor_fault
+      name: "Vent Fan Stalled"
+      platform: gpio
+      pin:
+        number: 8
+        mode: input
+        inverted: true
+        ignore_strapping_warning: true
+      icon: mdi:fan-alert
+      device_class: problem
+  sensor:
+    - id: minuet_fan_motor_tach
+      name: "Vent Fan Tachometer"
+      platform: pulse_counter
+      pin:
+        number: 2
+        mode: input
+        ignore_strapping_warning: true
+      count_mode:
+        rising_edge: DISABLE
+        falling_edge: INCREMENT
+      unit_of_measurement: rpm
+      state_class: measurement
+      icon: mdi:fan
+      accuracy_decimals: 0
+      update_interval: 5 s
+      filters:
+        # The motor has 4 poles so it rotates twice for each complete electrical cycle
+        # and tick of the tachometer
+        - multiply: 0.5
+    - id: minuet_thermistor_voltage
+      platform: adc
+      pin: 3
+      attenuation: 12db
+      filters:
+        - sliding_window_moving_average:
+            window_size: 10
+            send_every: 5
+            send_first_at: 5
+      update_interval: never
+    - id: minuet_thermistor_resistance
+      platform: resistance
+      sensor: minuet_thermistor_voltage
+      configuration: DOWNSTREAM
+      resistor: 10kOhm
+    - id: minuet_air_temperature
+      platform: ntc
+      sensor: minuet_thermistor_resistance
+      calibration:
+        b_constant: 3950
+        reference_temperature: 25°C
+        reference_resistance: 10kOhm
+      accuracy_decimals: 1
+      filters:
+        - delta: 0.2
+  interval:
+    - interval: 1s
+      then:
+        lambda: |-
+          // The thermistor is powered by the keypad row 1 strobe to minimize self-heating
+          id(minuet_keypad_row_1).turn_on();
+          id(minuet_thermistor_voltage).update();
+          id(minuet_keypad_row_1).turn_off();
+
+# Read the keypad controls and determine an action
+#
+# Main menu:
+# - press speed up: increase fan speed by one
+# - hold speed up: increase fan speed to maximum
+# - press speed down: decrease fan speed by one
+# - hold speed down: decrease fan speed to minimum
+# - press open/close: toggle cover position
+# - press in/out: toggle fan direction
+# - press on/off: toggle fan off or turn it on at speed one
+# - press auto: toggle auto thermostat on or off
+#               auto indicator lights if auto thermostat is on
+# - hold auto: enter edit auto menu
+#
+# Edit auto thermostat settings menu:
+# - press speed up: increase auto fan speed by one
+# - hold speed up: increase auto fan speed to maximum
+# - press speed down: decrease auto fan speed by one
+# - hold speed down: decrease auto fan speed to minimum
+# - press in/out: toggle auto fan direction
+# - press on/off: toggle auto fan off or turn it on at speed one
+# - press auto: cycle through auto temperature setpoints,
+#               auto indicator blinks once for 25°C and once more per 5°C above that
+# - hold auto: exit edit auto menu
+#
+# Any state:
+# - hold on/off: turn off fan and auto thermostat, return to main menu
+# - long hold on/off (15 seconds): factory reset
+minuet_keypad_control:
+  substitutions:
+    minuet_keypad_click_min_length: '100ms'
+    minuet_keypad_click_max_length: '400ms'
+    minuet_keypad_hold_min_length: '800ms'
+    minuet_keypad_hold_max_length: '5000ms'
+    minuet_keypad_factory_reset_min_length: '15000ms'
+    minuet_keypad_factory_reset_max_length: '30000ms'
+  globals:
+    # Menu modes: 0 = main menu, 1 = edit auto thermostat settings
+    - id: minuet_keypad_menu
+      type: int
+      restore_value: false
+      initial_value: "0"
+    - id: minuet_keypad_auto_blink_counter
+      type: int
+      restore_value: false
+      initial_value: "0"
+  button:
+    - id: minuet_factory_reset
+      platform: factory_reset
+  binary_sensor:
+    - id: minuet_keypad_control_speed_up
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Increase fan speed
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->make_call().set_speed(fan->speed + 1).perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+        - min_length: ${minuet_keypad_hold_min_length}
+          max_length: ${minuet_keypad_hold_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Set fan speed to maximum
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->make_call().set_speed(fan->get_traits().supported_speed_count()).perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+    - id: minuet_keypad_control_speed_down
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Reduce fan speed
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->make_call().set_speed(fan->speed - 1).perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+        - min_length: ${minuet_keypad_hold_min_length}
+          max_length: ${minuet_keypad_hold_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Set fan speed to minimum
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->make_call().set_speed(1).perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+    - id: minuet_keypad_control_open_close
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0) {
+                  // Toggle cover open or closed
+                  id(minuet_cover).make_call().set_command_toggle().perform();
+                }
+    - id: minuet_keypad_control_in_out
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Toggle fan direction forward or reverse
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->make_call()
+                        .set_direction(fan->direction == FanDirection::FORWARD ? FanDirection::REVERSE : FanDirection::FORWARD)
+                        .perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+    - id: minuet_keypad_control_on_off
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0 || menu == 1) {
+                  // Toggle fan on or off
+                  auto& fan = menu == 0 ? id(minuet_fan) : id(minuet_thermostat_fan_setting);
+                  if (fan->state) {
+                    fan->turn_off().perform();
+                  } else {
+                    fan->turn_on().perform();
+                  }
+                }
+        - min_length: ${minuet_keypad_hold_min_length}
+          max_length: ${minuet_keypad_hold_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                // Exit all menus, turn off fan and auto ("panic button")
+                menu = 0;
+                id(minuet_thermostat).make_call().set_preset("Off").perform();
+                id(minuet_fan).turn_off().perform();
+        - min_length: ${minuet_keypad_factory_reset_min_length}
+          max_length: ${minuet_keypad_factory_reset_max_length}
+          then:
+            - button.press: minuet_factory_reset
+    - id: minuet_keypad_control_auto
+      platform: template
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0) {
+                  // Toggle fan auto thermostat on or off
+                  id(minuet_thermostat).make_call()
+                      .set_mode(id(minuet_thermostat).mode == CLIMATE_MODE_OFF ? CLIMATE_MODE_COOL : CLIMATE_MODE_OFF)
+                      .perform();
+                } else if (menu == 1) {
+                  // Cycle the thermostat temperature setpoint
+                  float target = id(minuet_thermostat).target_temperature;
+                  target += 5.f;
+                  if (target > 45.f) {
+                    target = 25.f;
+                  }
+                  id(minuet_thermostat).make_call().set_target_temperature(target).perform();
+                  id(minuet_keypad_auto_blink_counter) = 0;
+                }
+        - min_length: ${minuet_keypad_hold_min_length}
+          max_length: ${minuet_keypad_hold_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0) {
+                  // Enter edit auto menu
+                  menu = 1;
+                  id(minuet_thermostat_sync)->execute(true);
+                } else if (menu == 1) {
+                  // Exit edit auto menu
+                  menu = 0;
+                  id(minuet_thermostat_sync)->execute(true);
+                }
+
+  interval:
+    - interval: 10ms
+      then:
+        lambda: |-
+          //id(minuet_keypad_row_1).turn_off();
+          id(minuet_keypad_row_2).turn_on();
+          id(minuet_keypad_column_2)->loop(); // read the value again
+          id(minuet_keypad_column_3)->loop();
+          const bool key12 = id(minuet_keypad_column_2).state;
+          const bool key13 = id(minuet_keypad_column_3).state;
+          //bool key14 = id(minuet_keypad_column_4).state;
+          id(minuet_keypad_row_1).turn_on();
+          id(minuet_keypad_row_2).turn_off();
+          id(minuet_keypad_column_2)->loop();
+          id(minuet_keypad_column_3)->loop();
+          id(minuet_keypad_column_4)->loop();
+          const bool key22 = id(minuet_keypad_column_2).state;
+          const bool key23 = id(minuet_keypad_column_3).state;
+          const bool key24 = id(minuet_keypad_column_4).state;
+          id(minuet_keypad_row_1).turn_off();
+
+          id(minuet_keypad_control_speed_up).publish_state(key12 && !key13);
+          id(minuet_keypad_control_speed_down).publish_state(key13 && !key12);
+          id(minuet_keypad_control_open_close).publish_state(key12 && key13);
+          id(minuet_keypad_control_on_off).publish_state(key22);
+          id(minuet_keypad_control_in_out).publish_state(key23);
+          id(minuet_keypad_control_auto).publish_state(key24);
+    - interval: 150ms
+      then:
+        lambda: |-
+          constexpr int PAUSE_DURATION = 8;
+          int& menu = id(minuet_keypad_menu);
+          auto& indicator = id(minuet_keypad_auto_indicator);
+          auto& thermostat = id(minuet_thermostat);
+          int& blink_counter = id(minuet_keypad_auto_blink_counter);
+          if (menu == 0) {
+            // Show the current auto thermostat state
+            indicator->set_state(thermostat->mode != CLIMATE_MODE_OFF);
+            blink_counter = 0;
+          } else if (menu == 1) {
+            // Blink the indicator to show the auto thermostat target temperature (approximately)
+            // One blink for 25°C and one more per 5°C above that
+            if (blink_counter < -PAUSE_DURATION) {
+              blink_counter = max(int((thermostat->target_temperature - 25.f) / 5.f) + 1, 1) * 2;
+            }
+            indicator->set_state(blink_counter > 0 && (blink_counter & 1) == 0);
+            blink_counter -= 1;
+          }
+
+# The state machine for the fan and its remote control interface
+minuet_core:
+  substitutions:
+    minuet_fan_speed_count: '10'
+  globals:
+    - id: minuet_fan_last_duty_cycle
+      type: float
+      restore_value: false
+      initial_value: "0.f"
+    - id: minuet_fan_target_duty_cycle
+      type: float
+      restore_value: false
+      initial_value: "0.f"
+    - id: minuet_fan_suppress_cover_movement
+      type: bool
+      restore_value: false
+      initial_value: "false"
+  esphome:
+    on_boot:
+      - then:
+          - cover.close: minuet_cover
+  fan:
+    - id: minuet_fan
+      name: "Vent Fan"
+      platform: template
+      has_direction: true
+      speed_count: ${minuet_fan_speed_count}
+      restore_mode: ALWAYS_OFF
+      on_turn_on:
+        then:
+          - lambda: |-
+              if (!id(minuet_fan_suppress_cover_movement)) {
+                id(minuet_cover).make_call().set_command_open().perform();
+              }
+      on_turn_off:
+        then:
+          - lambda: |-
+              if (!id(minuet_fan_suppress_cover_movement)) {
+                id(minuet_cover).make_call().set_command_close().perform();
+              }
+      on_state:
+        then:
+          - lambda: |-
+              constexpr float DUTY_CYCLES[] = {
+                0.f, 0.1f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f, 0.25f, 0.30f, 0.34f, 1.f
+              };
+              float duty_cycle = 0.f;
+              if (id(minuet_fan).state) {
+                duty_cycle = DUTY_CYCLES[clamp(id(minuet_fan).speed, 0, 10)];
+                if (id(minuet_fan).direction == FanDirection::REVERSE) {
+                  duty_cycle = -duty_cycle;
+                }
+              }
+              id(minuet_fan_target_duty_cycle) = duty_cycle;
+    - id: minuet_thermostat_fan_setting
+      name: "Vent Thermostat Fan Setting"
+      platform: template
+      icon: mdi:fan-auto
+      has_direction: true
+      speed_count: ${minuet_fan_speed_count}
+      restore_mode: RESTORE_DEFAULT_OFF
+      on_state:
+        then:
+          - script.execute:
+              id: minuet_thermostat_sync
+              force: false
+  cover:
+    - id: minuet_cover
+      name: "Vent Cover"
+      platform: template
+      device_class: damper
+      optimistic: false
+      assumed_state: true
+      restore_mode: NO_RESTORE
+      open_action:
+        then:
+          - script.execute:
+              id: minuet_cover_set
+              open: true
+      close_action:
+        then:
+          - script.execute:
+              id: minuet_cover_set
+              open: false
+      toggle_action:
+        then:
+          - lambda: |-
+              if (id(minuet_cover).is_fully_closed()) {
+                id(minuet_cover).make_call().set_command_open().perform();
+              } else {
+                id(minuet_cover).make_call().set_command_close().perform();
+              }
+  climate:
+    - id: minuet_thermostat
+      name: "Vent Thermostat"
+      platform: thermostat
+      icon: mdi:fan-auto
+      sensor: minuet_air_temperature
+      visual:
+        min_temperature: 10°C
+        max_temperature: 50°C
+        temperature_step: 0.5°C
+      cool_overrun: 1°C
+      cool_deadband: 0.5°C
+      min_idle_time: 30s
+      min_cooling_off_time: 30s
+      min_cooling_run_time: 0s
+      idle_action:
+        then:
+          - script.execute:
+              id: minuet_thermostat_sync
+              force: true
+      cool_action:
+        then:
+          - script.execute:
+              id: minuet_thermostat_sync
+              force: true
+      preset:
+        - name: 'Off'
+          mode: 'off'
+          default_target_temperature_high: 25°C
+      default_preset: 'Off'
+      on_boot_restore_from: memory
+  script:
+    - id: minuet_cover_set
+      mode: restart
+      parameters:
+        open: bool
+      then:
+        - lambda: |-
+            id(minuet_cover_motor_enable).turn_off();
+            id(minuet_cover_motor_open).set_state(open);
+            id(minuet_cover_motor_enable).turn_on();
+            id(minuet_cover_motor_sleep).turn_off();
+        - wait_until:
+            condition:
+              binary_sensor.is_on: minuet_cover_motor_fault # Wait for motor to stall
+            timeout: 6s
+        - lambda: |-
+            id(minuet_cover_motor_enable).turn_off();
+            id(minuet_cover_motor_sleep).turn_on();
+            id(minuet_cover).position = open ? COVER_OPEN : COVER_CLOSED;
+            id(minuet_cover).publish_state();
+    - id: minuet_thermostat_sync
+      mode: queued
+      parameters:
+        force: bool
+      then:
+        - lambda: |-
+            bool cooling = id(minuet_thermostat).action == CLIMATE_ACTION_COOLING;
+            int& menu = id(minuet_keypad_menu);
+            if (cooling || menu == 1) {
+              auto& fan = id(minuet_fan);
+              auto& setting = id(minuet_thermostat_fan_setting);
+              id(minuet_fan_suppress_cover_movement) = true;
+              id(minuet_cover).make_call().set_command_open().perform();
+              fan->make_call().set_state(setting->state).set_speed(setting->speed).set_direction(setting->direction).perform();
+              id(minuet_fan_suppress_cover_movement) = false;
+            } else if (force) {
+              id(minuet_fan).turn_off().perform();
+            }
+  interval:
+    - interval: 50ms
+      then:
+        lambda: |-
+          float& last_duty_cycle = id(minuet_fan_last_duty_cycle);
+          float& target_duty_cycle = id(minuet_fan_target_duty_cycle);
+          if (id(minuet_fan_motor_fault).state) {
+            if (target_duty_cycle != 0.f || last_duty_cycle != 0.f) {
+              ESP_LOGD("minuet", "Fan stalled, disabling the motor for safety");
+              id(minuet_fan_motor_duty_cycle).turn_off();
+              id(minuet_fan)->turn_off().perform();
+              last_duty_cycle = 0.f;
+              target_duty_cycle = 0.f;
+            }
+          } else if (target_duty_cycle != last_duty_cycle) {
+            // Ramp the duty cycle linearly over time up to the desired target.
+            constexpr float MAX_RAMP_PER_INTERVAL = 0.01f;
+            constexpr float MIN_DUTY_CYCLE = 0.1f;
+            constexpr float MAX_DUTY_CYCLE = 0.5f;
+            float ramp = clamp(target_duty_cycle - last_duty_cycle, -MAX_RAMP_PER_INTERVAL, MAX_RAMP_PER_INTERVAL);
+            if (last_duty_cycle == 0.f && ramp != 0.f) {
+              last_duty_cycle = std::copysign(MIN_DUTY_CYCLE, ramp);
+            } else if (fabs(last_duty_cycle + ramp) < MIN_DUTY_CYCLE) {
+              last_duty_cycle = 0.f;
+            } else {
+              last_duty_cycle = clamp(last_duty_cycle + ramp, -MAX_DUTY_CYCLE, MAX_DUTY_CYCLE);
+            }
+            ESP_LOGD("minuet", "last_duty_cycle: %f, target_duty_cycle: %f, ramp: %f", last_duty_cycle, target_duty_cycle, ramp);
+            id(minuet_fan_motor_forward).set_state(last_duty_cycle >= 0.f);
+            id(minuet_fan_motor_duty_cycle).set_level(fabs(last_duty_cycle));
+          }

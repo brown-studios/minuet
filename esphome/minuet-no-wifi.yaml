@@ -1,0 +1,29 @@
+# ESPHome device configuration for operating Minuet without WiFi.
+# Control Minuet with the control panel and/or wall remote.
+#
+# Feel free to modify this configuration to suit your needs.
+esphome:
+  name: minuet
+  friendly_name: Minuet
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Configure logging.
+logger:
+  level: DEBUG
+  baud_rate: 921600
+
+# Organize the configuration into packages for extensibility.
+packages:
+  # Include the core logic.
+  <<: !include minuet/core.yaml
+
+  # Define more packages here to support your custom peripherals.
+  #
+  # my_package:
+  #   sensors:
+  #     - platform: scd4x
+  #       i2c_id: minuet_i2c

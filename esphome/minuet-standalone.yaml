@@ -1,0 +1,52 @@
+# ESPHome device configuration for operating Minuet with a WiFi captive portal
+# and a simple web based user interface.
+#
+# After connecting to the access point, open http://192.168.4.1/ in a web browser
+# to change the password and access the user interface.
+#
+# Feel free to modify this configuration to suit your needs.
+esphome:
+  name: minuet
+  friendly_name: Minuet
+
+esp32:
+  board: esp32-c3-devkitm-1
+  framework:
+    type: arduino
+
+# Configure logging.
+# Disable writing logs to the serial port because it slows down the event loop
+# and they can be accessed over WiFi.
+logger:
+  level: DEBUG
+  baud_rate: 0
+
+# Set up a WiFi access point and captive portal for out-of-the-box wireless configuration.
+wifi:
+  id: minuet_wifi
+  ap:
+    ssid: 'Minuet'
+    password: 'IAmAFan!' # Change me
+    ap_timeout: 1min
+  power_save_mode: none
+
+captive_portal:
+
+# Allow over-the-air software updates.
+ota:
+  - platform: esphome
+    password: "379584e3bac0c0e59bcf1069dea603c4" # Change me
+
+# Organize the configuration into packages for extensibility.
+packages:
+  # Include the core logic.
+  <<: !include minuet/core.yaml
+  # Include the web interface.
+  <<: !include minuet/web.yaml
+
+  # Define more packages here to support your custom peripherals.
+  #
+  # my_package:
+  #   sensors:
+  #     - platform: scd4x
+  #       i2c_id: minuet_i2c

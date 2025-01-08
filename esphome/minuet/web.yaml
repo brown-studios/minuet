@@ -1,0 +1,13 @@
+# ESPHome package for the Minuet web based user interface.
+#
+# Include the contents of this file into your device configuration YAML
+# file as a package like this (recommended):
+#
+# packages:
+#   <<: !include minuet/web.yaml
+minuet_web:
+  web_server:
+    local: true
+    log: true
+    ota: true
+    version: 3
