@@ -63,3 +63,9 @@ Read these guides to learn how to build, install, and use Minuet.
 1. [User guide](docs/user-guide.md): How to use Minuet once it has been installed
 
 Good luck and enjoy your fan!
+
+## Notice
+
+The Minuet software, documentation, design, and all other copyright protected artifacts are released under the terms of the [MIT license](LICENSE).
+
+The Minuet hardware is released under the terms of the [CERN-OHL-W license](hardware/LICENSE).
