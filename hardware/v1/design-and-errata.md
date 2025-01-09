@@ -8,7 +8,7 @@ The v1 revision is the first prototype of the Minuet fan controller.
 
 ## Design
 
-The microcontroller is an [ESP32-C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3-wroom-02_datasheet_en.pdf) with 4 MB of flash and a single core.  It is ample for running ESPHome.
+The microcontroller is an [ESP32-C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3-wroom-02_datasheet_en.pdf) with 4 MB of flash, a single core, and an integrated 2.4 GHz antenna.  It is ample for running ESPHome.
 
 The cover motor driver is a [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf).  It has built-in current limiting which is used to detect end-of-travel when the cover is completely opened or closed.
 
