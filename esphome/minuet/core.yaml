@@ -193,7 +193,7 @@ minuet_peripherals:
 # - hold speed down: decrease fan speed to minimum
 # - press open/close: toggle cover position
 # - press in/out: toggle fan direction
-# - press on/off: toggle fan off or turn it on at speed one
+# - press on/off: toggle fan off or turn it on at its last used speed
 # - press auto: toggle auto thermostat on or off
 #               auto indicator lights if auto thermostat is on
 # - hold auto: enter edit auto menu
@@ -204,7 +204,7 @@ minuet_peripherals:
 # - press speed down: decrease auto fan speed by one
 # - hold speed down: decrease auto fan speed to minimum
 # - press in/out: toggle auto fan direction
-# - press on/off: toggle auto fan off or turn it on at speed one
+# - press on/off: toggle auto fan off or turn it on at its last used speed
 # - press auto: cycle through auto temperature setpoints,
 #               auto indicator blinks once for 25°C and once more per 5°C above that
 # - hold auto: exit edit auto menu
