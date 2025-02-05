@@ -33,7 +33,7 @@ Edit the configuration template as you need.  Pay attention to the WiFi settings
 
 To flash the firmware:
 
-- Power your Minuet board from your house battery or a benchtop power supply with 9 to 15 V DC.
+- Power your Minuet board from your house battery or a benchtop power supply with 9 to 16 V DC (suggest using 12 V DC when available).
 - Connect a USB-C cable between your computer and Minuet.
 - Boot into the bootloader: Press and hold the BOOT button on the circuit board, tap the RESET button, wait a second, then release the BOOT button.
 - Use the ESPHome tools to install the firmware.

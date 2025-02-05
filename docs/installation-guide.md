@@ -19,7 +19,7 @@ Follow the [setup guide](setup-guide.md) to configure your Minuet circuit board 
 
 Confirm that your Maxxfan's electrical supply meets these requirements:
 
-- Voltage: 12 V DC nominal and absolute maximum range from 9 to 15 V DC
+- Voltage: 12 V DC nominal and absolute maximum range from 9 to 16 V DC
 - Wiring: minimum 18 AWG (0.8 mm²)
 - Circuit protection: 5 A fuse or circuit breaker
 
