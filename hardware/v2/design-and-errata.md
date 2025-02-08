@@ -62,8 +62,8 @@ The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to pe
 
 - `GPIO0` & `GPIO1`: Reserved for the expansion port (ADC, LEDC PWM, 32 kHz XTAL, and more functions)
 - `GPIO2`:` IR receiver (RMT function), strapping pin
-- `GPIO3`: Thermistor (ADC function)
-- `GPIO4`: Voltage sensor (ADC function)
+- `GPIO3`: Voltage sensor (ADC function)
+- `GPIO4`: Thermistor (ADC function)
 - `GPIO5`: Fan motor speed (LEDC PWM function)
 - `GPIO6` & `GPIO7`: I2C bus
 - `GPIO8`: Fan motor tachometer (PCNT function), strapping pin

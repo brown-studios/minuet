@@ -1854,6 +1854,16 @@
 	)
 	(wire
 		(pts
+			(xy 55.88 95.25) (xy 58.42 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "480f182d-5a30-40f3-ac0d-e64b0854da64")
+	)
+	(wire
+		(pts
 			(xy 152.4 72.39) (xy 160.02 72.39)
 		)
 		(stroke
@@ -1944,7 +1954,17 @@
 	)
 	(wire
 		(pts
-			(xy 209.55 69.85) (xy 212.09 69.85)
+			(xy 48.26 95.25) (xy 50.8 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6d9d471f-3230-490f-96a4-062ac7b3cb67")
+	)
+	(wire
+		(pts
+			(xy 209.55 71.12) (xy 212.09 71.12)
 		)
 		(stroke
 			(width 0)
@@ -2044,7 +2064,7 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 87.63) (xy 111.76 87.63)
+			(xy 109.22 87.63) (xy 111.76 87.63)
 		)
 		(stroke
 			(width 0)
@@ -2144,7 +2164,7 @@
 	)
 	(wire
 		(pts
-			(xy 199.39 69.85) (xy 201.93 69.85)
+			(xy 199.39 71.12) (xy 201.93 71.12)
 		)
 		(stroke
 			(width 0)
@@ -2154,7 +2174,7 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 102.87) (xy 111.76 102.87)
+			(xy 109.22 102.87) (xy 111.76 102.87)
 		)
 		(stroke
 			(width 0)
@@ -2224,7 +2244,7 @@
 	)
 	(rectangle
 		(start 187.96 57.15)
-		(end 255.27 124.46)
+		(end 256.54 124.46)
 		(stroke
 			(width 0)
 			(type default)
@@ -2256,6 +2276,17 @@
 			(justify left top)
 		)
 		(uuid "1c42bf74-469d-4ff3-bdf0-ee3efac67df7")
+	)
+	(text "Increasing resistance of the setpoint decreases the current limit"
+		(exclude_from_sim no)
+		(at 189.23 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "2685d1e1-e660-45e3-b634-43b22cf299b8")
 	)
 	(text "CURRENT LIMIT"
 		(exclude_from_sim no)
@@ -2307,7 +2338,7 @@
 	)
 	(text "Current limit mode 3\nWhen Itrip or Iocp exceeded (motor stall), brake motor,\nlatch outputs off, and assert NFAULT until inputs change"
 		(exclude_from_sim no)
-		(at 194.31 73.66 0)
+		(at 194.31 74.93 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2327,7 +2358,7 @@
 		(uuid "7f3c7bf9-4554-4b0f-9eaf-85f2d5b19967")
 	)
 	(label "IMODE"
-		(at 199.39 69.85 180)
+		(at 199.39 71.12 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -2335,6 +2366,16 @@
 			(justify right bottom)
 		)
 		(uuid "8ae448d7-e04c-447a-b8e1-f8eb6d82df5f")
+	)
+	(label "VREF"
+		(at 109.22 102.87 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "9147bfc6-46bd-44b8-b211-e46e8f665dd3")
 	)
 	(label "VM"
 		(at 110.49 72.39 180)
@@ -2405,6 +2446,26 @@
 			(justify left bottom)
 		)
 		(uuid "de06eeee-aa6f-4d4a-990d-b92c46e80cdd")
+	)
+	(label "VREF"
+		(at 58.42 95.25 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e0cb3c16-d96a-4fc5-a6ab-4c4971e09087")
+	)
+	(label "VREF"
+		(at 109.22 87.63 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "efb54d97-4a58-48b1-ac27-6626f49d9cbe")
 	)
 	(label "CPH"
 		(at 153.67 72.39 0)
@@ -2763,7 +2824,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3669e6f7-63dc-48f6-9a5c-fde9ff797940")
-		(property "Reference" "#PWR0408"
+		(property "Reference" "#PWR0407"
 			(at 161.29 115.57 0)
 			(effects
 				(font
@@ -2814,7 +2875,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0408")
+					(reference "#PWR0407")
 					(unit 1)
 				)
 			)
@@ -2917,7 +2978,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_2Pads_Pitch5.08mm_Drill1.3mm"
+		(property "Footprint" "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm"
 			(at 203.2 92.71 0)
 			(effects
 				(font
@@ -2970,7 +3031,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "45798315-332e-4b85-9e12-f380db4d320b")
-		(property "Reference" "#PWR0409"
+		(property "Reference" "#PWR0408"
 			(at 104.14 118.11 0)
 			(effects
 				(font
@@ -3021,7 +3082,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0409")
+					(reference "#PWR0408")
 					(unit 1)
 				)
 			)
@@ -3481,72 +3542,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3V")
-		(at 110.49 87.63 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "844a114d-ca70-4a0b-b579-83a56c7482ef")
-		(property "Reference" "#PWR0404"
-			(at 114.3 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 107.188 87.63 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 110.49 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 110.49 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 110.49 87.63 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8531dcc0-2bbb-4367-ac75-ff6bf8127fda")
-		)
-		(instances
-			(project "minuet"
-				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0404")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:NetTie_2")
 		(at 53.34 72.39 0)
 		(unit 1)
@@ -3848,6 +3843,75 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:NetTie_2")
+		(at 53.34 95.25 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8b2e71fc-e809-4a59-a38e-a39ca25aed76")
+		(property "Reference" "NT402"
+			(at 53.34 93.5299 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "NetTie_2"
+			(at 53.34 93.5298 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Generic:NetTie-2_SMD_Pad0.2mm"
+			(at 53.34 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 53.34 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Net tie, 2 pins"
+			(at 53.34 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b7171ed4-1d66-414a-b3a9-30c1a2db93c7")
+		)
+		(pin "2"
+			(uuid "77bc7a6f-d2fc-489b-843e-4638490568f4")
+		)
+		(instances
+			(project ""
+				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
+					(reference "NT402")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 231.14 101.6 0)
 		(mirror y)
@@ -3924,7 +3988,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "96f6c26a-23bc-41c5-80cf-f67bdeb0dd6a")
-		(property "Reference" "#PWR0410"
+		(property "Reference" "#PWR0409"
 			(at 161.29 118.11 0)
 			(effects
 				(font
@@ -3975,7 +4039,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0410")
+					(reference "#PWR0409")
 					(unit 1)
 				)
 			)
@@ -3983,7 +4047,7 @@
 	)
 	(symbol
 		(lib_id "Device:R")
-		(at 205.74 69.85 270)
+		(at 205.74 71.12 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3991,7 +4055,7 @@
 		(dnp no)
 		(uuid "977dcd27-ab10-4138-9e9f-4858d4b0823b")
 		(property "Reference" "R401"
-			(at 205.74 64.6895 90)
+			(at 205.74 65.9595 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3999,7 +4063,7 @@
 			)
 		)
 		(property "Value" "62K"
-			(at 205.74 67.1138 90)
+			(at 205.74 68.3838 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4007,7 +4071,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 205.74 68.072 90)
+			(at 205.74 69.342 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4016,7 +4080,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4025,7 +4089,7 @@
 			)
 		)
 		(property "Description" "Resistor"
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4034,7 +4098,7 @@
 			)
 		)
 		(property "Arrow Part Number" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4043,7 +4107,7 @@
 			)
 		)
 		(property "Arrow Price/Stock" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4052,7 +4116,7 @@
 			)
 		)
 		(property "Height" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4061,7 +4125,7 @@
 			)
 		)
 		(property "Hold Current" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4070,7 +4134,7 @@
 			)
 		)
 		(property "Manufacturer_Name" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4079,7 +4143,7 @@
 			)
 		)
 		(property "Manufacturer_Part_Number" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4088,7 +4152,7 @@
 			)
 		)
 		(property "Mouser Part Number" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4097,7 +4161,7 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
-			(at 205.74 69.85 0)
+			(at 205.74 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4130,7 +4194,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9c78f7b4-2b7b-4842-8562-b57edf785bfb")
-		(property "Reference" "#PWR0407"
+		(property "Reference" "#PWR0406"
 			(at 161.29 113.03 0)
 			(effects
 				(font
@@ -4181,7 +4245,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0407")
+					(reference "#PWR0406")
 					(unit 1)
 				)
 			)
@@ -4340,8 +4404,74 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3.3V")
+		(at 48.26 95.25 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a3d588da-d6cf-4bc6-9346-c8ed5adedce4")
+		(property "Reference" "#PWR0404"
+			(at 52.07 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 44.958 95.25 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 48.26 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 48.26 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 48.26 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fc7d19ae-6092-4b3f-91c3-6a98118d0fc3")
+		)
+		(instances
+			(project "minuet"
+				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
+					(reference "#PWR0404")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
-		(at 212.09 69.85 90)
+		(at 212.09 71.12 90)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4351,7 +4481,7 @@
 		(fields_autoplaced yes)
 		(uuid "cc9e6dcf-6e82-4ef1-af42-77d8cc2fc411")
 		(property "Reference" "#PWR0401"
-			(at 218.44 69.85 0)
+			(at 218.44 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4360,7 +4490,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 215.265 69.85 90)
+			(at 215.265 71.12 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4369,7 +4499,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 212.09 69.85 0)
+			(at 212.09 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4378,7 +4508,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 212.09 69.85 0)
+			(at 212.09 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4387,7 +4517,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 212.09 69.85 0)
+			(at 212.09 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4655,7 +4785,7 @@
 		(fields_autoplaced yes)
 		(uuid "df2a277b-3f00-47f2-8baa-fc80d6d9092a")
 		(property "Reference" "RV401"
-			(at 232.918 91.5557 0)
+			(at 232.918 90.3435 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4664,7 +4794,7 @@
 			)
 		)
 		(property "Value" "5K"
-			(at 232.918 93.98 0)
+			(at 232.918 92.7678 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4700,7 +4830,16 @@
 			)
 		)
 		(property "Rating" "10%"
-			(at 232.918 96.4043 0)
+			(at 232.918 95.1921 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Label" "COVER CURRENT LIMIT"
+			(at 232.918 97.6164 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4889,72 +5028,6 @@
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
 					(reference "J401")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 110.49 102.87 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "ee88c86a-42db-4b6d-b0de-2d293cac24ce")
-		(property "Reference" "#PWR0406"
-			(at 114.3 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 107.188 102.87 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 110.49 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 110.49 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 110.49 102.87 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "a16f920b-ff29-4059-becd-669d9bdffeb3")
-		)
-		(instances
-			(project "minuet"
-				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0406")
 					(unit 1)
 				)
 			)

@@ -27,7 +27,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Footprint" "MCT8315Z0HRRYR:IC_MCT8315Z0HRRYR"
+		(property "Footprint" "MCT8315Z:IC_MCT8315Z0HRRYR"
 			(at 0 0 0)
 			(effects
 				(font
@@ -711,6 +711,114 @@
 					)
 				)
 			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "34"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "35"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "36"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "37"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "38"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "39"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
 			(pin power_out line
 				(at 17.78 35.56 180)
 				(length 5.08)
@@ -722,6 +830,96 @@
 					)
 				)
 				(number "4"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "40"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "41"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "42"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "43"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 17.78 -38.1 180)
+				(length 5.08)
+				(name "EP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "44"
 					(effects
 						(font
 							(size 1.016 1.016)
