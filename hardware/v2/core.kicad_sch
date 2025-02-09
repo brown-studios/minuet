@@ -7012,6 +7012,14 @@
 				(hide yes)
 			)
 		)
+		(property "Rating" "1%"
+			(at 264.16 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "c2dde968-0a38-47cb-b9d5-9fce073c574a")
 		)
@@ -7627,6 +7635,14 @@
 					(size 1.27 1.27)
 				)
 				(hide yes)
+			)
+		)
+		(property "Rating" "1%"
+			(at 264.16 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(pin "1"
