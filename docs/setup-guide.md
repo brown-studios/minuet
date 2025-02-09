@@ -61,9 +61,13 @@ Get creative!
 
 Minuet gets better when you take advantage of its place in the middle of your vehicle's roof to add peripherals connected to the [QWIIC](https://www.sparkfun.com/qwiic) I2C port or the GPIO expansion header (which includes a UART).
 
-This will take some know-how and you can find plenty of tutorials online for building stuff with ESPHome (or an Arduino) to get started.
+These peripherals are specifically designed for use with Minuet:
 
-Here are some ideas:
+- Add lights to your fan with a [lighting and load accessory board](../hardware/load/design-and-errata.md)
+
+You can also make your own peripherals that leverage ESPHome and parts that you can buy from hobby electronics shops.  You can find plenty of tutorials online for building stuff with ESPHome.  You might find it easier to program than an Arduino because it's all done with YAML configuration files.
+
+Here are a few ideas for peripherals that you could make yourself:
 
 - Add a CO₂, temperature, humidity sensor: [scd4x sensor](https://esphome.io/components/sensor/scd4x.html)
 - Add a temperature, pressure sensor, humidity, gas sensor: [bmp680 sensor](https://esphome.io/components/sensor/bme680)

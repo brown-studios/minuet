@@ -7,6 +7,7 @@ Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan Deluxe 
 * Control your fan using your phone, Home Assistant, the built-in keypad, and/or a wired Maxxfan wall controller.
 * Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
 * Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
+* Connect lights to your fan with the lighting and load accessory board.
 * Connect your own environmental sensors and peripherals to Minuet's built-in [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion header.
 * The hardware and software is open source: help make it better and share your improvements with others.
 
