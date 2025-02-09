@@ -21,7 +21,7 @@ packages:
   # Include the core logic.
   <<: !include minuet/core.yaml
 
-  # Define more packages here to support your custom peripherals.
+  # Define more packages here to support your accessories.
   #
   # my_package:
   #   sensors:

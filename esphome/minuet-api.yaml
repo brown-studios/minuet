@@ -43,7 +43,7 @@ packages:
   # Uncomment to include the web interface if you need it.
   # <<: !include minuet/web.yaml
 
-  # Define more packages here to support your custom peripherals.
+  # Define more packages here to support your accessories.
   #
   # my_package:
   #   sensors:

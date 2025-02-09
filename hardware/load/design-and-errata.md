@@ -9,7 +9,7 @@ Suggested applications:
 - Drive up to two independent loads such as LED lights with ON/OFF or PWM control.
 - Drive one addressable LED strip (WS2811, WS2812B, WS2814, SK6812, or similar), attach it to the inside of the fan cowling to make it light up pretty colors.
 - Drive one warm white LED strip with PWM control for dimming as one load and a drive motorized disco ball with ON/OFF control as the second load, just for fun!
-- Use it as a breakout board with access to all of the expansion port signals and power for making your own accessories.
+- Use it as a breakout board with access to all of the GPIO expansion port signals and power for making your own accessories.
 
 Depending on your application, you may need to modify the Minuet ESPHome firmware YAML configuration to control the loads in the manner you desire.
 

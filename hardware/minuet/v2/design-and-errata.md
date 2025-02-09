@@ -26,9 +26,9 @@ The fan motor driver is a [MCT8315Z](https://www.ti.com/lit/ds/symlink/mct8315z.
 
 There is a [TCA9555](https://www.ti.com/lit/ds/symlink/tca9555.pdf) IO expander on-board to provide 16 additional IO pins with built-in pull-up resistors via I2C.
 
-The expansion port enables custom peripherals and factory programming.  It exposes two free GPIO pins that can be used for any purpose, the serial port, the I2C bus, the reset and bootloader signals, and the 3.3 V and 12 V power rails.  For example, with just a few components you could use the expansion port to attach an addressable LED strip for fancy lighting around the fan enclosure.
+The GPIO expansion port enables accessories and factory programming.  It exposes two free GPIO pins that can be used for any purpose, the serial port, the I2C bus, the reset and bootloader signals, and the 3.3 V and 12 V power rails.  For example, with just a few components you could use the GPIO expansion port to attach an addressable LED strip for fancy lighting around the fan enclosure.
 
-The QWIIC port allows readily available I2C peripherals (such as environmental sensors) to be connected with ease.
+The QWIIC port allows readily available I2C accessories (such as environmental sensors) to be connected with ease.
 
 ## PCB assembly
 
@@ -58,9 +58,9 @@ To improve the circuit board's moisture resistance, you can spray it with an ins
 
 ### IO scarcity
 
-The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to peripherals that need specific functions.
+The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to components that need specific functions.
 
-- `GPIO0` & `GPIO1`: Reserved for the expansion port (ADC, LEDC PWM, 32 kHz XTAL, and more functions)
+- `GPIO0` & `GPIO1`: Reserved for the GPIO expansion port (ADC, LEDC PWM, 32 kHz XTAL, and more functions)
 - `GPIO2`:` IR receiver (RMT function), strapping pin
 - `GPIO3`: Voltage sensor (ADC function)
 - `GPIO4`: Thermistor (ADC function)
@@ -72,7 +72,7 @@ The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to pe
 - `GPIO18` & `GPIO19`: USB full-speed transceiver
 - `GPIO20` & `GPIO21`: Serial port UART
 
-Given the scarcity, I was tempted to reuse `GPIO9` for other purposes after booting up but I decided against it because glitches could result in the board mistakenly entering the bootloader after reset and rendering the device inoperable.  Perhaps `GPIO9` could be reused as a button input in a custom expansion.
+Given the scarcity, I was tempted to reuse `GPIO9` for other purposes after booting up but I decided against it because glitches could result in the board mistakenly entering the bootloader after reset and rendering the device inoperable.  Perhaps `GPIO9` could be reused as a button input in an accessory.
 
 The TCA9555 IO expander handles the remaining low speed digital logic functions.  These pins are designated `XIO` on the schematic.  All of the `XIO` pins have been assigned.  If needed in a subsequent revision, a few pins could be released by doubling-up functions (such as by combining the motor driver `NFAULT` signals or by reusing one of the keypad row pins to drive the thermistor).
 
@@ -80,7 +80,7 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 
 The rain sensor detects a small current flowing between bare electrodes immersed in water.  The circuit has high impedance to protect itself from the environment especially because it is DC coupled to the sensing electrodes (just like the original equipment).  It might be interesting to explore AC coupling the rain sensor for immunity in a subsequent revision.
 
-Due to IO scarcity, there are no available ADC pins to measure the voltage.  I considered assigning `GPIO1` for this purpose but it's more valuable to reserve for the expansion port.  Instead, I used a relatively inexpensive comparator to detect when the sensor's voltage crosses a fixed threshold.  You can omit this component if you don't need the rain sensor.
+Due to IO scarcity, there are no available ADC pins to measure the voltage.  I considered assigning `GPIO1` for this purpose but it's more valuable to reserve for the GPIO expansion port.  Instead, I used a relatively inexpensive comparator to detect when the sensor's voltage crosses a fixed threshold.  You can omit this component if you don't need the rain sensor.
 
 ### Temperature sensor
 

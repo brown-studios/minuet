@@ -134,9 +134,9 @@ Ensure that you have completed the set-up process for your minuet circuit board 
 1. Gently plug the flexible cable for the built-in keypad to the header labeled **PANEL**.
 1. Screw the board into place with the 3 screws and plastic washers that were used for the original circuit board.
 1. Plug the thermistor connector into the socket labeled **THERMISTOR**.
-1. If you have a peripheral that plugs into the **EXPANSION** header, configure it according to its documentation then plug it into the socket.  Take care to orient the peripheral to fit within the outline of the main board and ensure that its pins are fully seated.
+1. If you have an accessory that plugs into the **EXPANSION** port, configure it according to its documentation then plug it into the socket.  Take care to orient the accessory to fit within the outline of the main board and ensure that its pins are fully seated.
     - [Lighting and load accessory board](../hardware/load/design-and-errata.md)
-1. If you have a peripheral with a QWIIC interface, plug it into the **QWIIC** connector using a QWIIC cable.
+1. If you have an accessory with a QWIIC interface, plug it into the **QWIIC** connector using a QWIIC cable.
 
 ## Reassembling the Maxxfan
 

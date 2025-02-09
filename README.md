@@ -8,7 +8,7 @@ Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan Deluxe 
 * Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
 * Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
 * Connect lights to your fan with the lighting and load accessory board.
-* Connect your own environmental sensors and peripherals to Minuet's built-in [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion header.
+* Connect your own environmental sensors and accessories to Minuet's [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion port.
 * The hardware and software is open source: help make it better and share your improvements with others.
 
 ## Author's note and project status
@@ -57,9 +57,9 @@ Minuet does not (yet) support IR remote controls.  Please contact the author if 
 
 Read these guides to learn how to build, install, and use Minuet.
 
-1. [Hardware guide](docs/hardware-guide.md): All about Minuet's custom circuit board
+1. [Hardware guide](docs/hardware-guide.md): All about Minuet's circuit board
 1. [Fan motor guide](docs/fan-motor-guide.md): How to choose a brushless DC fan motor for Minuet, wire it up, and make adapters for installing it
-1. [Setup guide](docs/setup-guide.md): How to configure Minuet for your motor, network, automation, and peripherals
+1. [Setup guide](docs/setup-guide.md): How to configure Minuet for your motor, network, automation, and accessories
 1. [Installation guide](docs/installation-guide.md): How to install Minuet into your Maxxfan
 1. [User guide](docs/user-guide.md): How to use Minuet once it has been installed
 

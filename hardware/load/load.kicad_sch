@@ -2637,7 +2637,7 @@
 		)
 		(uuid "94689154-9089-457a-a10a-8c462625a251")
 	)
-	(text "Header for custom peripherals and factory programming\n- GPIO0 and GPIO1 are free to be used for any purpose\n- UART_RXD and UART_TXD provide the serial port\n- SCL and SDA provide the I2C bus (QWIIC)\n- RESET and BOOT are wired in parallel with their\n   corresponding buttons (active when tied to ground)\n- 12 V supply is unregulated, 1 A maximum current\n- 5 V supply is regulated, 150 mA maximum current\n- 3.3 V supply is regulated, 1 A maximum current"
+	(text "Header for accessories and factory programming\n- GPIO0 and GPIO1 are free to be used for any purpose\n- UART_RXD and UART_TXD provide the serial port\n- SCL and SDA provide the I2C bus (QWIIC)\n- RESET and BOOT are wired in parallel with their\n   corresponding buttons (active when tied to ground)\n- 12 V supply is unregulated, 1 A maximum current\n- 5 V supply is regulated, 150 mA maximum current\n- 3.3 V supply is regulated, 1 A maximum current"
 		(exclude_from_sim no)
 		(at 73.66 58.42 0)
 		(effects

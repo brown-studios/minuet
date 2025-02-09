@@ -1,4 +1,4 @@
-# ESPHome package for the Minuet fan controller built-in peripherals.
+# ESPHome package for the Minuet fan controller built-in components.
 #
 # Supported hardware revisions: v1
 #
@@ -12,13 +12,13 @@
 # motors and the keypad. Please take care when making modifications to this
 # file to prevent malfunction.
 #
-# To extend the capabilities of your Minuet fan controller, you may attach
-# additional peripherals to the I2C bus using the QWIIC connection and
+# To expand the capabilities of your Minuet fan controller, you may attach
+# additional components to the I2C bus using the QWIIC connection and
 # use GPIO0, GPIO1, GPIO20 (RXD), GPIO21 (TXD) which are presented at the
-# expansion port header.
-minuet_peripherals:
-  # The I2C bus is used by built-it peripherals and is presented via a
-  # QWIIC connector on the board edge for extension.
+# GPIO expansion port for accessories.
+minuet_components:
+  # The I2C bus is used by built-in components and is presented via a
+  # QWIIC connector on the board edge for accessories.
   i2c:
     - id: minuet_i2c
       scl: 6
@@ -34,7 +34,7 @@ minuet_peripherals:
       i2c_id: minuet_i2c
       address: 0x20
       pin_count: 8
-  # Built-in peripherals
+  # Built-in components
   output:
     - id: minuet_keypad_auto_indicator
       platform: gpio

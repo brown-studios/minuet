@@ -1,6 +1,6 @@
 # Minuet hardware guide
 
-This guide describes Minuet's custom circuit board.
+This guide describes Minuet's circuit board.
 
 ## Overview
 
@@ -16,7 +16,7 @@ Minuet has the following major components:
 - BOOT button to enter the bootloader
 - USB-C connector for programming
 - QWIIC I2C bus connector
-- GPIO expansion header
+- GPIO expansion port
 - Switching power supply for the electronics
 - Self-resetting polyfuse for overcurrent protection
 - Jumpers for configuring the hardware as described in the [setup guide](setup-guide.md)

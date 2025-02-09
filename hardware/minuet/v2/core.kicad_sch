@@ -4846,7 +4846,7 @@
 		)
 		(uuid "f042b14d-a68a-4db1-af8c-cebbb95d9568")
 	)
-	(text "Host has pull-ups so peripherals don't need their own"
+	(text "Host has pull-ups so accessories don't need their own"
 		(exclude_from_sim no)
 		(at 208.28 90.17 0)
 		(effects
