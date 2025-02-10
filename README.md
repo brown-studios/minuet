@@ -4,7 +4,7 @@ Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan Deluxe 
 
 * No more squeaking motor! Replace your fan's original brushed motor with a quieter low maintenance brushless motor.
 * Install Minuet with simple hand tools: it is a complete drop-in replacement that does not require making any irreversible modifications so you can easily revert back to the original equipment later if you want.
-* Control your fan using your phone, Home Assistant, the built-in keypad, and/or a wired Maxxfan wall controller.
+* Control your fan using your phone, Home Assistant, the built-in keypad, a wired Maxxfan wall controller, and/or the Maxxfan IR remote.
 * Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
 * Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
 * Connect lights to your fan with the lighting and load accessory board.
@@ -19,7 +19,7 @@ As the author of Minuet, I want to give you a sense of what to expect from this 
 
 The first revision of the Minuet hardware is installed in my campervan and it works somewhat well.  I do not recommend building this revision of the hardware due to schematic errata noted in the accompanying documentation.  It is after all a prototype.
 
-The second revision of the Minuet hardware will address the known errata and will use a different brushless motor driver chip to run a bigger motor with a higher current limit.  It will likely take further revisions to stabilize the design for production in quantity.
+The second revision of the Minuet hardware is feature complete.  It supports more powerful fan motors, IR remote control, wall controls, rain sensor, thermistor, piezo buzzer for (polite and configurable) audible feedback.  I've ordered the circuit boards and hopefully the design works well and is closer to a final version that I can send to folks.
 
 If there is sufficient interest, I would like to commission a small manufacturing run of a hardware kit to make it easier for people to install Minuet.
 
@@ -42,16 +42,15 @@ I'm looking for folks to assist in lots of ways:
 
 [Link to Minuet playlist on YouTube](https://www.youtube-nocookie.com/embed/videoseries?si=fa14cJ42dhqO0x0U&amp;list=PL8ZnNA3SFfE8v-qSholF0Ovc9Exv59-uN)
 
-## Limitations
+## Compatibility
 
-Minuet currently supports the following Maxxfan models.  Please contact the author if you would like to volunteer to help test Minuet with other models.
+Minuet v1, the initial prototype, has been tested and works well with the following Maxxfan models though it does not support the IR remote control or wired wall controls.
 
 - Maxxfan Deluxe 7500K
-- Maxxfan Deluxe 7000K
 
-Minuet v2 supports Maxxfan wall controls with an 8P8C connector.
+Minuet v2, the feature complete revision, should work with most Maxxfan Deluxe and Maxxfan Plus models, the IR remote control, and wired wall controls.  This section will be updated once testing is underway.
 
-Minuet does not (yet) support IR remote controls.  Please contact the author if you would like to volunteer to develop the necessary circuitry and software to receive and decode IR signals from the remote control.
+Please contact the author if you would like to volunteer to help test Minuet with other models.
 
 ## Getting started
 
