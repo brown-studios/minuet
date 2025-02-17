@@ -66,6 +66,6 @@ Good luck and enjoy your fan!
 
 ## Notice
 
-The Minuet software, documentation, design, and all other copyright protected artifacts are released under the terms of the [MIT license](LICENSE).
+The Minuet software, documentation, design, and all copyright protected artifacts are released under the terms of the [MIT license](LICENSE).
 
 The Minuet hardware is released under the terms of the [CERN-OHL-W license](hardware/LICENSE).
