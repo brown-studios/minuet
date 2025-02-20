@@ -66,7 +66,7 @@ Good luck and enjoy your fan!
 
 ## Acknowledgements
 
-Thanks to [skypeachblue](https://github.com/skypeachblue/maxxfan-reversing) for helping to reverse engineer the Maxxfan IR remote control protocol.
+Thanks to [skypeachblue](https://github.com/skypeachblue/maxxfan-reversing) and [wingspinner](https://github.com/wingspinner) for helping to reverse engineer the Maxxfan IR remote control protocol.
 
 ## Notice
 
