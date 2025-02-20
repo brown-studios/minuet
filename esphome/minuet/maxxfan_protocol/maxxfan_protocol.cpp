@@ -84,12 +84,13 @@ void MaxxfanProtocol::encode(RemoteTransmitData *dst, const MaxxfanData &data) {
 optional<MaxxfanData> MaxxfanProtocol::decode(RemoteReceiveData src) {
   if (false) {
     char buffer[256];
-    buffer[0] = 0;
+    size_t index = 0;
     BitReader reader(src);
     int bit;
-    while ((bit = reader.next_bit()) >= 0) {
-      strlcat(buffer, bit ? "1" : "0", sizeof(buffer));
+    while ((bit = reader.next_bit()) >= 0 && index < sizeof(buffer) - 1) {
+      buffer[index++] = bit ? '1' : '0';
     }
+    buffer[index] = 0;
     ESP_LOGD(TAG, "Received bits: %s", buffer);
   }
 
