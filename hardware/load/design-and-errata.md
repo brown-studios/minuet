@@ -1,6 +1,6 @@
-# Minuet lighting and load accessory v2 (UNDER DEVELOPMENT)
+# Minuet lighting and load accessory
 
-**Status: UNDER DEVELOPMENT**
+**Status: ABANDONED - SUPERSEDED BY THE SIMPLER 'LIGHT' ACCESSORY - SEE ERRATA**
 
 The Minuet lighting and load accessory adds the capability to drive up to two independent loads attached to the fan.  The accessory can be configure to drive each independent load at 12 V, 5 V, or 3.3 V.
 
@@ -80,4 +80,16 @@ Recommendation: Use RGBW addressable LED strips with a warm white or cold white 
 
 ## Errata
 
-Nothing yet...
+Corrected from v2.0 to v2.1:
+
+- Changed the `5V EN` jumper to disconnect the LDO's power supply so that the disable input is not left floating.
+- Corrected the orientation of the P-Channel MOSFETs on the schematics.
+- Reduced the MOSFET pull-up resistor to 10 Kohm from 100 Kohm to increase drive current.
+
+Remaining errors in v2.1:
+
+- The `DUAL` output cannot be used to drive addressable LED strips because there is nothing driving the data line low fast enough for 800 KHz signalling.
+- The NPN transistor base should not be left floating in case the GPIO is tristate.
+- THe MOSFET gate needs a resistor to limit the switching current.
+
+Decided to abandon this design because it is overly complex and doesn't work with addressable LEDs as intended.  It would be better to design simpler boards for each use-case instead of having lots of jumpers.

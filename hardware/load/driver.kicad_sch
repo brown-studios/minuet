@@ -1761,7 +1761,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100K"
+		(property "Value" "10K"
 			(at 140.208 90.1121 0)
 			(effects
 				(font
@@ -1819,6 +1819,7 @@
 	(symbol
 		(lib_id "Device:Q_PMOS_GSD")
 		(at 158.75 93.98 0)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1826,7 +1827,7 @@
 		(dnp no)
 		(uuid "21a8e36a-8ac0-4056-80f5-c2e82e06ac71")
 		(property "Reference" "Q1"
-			(at 163.957 92.7678 0)
+			(at 163.957 95.1922 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1835,7 +1836,7 @@
 			)
 		)
 		(property "Value" "DMG2301L"
-			(at 163.957 95.1921 0)
+			(at 163.957 92.7679 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1844,7 +1845,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23_Handsoldering"
-			(at 163.83 91.44 0)
+			(at 163.83 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)

@@ -7,7 +7,7 @@
 	(title_block
 		(title "Minuet Lighting and Load Accessory")
 		(date "2025-02")
-		(rev "2.0")
+		(rev "2.1")
 	)
 	(lib_symbols
 		(symbol "Connector_Generic:Conn_01x03"
@@ -1943,16 +1943,16 @@
 		(uuid "0caa906c-e41b-439f-a373-d53b6b29ca6c")
 	)
 	(junction
-		(at 153.67 71.12)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "198e1b7d-b225-4070-9bfe-0762ce989d26")
-	)
-	(junction
 		(at 111.76 99.06)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "204df035-96ff-44c8-8a96-efd60ed345a4")
+	)
+	(junction
+		(at 153.67 68.58)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2fe9b364-f22d-4ce4-b44c-ff267332e545")
 	)
 	(junction
 		(at 111.76 101.6)
@@ -1973,10 +1973,10 @@
 		(uuid "b65de884-3132-4c2e-9600-7112cf9896ce")
 	)
 	(junction
-		(at 153.67 68.58)
+		(at 162.56 68.58)
 		(diameter 0)
 		(color 0 0 0 0)
-		(uuid "c4d5db17-61ce-4359-a822-5374d03179b1")
+		(uuid "c8443143-9d9e-4cda-bdc3-d6a527546010")
 	)
 	(junction
 		(at 173.99 85.09)
@@ -2066,7 +2066,7 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 68.58) (xy 153.67 71.12)
+			(xy 153.67 68.58) (xy 153.67 73.66)
 		)
 		(stroke
 			(width 0)
@@ -2186,16 +2186,6 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 68.58) (xy 163.83 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "41ba6fd7-5036-460e-b02b-551fc4e6d187")
-	)
-	(wire
-		(pts
 			(xy 187.96 85.09) (xy 203.2 85.09)
 		)
 		(stroke
@@ -2216,6 +2206,16 @@
 	)
 	(wire
 		(pts
+			(xy 162.56 68.58) (xy 163.83 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "498a390b-96d5-46ae-88cd-32678241ac0b")
+	)
+	(wire
+		(pts
 			(xy 92.71 120.65) (xy 95.25 120.65)
 		)
 		(stroke
@@ -2223,16 +2223,6 @@
 			(type default)
 		)
 		(uuid "4bcdcc8b-9f16-460d-b6f0-909ee022ed33")
-	)
-	(wire
-		(pts
-			(xy 153.67 71.12) (xy 154.94 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5307675a-f7f8-418e-ae06-b1a6336bd2cd")
 	)
 	(wire
 		(pts
@@ -2286,6 +2276,16 @@
 	)
 	(wire
 		(pts
+			(xy 153.67 68.58) (xy 154.94 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "62628ed5-69ce-48d8-b212-6dff93631ac3")
+	)
+	(wire
+		(pts
 			(xy 180.34 116.84) (xy 180.34 123.19)
 		)
 		(stroke
@@ -2293,16 +2293,6 @@
 			(type default)
 		)
 		(uuid "7188e90f-8918-4588-831d-f17997d9cafb")
-	)
-	(wire
-		(pts
-			(xy 153.67 71.12) (xy 153.67 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "726e3e30-8ff7-40ff-84ce-a07d8df7e884")
 	)
 	(wire
 		(pts
@@ -2386,6 +2376,16 @@
 	)
 	(wire
 		(pts
+			(xy 162.56 71.12) (xy 163.83 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a4fb3c21-a9b4-456c-9028-02f283677024")
+	)
+	(wire
+		(pts
 			(xy 113.03 96.52) (xy 110.49 96.52)
 		)
 		(stroke
@@ -2426,6 +2426,16 @@
 	)
 	(wire
 		(pts
+			(xy 162.56 68.58) (xy 162.56 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bd867a64-7dd8-4de4-98cb-499282ee407f")
+	)
+	(wire
+		(pts
 			(xy 97.79 101.6) (xy 96.52 101.6)
 		)
 		(stroke
@@ -2443,16 +2453,6 @@
 			(type default)
 		)
 		(uuid "c9a41dc1-53c3-46b4-8d1c-bc7d309cc91b")
-	)
-	(wire
-		(pts
-			(xy 163.83 71.12) (xy 162.56 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d4a9c3b3-08a8-4038-85f3-d24a1fe9874f")
 	)
 	(wire
 		(pts
@@ -3357,7 +3357,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2cbbc224-b0fa-4c26-af1c-51374f9fe8c4")
-		(property "Reference" "#FLG01"
+		(property "Reference" "#FLG02"
 			(at 114.935 100.33 0)
 			(effects
 				(font
@@ -3408,7 +3408,7 @@
 		(instances
 			(project "load"
 				(path "/a369f822-a924-4186-8e20-d08fd579731a"
-					(reference "#FLG01")
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)
@@ -3903,6 +3903,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 162.56 68.58 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "52e8b38a-5522-47c2-bd88-aedca7b7f36d")
+		(property "Reference" "#FLG01"
+			(at 162.56 66.675 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 162.56 64.4469 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 162.56 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 162.56 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 162.56 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "b6daca32-21c9-4fe6-baf1-54b3e26bfba7")
+		)
+		(instances
+			(project "load"
+				(path "/a369f822-a924-4186-8e20-d08fd579731a"
+					(reference "#FLG01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+12V")
 		(at 116.84 101.6 270)
 		(mirror x)
@@ -3980,7 +4047,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "688cbea8-e73b-48df-ad29-f72d0f63b702")
-		(property "Reference" "#FLG03"
+		(property "Reference" "#FLG04"
 			(at 111.76 103.505 0)
 			(effects
 				(font
@@ -4031,7 +4098,7 @@
 		(instances
 			(project "load"
 				(path "/a369f822-a924-4186-8e20-d08fd579731a"
-					(reference "#FLG03")
+					(reference "#FLG04")
 					(unit 1)
 				)
 			)
@@ -4192,7 +4259,7 @@
 	)
 	(symbol
 		(lib_id "Jumper:SolderJumper_2_Open")
-		(at 158.75 71.12 0)
+		(at 158.75 68.58 0)
 		(unit 1)
 		(exclude_from_sim yes)
 		(in_bom no)
@@ -4200,7 +4267,7 @@
 		(dnp no)
 		(uuid "7809868e-0bc4-47b5-8b25-d4a980ce97bd")
 		(property "Reference" "JP1"
-			(at 158.75 73.7291 0)
+			(at 158.75 71.1891 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4208,7 +4275,7 @@
 			)
 		)
 		(property "Value" "SolderJumper_2_Open"
-			(at 157.5379 72.771 90)
+			(at 157.5379 70.231 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4218,7 +4285,7 @@
 			)
 		)
 		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_TrianglePad1.0x1.5mm"
-			(at 158.75 71.12 0)
+			(at 158.75 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4227,7 +4294,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 158.75 71.12 0)
+			(at 158.75 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4236,7 +4303,7 @@
 			)
 		)
 		(property "Description" "Solder Jumper, 2-pole, open"
-			(at 158.75 71.12 0)
+			(at 158.75 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5214,7 +5281,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e5e7a53a-e047-46a5-aab8-3decd1795988")
-		(property "Reference" "#FLG02"
+		(property "Reference" "#FLG03"
 			(at 96.52 103.505 0)
 			(effects
 				(font
@@ -5265,7 +5332,7 @@
 		(instances
 			(project ""
 				(path "/a369f822-a924-4186-8e20-d08fd579731a"
-					(reference "#FLG02")
+					(reference "#FLG03")
 					(unit 1)
 				)
 			)
