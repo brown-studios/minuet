@@ -1,0 +1,30 @@
+# MINUET LIGHT ACCESSORY PACKAGE
+# VARIANT: DIMMABLE LIGHT
+# SUPPORTED HARDWARE: Minuet Light Accessory v2.5
+#
+# Supports a dimmable light connected to the accessory board.
+# Refer to the accessory documentation for details.
+#
+# Include the contents of this file into your device configuration YAML
+# file as a package like this (recommended):
+#
+# packages:
+#   <<: !include
+#     file: minuet/light-accessory/dimmable-light.yaml
+#     vars:
+#       name: 'Light'
+minuet_light:
+  output:
+    - id: minuet_light_pwm
+      platform: ledc
+      pin:
+        number: 0
+        mode: output
+      channel: 0
+      frequency: 400 Hz
+  light:
+    - id: minuet_light
+      name: ${name}
+      platform: monochromatic
+      output: minuet_light_pwm
+      restore_mode: ALWAYS_OFF

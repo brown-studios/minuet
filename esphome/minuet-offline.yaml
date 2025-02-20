@@ -15,11 +15,26 @@ logger:
 
 # Organize the configuration into packages for extensibility.
 packages:
-  # Include the core logic.
+  # Include the core logic (required).
   <<: !include minuet/core.yaml
 
-  # Define more packages here to support your accessories.
-  #
+  # Include configuration for an accessory plugged into the expansion port (optional).
+  # Choose at most one of these packages to uncomment.
+  # <<: !include
+  #   file: minuet/light-accessory/addressable-led-strip.yaml
+  #   vars:
+  #     name: 'Light'
+  #     num_leds: 40
+  #     chipset: WS2811
+  #     rgb_order: RGB
+  #     is_wrgb: true
+  #     is_rgbw: false
+  # <<: !include
+  #   file: minuet/light-accessory/dimmable-light.yaml
+  #   vars:
+  #     name: 'Light'
+
+  # Add more packages here to support for your custom features.
   # my_package:
   #   sensors:
   #     - platform: scd4x

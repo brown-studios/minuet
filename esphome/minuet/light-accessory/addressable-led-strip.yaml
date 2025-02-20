@@ -1,0 +1,45 @@
+# MINUET LIGHT ACCESSORY PACKAGE
+# VARIANT: ADDRESSABLE LED STRIP
+# SUPPORTED HARDWARE: Minuet Light Accessory v2.5
+#
+# Supports an addressable LED strip connected to the accessory board.
+# Refer to the accessory documentation for details.
+#
+# Include the contents of this file into your device configuration YAML
+# file as a package like this (recommended):
+#
+# packages:
+#   <<: !include
+#     file: minuet/light-accessory/addressable-led-strip.yaml
+#     vars:
+#       name: 'Light'
+#       num_leds: 40
+#       chipset: WS2811
+#       rgb_order: RGB
+#       is_wrgb: true
+#       is_rgbw: false
+minuet_light:
+  power_supply:
+    - id: minuet_light_power
+      pin:
+        number: 0
+        mode: output
+      enable_time: 50ms
+      keep_on_time: 5s
+  light:
+    - id: minuet_light
+      name: ${name}
+      platform: esp32_rmt_led_strip
+      pin: 1
+      restore_mode: ALWAYS_OFF
+      rmt_channel: 0
+      num_leds: ${num_leds}
+      chipset: ${chipset}
+      rgb_order: ${rgb_order}
+      is_wrgb: ${is_wrgb}
+      is_rgbw: ${is_rgbw}
+      power_supply: minuet_light_power
+      effects:
+        - addressable_twinkle:
+        - addressable_rainbow:
+        - addressable_flicker:
