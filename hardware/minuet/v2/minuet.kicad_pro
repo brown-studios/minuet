@@ -621,6 +621,8 @@
       "Net-(J401-Pin_1)": "3A",
       "Net-(J401-Pin_2)": "3A",
       "Net-(J401-Pin_3)": "3A",
+      "Net-(JP101-C)": "Power",
+      "Net-(Q101-C)": "Power",
       "Net-(U301-CP)": "Power",
       "Net-(U301-CPH)": "Power",
       "Net-(U301-CPL)": "Power",

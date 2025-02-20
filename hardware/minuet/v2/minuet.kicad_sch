@@ -8,6 +8,7 @@
 		(title "Minuet Fan Controller")
 		(date "2025-02")
 		(rev "2.0")
+		(company "Brown Studios LLC")
 	)
 	(lib_symbols
 		(symbol "Comparator:LMV331"
@@ -868,164 +869,6 @@
 				)
 			)
 		)
-		(symbol "Device:Buzzer"
-			(pin_names
-				(offset 0.0254) hide)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "BZ"
-				(at 3.81 1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Value" "Buzzer"
-				(at 3.81 -1.27 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify left)
-				)
-			)
-			(property "Footprint" ""
-				(at -0.635 2.54 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at -0.635 2.54 90)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Buzzer, polarized"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "quartz resonator ceramic"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "*Buzzer*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "Buzzer_0_1"
-				(arc
-					(start 0 -3.175)
-					(mid 3.1612 0)
-					(end 0 3.175)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.651 1.905) (xy -1.143 1.905)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.397 2.159) (xy -1.397 1.651)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 3.175) (xy 0 -3.175)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "Buzzer_1_1"
-				(pin passive line
-					(at -2.54 2.54 0)
-					(length 2.54)
-					(name "+"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at -2.54 -2.54 0)
-					(length 2.54)
-					(name "-"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-		)
 		(symbol "Device:C"
 			(pin_numbers hide)
 			(pin_names
@@ -1692,6 +1535,189 @@
 					(at 0 -3.81 90)
 					(length 1.27)
 					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
+		(symbol "Device:Speaker_Crystal"
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "LS"
+				(at 0.635 5.715 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify right)
+				)
+			)
+			(property "Value" "Speaker_Crystal"
+				(at 0.635 3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify right)
+				)
+			)
+			(property "Footprint" ""
+				(at -0.889 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at -0.889 -1.27 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Crystal speaker/transducer"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "crystal speaker ultrasonic transducer"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Speaker_Crystal_0_0"
+				(rectangle
+					(start -2.54 1.27)
+					(end 1.143 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -2.032 -0.635)
+					(end 0.635 -1.905)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.651 -2.286) (xy 0.381 -2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.651 -0.254) (xy 0.381 -0.254)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.635 -2.286) (xy -0.635 -3.048)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -0.635 -0.254) (xy -0.635 0.508)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.143 1.27) (xy 3.683 3.81) (xy 3.683 -6.35) (xy 1.143 -3.81)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Speaker_Crystal_1_1"
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -5.08 -2.54 0)
+					(length 2.54)
+					(name "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3952,6 +3978,16 @@
 	)
 	(wire
 		(pts
+			(xy 241.3 59.69) (xy 243.84 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "37d249ec-1ab5-4e4c-9097-927410a58939")
+	)
+	(wire
+		(pts
 			(xy 72.39 58.42) (xy 72.39 66.04)
 		)
 		(stroke
@@ -4012,7 +4048,7 @@
 	)
 	(wire
 		(pts
-			(xy 243.84 58.42) (xy 243.84 55.88)
+			(xy 243.84 55.88) (xy 243.84 59.69)
 		)
 		(stroke
 			(width 0)
@@ -4229,16 +4265,6 @@
 			(type default)
 		)
 		(uuid "6ab99fa1-b4b1-49fe-a36c-8aff2fa48055")
-	)
-	(wire
-		(pts
-			(xy 241.3 63.5) (xy 243.84 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6c30bd3a-ed99-45d3-a004-3c02d357b614")
 	)
 	(wire
 		(pts
@@ -4462,16 +4488,6 @@
 	)
 	(wire
 		(pts
-			(xy 243.84 63.5) (xy 243.84 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "94bd3c9c-8b6c-4363-af54-b561b26e5f8a")
-	)
-	(wire
-		(pts
 			(xy 33.02 165.1) (xy 45.72 165.1)
 		)
 		(stroke
@@ -4639,16 +4655,6 @@
 			(type default)
 		)
 		(uuid "ae264c76-24b9-44f0-85d1-dc3c7bd2169b")
-	)
-	(wire
-		(pts
-			(xy 241.3 58.42) (xy 243.84 58.42)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "aed49362-cf28-4a86-83a2-b9a375e28953")
 	)
 	(wire
 		(pts
@@ -4882,6 +4888,16 @@
 	)
 	(wire
 		(pts
+			(xy 243.84 62.23) (xy 243.84 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e29f5b2f-ad7c-4742-8a07-805f0f4e73e2")
+	)
+	(wire
+		(pts
 			(xy 207.01 127) (xy 207.01 128.27)
 		)
 		(stroke
@@ -5059,6 +5075,16 @@
 			(type default)
 		)
 		(uuid "fc572b6e-b5b7-4b18-b71e-7d66d3c35522")
+	)
+	(wire
+		(pts
+			(xy 241.3 62.23) (xy 243.84 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ff914afc-600d-40da-9a48-d984f037ee91")
 	)
 	(rectangle
 		(start 13.97 40.64)
@@ -6200,8 +6226,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:Buzzer")
-		(at 238.76 60.96 0)
+		(lib_id "Device:Speaker_Crystal")
+		(at 236.22 59.69 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6210,7 +6236,7 @@
 		(dnp no)
 		(uuid "0017c40e-5e9d-4a0d-a147-c5d85855bcf4")
 		(property "Reference" "BZ101"
-			(at 234.9638 59.7478 0)
+			(at 232.4238 58.4778 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6219,7 +6245,7 @@
 			)
 		)
 		(property "Value" "PS1240P02BT"
-			(at 234.9638 62.1721 0)
+			(at 232.4238 60.9021 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6228,7 +6254,7 @@
 			)
 		)
 		(property "Footprint" "Buzzer_Beeper:Buzzer_TDK_PS1240P02BT_D12.2mm_H6.5mm"
-			(at 239.395 58.42 90)
+			(at 236.855 57.15 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6237,7 +6263,7 @@
 			)
 		)
 		(property "Datasheet" "https://product.tdk.com/en/system/files/dam/doc/product/sw_piezo/sw_piezo/piezo-buzzer/catalog/piezoelectronic_buzzer_ps_en.pdf"
-			(at 239.395 58.42 90)
+			(at 236.855 57.15 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6245,8 +6271,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Buzzer, polarized"
-			(at 238.76 60.96 0)
+		(property "Description" "Piezo buzzer"
+			(at 236.22 59.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
