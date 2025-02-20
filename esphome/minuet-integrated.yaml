@@ -1,10 +1,8 @@
-# MINUET STANDALONE CONFIGURATION
+# MINUET INTEGRATED CONFIGURATION
 #
-# ESPHome device configuration for operating Minuet with a WiFi captive portal
-# and a simple web based user interface for a connected out-of-the-box experience.
-#
-# After connecting to the access point, open http://192.168.4.1/ in a web browser
-# to change the password and access the user interface.
+# ESPHome device configuration for connecting Minuet to an existing WiFi network
+# and integrated it with Home Assistant or some other front-end using the ESPHome API
+# instead of the built-in standalone web interface.
 #
 # Please modify this configuration and secrets.yaml to suit your needs.
 esphome:
@@ -16,17 +14,13 @@ logger:
   level: DEBUG
   baud_rate: 921600
 
-# Set up a WiFi access point and captive portal for out-of-the-box wireless configuration.
+# Set up WiFi to connect to your network.
 wifi:
   id: minuet_wifi
-  ap:
-    ssid: !secret minuet_access_point_ssid
-    password: !secret minuet_access_point_password
-    ap_timeout: 1min
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
   power_save_mode: light
   fast_connect: true
-
-captive_portal:
 
 # Enable over-the-air software updates.
 ota:
@@ -43,8 +37,8 @@ api:
 packages:
   # Include the core logic.
   <<: !include minuet/core.yaml
-  # Include the web interface.
-  <<: !include minuet/web.yaml
+  # Uncomment to include the web interface if you need it.
+  # <<: !include minuet/web.yaml
 
   # Define more packages here to support your accessories.
   #

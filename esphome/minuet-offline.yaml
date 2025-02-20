@@ -1,15 +1,12 @@
-# ESPHome device configuration for operating Minuet without WiFi.
-# Control Minuet with the control panel and/or wall remote.
+# MINUET OFFLINE CONFIGURATION
 #
-# Feel free to modify this configuration to suit your needs.
+# ESPHome device configuration for operating Minuet without any WiFi at all.
+# Control Minuet with the control panel, IR remote, or wall control.
+#
+# Please modify this configuration and secrets.yaml to suit your needs.
 esphome:
   name: minuet
   friendly_name: Minuet
-
-esp32:
-  board: esp32-c3-devkitm-1
-  framework:
-    type: arduino
 
 # Configure logging.
 logger:

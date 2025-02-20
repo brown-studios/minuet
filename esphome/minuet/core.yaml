@@ -1,6 +1,8 @@
+# MINUET CORE PACKAGE
+#
 # ESPHome package for the Minuet fan controller built-in components.
 #
-# Supported hardware revisions: v1
+# Supported hardware revisions: v2.0
 #
 # Include the contents of this file into your device configuration YAML
 # file as a package like this (recommended):
@@ -17,66 +19,83 @@
 # use GPIO0, GPIO1, GPIO20 (RXD), GPIO21 (TXD) which are presented at the
 # GPIO expansion port for accessories.
 minuet_components:
+  # Include Minuet ESPHome components
+  external_components:
+    - source: minuet
+
+  # Configure the board
+  esp32:
+    board: esp32-c3-devkitm-1
+    framework:
+      type: arduino
+
   # The I2C bus is used by built-in components and is presented via a
-  # QWIIC connector on the board edge for accessories.
+  # QWIIC connector on the board edge for accessories
   i2c:
     - id: minuet_i2c
-      scl: 6
-      sda: 7
+      scl: 7 # FIXME miswired in v2.0, will be 6 in v2.1
+      sda: 6 # FIXME miswired in v2.0, will be 7 in v2.1
       scan: true
       frequency: 100kHz
-  # The built-in TCA9554 provides additional 8 GPIO pins, all of which are
-  # used by built-in functions. If you need more GPIO pins, you can attach
-  # another TCA9554 or suitable GPIO expander via the QWIIC port, taking care
-  # to assign it an unused I2C address.
+
+  # The built-in TCA9555 provides additional 16 GPIO pins, all of which are
+  # used by built-in functions. If you need more GPIO pins, you can attach another
+  # GPIO expander via the QWIIC port, taking care to assign it an unused I2C address.
   pca9554:
     - id: minuet_xio
       i2c_id: minuet_i2c
       address: 0x20
-      pin_count: 8
-  # Built-in components
+      pin_count: 16
+
+# Vent fan motor driver
+minuet_fan_motor_driver:
+  binary_sensor:
+    - id: minuet_fan_motor_fault
+      name: "Vent Fan Stalled"
+      icon: mdi:fan-alert
+      device_class: problem
+      entity_category: diagnostic
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 14
+        mode: input
+        inverted: true
+      publish_initial_state: true
+      filters:
+        - delayed_on_off: 0.5s
+  sensor:
+    - id: minuet_fan_motor_tach
+      name: "Vent Fan Tachometer"
+      icon: mdi:fan
+      state_class: measurement
+      entity_category: diagnostic
+      unit_of_measurement: rpm
+      accuracy_decimals: 0
+      platform: pulse_counter
+      pin:
+        number: 8
+        mode: input
+        ignore_strapping_warning: true
+      count_mode:
+        rising_edge: DISABLE
+        falling_edge: INCREMENT
+      update_interval: 5s
+      filters:
+        # The tachometer ticks with each hall sensor pulse (3 times per complete cycle)
+        # and the motor has 4 poles so it takes two cycles to rotate completely.
+        # Thus we divide the pulses by 6 to obtain the motor shaft speed.
+        - multiply: 0.1667
+        - round_to_multiple_of: 10
+        - delta: 20
   output:
-    - id: minuet_keypad_auto_indicator
+    - id: minuet_fan_motor_sleep
       platform: gpio
       pin:
         pca9554: minuet_xio
-        number: 0
+        number: 13
         mode: output
         inverted: true
-    - id: minuet_keypad_row_1
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 5
-        mode: output
-        inverted: false
-    - id: minuet_keypad_row_2
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 4
-        mode: output
-        inverted: false
-    - id: minuet_cover_motor_sleep
-      platform: gpio
-      pin:
-        number: 10
-        mode: output
-        inverted: true
-    - id: minuet_cover_motor_enable
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 7
-        mode: output
-        inverted: false
-    - id: minuet_cover_motor_open
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 6
-        mode: output
-        inverted: false
     - id: minuet_fan_motor_duty_cycle
       platform: ledc
       pin:
@@ -88,84 +107,57 @@ minuet_components:
     - id: minuet_fan_motor_forward
       platform: gpio
       pin:
-        number: 4
+        pca9554: minuet_xio
+        number: 12
         mode: output
         inverted: false
+
+# Vent cover motor driver
+minuet_cover_motor_driver:
   binary_sensor:
-    - id: minuet_keypad_column_2
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 3
-        mode: input
-        inverted: true
-    - id: minuet_keypad_column_3
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 2
-        mode: input
-        inverted: true
-    - id: minuet_keypad_column_4
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 1
-        mode: input
-        inverted: true
     - id: minuet_cover_motor_fault
       platform: gpio
       pin:
+        pca9554: minuet_xio
         number: 9
         mode: input
         inverted: true
-        ignore_strapping_warning: true
-    - id: minuet_fan_motor_fault
-      name: "Vent Fan Stalled"
+      publish_initial_state: true
+  output:
+    - id: minuet_cover_motor_sleep
       platform: gpio
       pin:
-        number: 8
-        mode: input
+        pca9554: minuet_xio
+        number: 10
+        mode: output
         inverted: true
-        ignore_strapping_warning: true
-      icon: mdi:fan-alert
-      device_class: problem
-  sensor:
-    - id: minuet_fan_motor_tach
-      name: "Vent Fan Tachometer"
-      platform: pulse_counter
+    - id: minuet_cover_motor_open
+      platform: gpio
       pin:
-        number: 2
-        mode: input
-        ignore_strapping_warning: true
-      count_mode:
-        rising_edge: DISABLE
-        falling_edge: INCREMENT
-      unit_of_measurement: rpm
-      state_class: measurement
-      icon: mdi:fan
-      accuracy_decimals: 0
-      update_interval: 5 s
-      filters:
-        # The motor has 4 poles so it rotates twice for each complete electrical cycle
-        # and tick of the tachometer
-        - multiply: 0.5
+        pca9554: minuet_xio
+        number: 11
+        mode: output
+        inverted: false
+
+# Ambient temperature sensor
+minuet_ambient_temperature_sensor:
+  sensor:
     - id: minuet_thermistor_voltage
       platform: adc
-      pin: 3
+      pin: 4
       attenuation: 12db
       filters:
         - sliding_window_moving_average:
-            window_size: 10
-            send_every: 5
-            send_first_at: 5
+            window_size: 20
+            send_every: 10
+            send_first_at: 10
       update_interval: never
     - id: minuet_thermistor_resistance
       platform: resistance
       sensor: minuet_thermistor_voltage
       configuration: DOWNSTREAM
       resistor: 10kOhm
-    - id: minuet_air_temperature
+    - id: minuet_ambient_temperature
       platform: ntc
       sensor: minuet_thermistor_resistance
       calibration:
@@ -174,15 +166,196 @@ minuet_components:
         reference_resistance: 10kOhm
       accuracy_decimals: 1
       filters:
-        - delta: 0.2
+        - round_to_multiple_of: 0.2
+  output:
+    - id: minuet_thermistor_power
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 15
+        mode: output
+        inverted: false
   interval:
-    - interval: 1s
+    - interval: 0.5s
       then:
         lambda: |-
-          // The thermistor is powered by the keypad row 1 strobe to minimize self-heating
-          id(minuet_keypad_row_1).turn_on();
+          id(minuet_thermistor_power).turn_on();
           id(minuet_thermistor_voltage).update();
-          id(minuet_keypad_row_1).turn_off();
+          id(minuet_thermistor_power).turn_off();
+
+# Battery monitor
+minuet_battery_monitor:
+  binary_sensor:
+    - id: minuet_battery_problem
+      name: "Battery Problem"
+      device_class: problem
+      entity_category: diagnostic
+      platform: template
+  sensor:
+    - id: minuet_battery_voltage
+      name: "Battery Voltage"
+      icon: mdi:car-battery
+      device_class: voltage
+      state_class: measurement
+      entity_category: diagnostic
+      unit_of_measurement: V
+      accuracy_decimals: 1
+      platform: adc
+      pin: 3
+      attenuation: 12db
+      filters:
+        - sliding_window_moving_average:
+            window_size: 20
+            send_every: 10
+            send_first_at: 10
+        - multiply: 11
+        - round_to_multiple_of: 0.2
+      update_interval: 0.5s
+      on_value:
+        then:
+          - lambda: |-
+              auto& problem = id(minuet_battery_problem);
+              const float hysteresis = problem->state ? 0.4f : 0.f;
+              const bool low = x < id(minuet_battery_voltage_low).state + hysteresis;
+              const bool high = x > id(minuet_battery_voltage_high).state - hysteresis;
+              problem->publish_state(low || high);
+  number:
+    - id: minuet_battery_voltage_low
+      name: "Low Battery Voltage Threshold"
+      icon: mdi:battery-alert
+      entity_category: config
+      unit_of_measurement: V
+      mode: box
+      platform: template
+      optimistic: true
+      min_value: 9
+      max_value: 16
+      step: 0.2
+      restore_value: true
+      initial_value: 10.8
+    - id: minuet_battery_voltage_high
+      name: "High Battery Voltage Threshold"
+      icon: mdi:battery-alert
+      entity_category: config
+      unit_of_measurement: V
+      mode: box
+      platform: template
+      optimistic: true
+      min_value: 9
+      max_value: 16
+      step: 0.2
+      restore_value: true
+      initial_value: 15.2
+
+# Rain sensor
+minuet_rain_sensor:
+  binary_sensor:
+    - id: minuet_rain
+      name: "Rain Detected"
+      icon: mdi:weather-rainy
+      device_class: moisture
+      entity_category: diagnostic
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 8
+        mode: input
+        inverted: true
+      publish_initial_state: true
+      filters:
+        - delayed_on_off:
+            time_on: 2s
+            time_off: 60s
+
+# Provides audible feedback
+minuet_tone:
+  substitutions:
+    minuet_tones: |-
+      "warn:d=4,o=5,b=100:16e6,16e6",
+      // examples
+      "two_short:d=4,o=5,b=100:16e6,16e6",
+      "long:d=1,o=5,b=100:e6",
+      "siren:d=8,o=5,b=100:d,e,d,e,d,e,d,e",
+      "scale_up:d=32,o=5,b=100:c,c#,d#,e,f#,g#,a#,b",
+      "star_wars:d=16,o=5,b=100:4e,4e,4e,8c,p,g,4e,8c,p,g,4e,4p,4b,4b,4b,8c6,p,g,4d#,8c,p,g,4e,8p",
+      "mission_imp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,g,8p,g,8p,a#,p,c7,p,g,8p,g,8p,f,p,f#,p,a#,g,2d,32p,a#,g,2c#,32p,a#,g,2c,a#5,8c,2p,32p,a#5,g5,2f#,32p,a#5,g5,2f,32p,a#5,g5,2e,d#,8d",
+      "mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g,8p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,16p,8c6,16p,8g,16p,8e,16p,8a,8b,16a#,8a,16g.,16e6,16g6,8a6,16f6,8g6,8e6,16c6,16d6,8b,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16c7,16p,16c7,16c7,p,16g6,16f#6,16f6,16d#6,16p,16e6,16p,16g#,16a,16c6,16p,16a,16c6,16d6,8p,16d#6,8p,16d6,8p,16c6",
+    minuet_tone_default_if_unknown: "warn"
+  output:
+    - id: minuet_tone_pwm
+      platform: ledc
+      pin:
+        number: 10
+        mode: output
+        inverted: false
+      channel: 3
+  rtttl:
+    - id: minuet_tone_generator
+      output: minuet_tone_pwm
+  switch:
+    - id: minuet_tone_enable
+      name: "Audible Feedback"
+      icon: mdi:volume-high
+      entity_category: config
+      platform: template
+      optimistic: true
+      restore_mode: RESTORE_DEFAULT_ON
+      on_turn_off:
+        then:
+          - rtttl.stop:
+  api:
+    actions:
+      - action: play_tone
+        variables:
+          name: string
+        then:
+          - lambda: id(minuet_tone)->execute(name);
+      - action: play_tone_rtttl
+        variables:
+          tone: string
+        then:
+          - lambda: id(minuet_tone_rtttl)->execute(tone);
+      - action: stop_tone
+        then:
+          - rtttl.stop:
+  script:
+    - id: minuet_tone
+      mode: restart
+      parameters:
+        name: string
+      then:
+        - lambda: |-
+            constexpr const char* tones[] = { ${minuet_tones} };
+            constexpr const char* default_if_unknown = "${minuet_tone_default_if_unknown}";
+            for (;;) {
+              for (size_t i = 0; i < sizeof(tones) / sizeof(tones[0]); i++) {
+                const char* tone = tones[i];
+                char* colon_pos = strchr(tone, ':');
+                if (!colon_pos) {
+                  ESP_LOGD("minuet", "RTTTL tone missing name: '%s'", tone);
+                  continue;
+                }
+                size_t name_length = colon_pos - tone;
+                if (name.size() == name_length && strncmp(name.c_str(), tone, name_length) == 0) {
+                  id(minuet_tone_rtttl)->execute(tone);
+                  return;
+                }
+              }
+              ESP_LOGD("minuet", "RTTTL tone not found: '%s'", name.c_str());
+              if (name == default_if_unknown) {
+                return;
+              }
+              name = default_if_unknown;
+            }
+    - id: minuet_tone_rtttl
+      mode: restart
+      parameters:
+        tone: string
+      then:
+        - lambda: |-
+            if (id(minuet_tone_enable).state) {
+              id(minuet_tone_generator).play(tone);
+            }
 
 # Read the keypad controls and determine an action
 #
@@ -236,6 +409,7 @@ minuet_keypad_control:
   binary_sensor:
     - id: minuet_keypad_control_speed_up
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -267,6 +441,7 @@ minuet_keypad_control:
                 }
     - id: minuet_keypad_control_speed_down
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -296,8 +471,35 @@ minuet_keypad_control:
                     fan->turn_on().perform();
                   }
                 }
+    - id: minuet_keypad_control_4key_open
+      platform: template
+      publish_initial_state: true
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0) {
+                  // Open cover
+                  id(minuet_cover).make_call().set_command_open().perform();
+                }
+    - id: minuet_keypad_control_4key_close
+      platform: template
+      publish_initial_state: true
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                int& menu = id(minuet_keypad_menu);
+                if (menu == 0) {
+                  // Close cover
+                  id(minuet_cover).make_call().set_command_close().perform();
+                }
     - id: minuet_keypad_control_open_close
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -310,6 +512,7 @@ minuet_keypad_control:
                 }
     - id: minuet_keypad_control_in_out
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -327,8 +530,27 @@ minuet_keypad_control:
                     fan->turn_on().perform();
                   }
                 }
+    - id: minuet_keypad_control_4key_on
+      platform: template
+      publish_initial_state: true
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                id(minuet_fan)->turn_on().perform();
+    - id: minuet_keypad_control_4key_off
+      platform: template
+      publish_initial_state: true
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                id(minuet_fan)->turn_off().perform();
     - id: minuet_keypad_control_on_off
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -359,6 +581,7 @@ minuet_keypad_control:
             - button.press: minuet_factory_reset
     - id: minuet_keypad_control_auto
       platform: template
+      publish_initial_state: true
       on_click:
         - min_length: ${minuet_keypad_click_min_length}
           max_length: ${minuet_keypad_click_max_length}
@@ -394,34 +617,81 @@ minuet_keypad_control:
                   menu = 0;
                   id(minuet_thermostat_sync)->execute(true);
                 }
-
+    - id: minuet_keypad_control_rain
+      platform: template
+      publish_initial_state: true
+      on_click:
+        - min_length: ${minuet_keypad_click_min_length}
+          max_length: ${minuet_keypad_click_max_length}
+          then:
+            - lambda: |-
+                // TODO
+  output:
+    - id: minuet_keypad_auto_indicator
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 0
+        mode: output
+        inverted: true
+    - id: minuet_keypad_rain_indicator
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 1
+        mode: output
+        inverted: true
   interval:
     - interval: 10ms
       then:
         lambda: |-
-          //id(minuet_keypad_row_1).turn_off();
-          id(minuet_keypad_row_2).turn_on();
-          id(minuet_keypad_column_2)->loop(); // read the value again
-          id(minuet_keypad_column_3)->loop();
-          const bool key12 = id(minuet_keypad_column_2).state;
-          const bool key13 = id(minuet_keypad_column_3).state;
-          //bool key14 = id(minuet_keypad_column_4).state;
-          id(minuet_keypad_row_1).turn_on();
-          id(minuet_keypad_row_2).turn_off();
-          id(minuet_keypad_column_2)->loop();
-          id(minuet_keypad_column_3)->loop();
-          id(minuet_keypad_column_4)->loop();
-          const bool key22 = id(minuet_keypad_column_2).state;
-          const bool key23 = id(minuet_keypad_column_3).state;
-          const bool key24 = id(minuet_keypad_column_4).state;
-          id(minuet_keypad_row_1).turn_off();
+          // Scan the keypad matrix
+          // All of the pins have internal pull-up resistors
+          const uint8_t XIO_PIN_R1 = 5;
+          const uint8_t XIO_PIN_R2 = 3;
+          const uint8_t XIO_PIN_C1 = 7;
+          const uint8_t XIO_PIN_C2 = 4;
+          const uint8_t XIO_PIN_C3 = 2;
+          const uint8_t XIO_PIN_C4 = 6;
+          auto& xio = id(minuet_xio);
 
-          id(minuet_keypad_control_speed_up).publish_state(key12 && !key13);
-          id(minuet_keypad_control_speed_down).publish_state(key13 && !key12);
-          id(minuet_keypad_control_open_close).publish_state(key12 && key13);
-          id(minuet_keypad_control_on_off).publish_state(key22);
-          id(minuet_keypad_control_in_out).publish_state(key23);
-          id(minuet_keypad_control_auto).publish_state(key24);
+          // Read the keypad row pins themselves while they are undriven
+          // to detect OPEN and CLOSE on the 4 key keypad
+          const bool key_r1_gnd = !xio->digital_read(XIO_PIN_R1);
+          const bool key_r2_gnd = !xio->digital_read(XIO_PIN_R2);
+
+          // Drive keypad row 1 low and read the columns
+          xio->pin_mode(XIO_PIN_R1, gpio::FLAG_OUTPUT);
+          xio->loop();
+          const bool key_r1_c1 = !xio->digital_read(XIO_PIN_C1);
+          const bool key_r1_c2 = !xio->digital_read(XIO_PIN_C2);
+          const bool key_r1_c3 = !xio->digital_read(XIO_PIN_C3);
+          const bool key_r1_c4 = !xio->digital_read(XIO_PIN_C4);
+          xio->pin_mode(XIO_PIN_R1, gpio::FLAG_INPUT);
+
+          // Drive keypad row 2 low and read the columns
+          xio->pin_mode(XIO_PIN_R2, gpio::FLAG_OUTPUT);
+          xio->loop();
+          const bool key_r2_c1 = !xio->digital_read(XIO_PIN_C1);
+          const bool key_r2_c2 = !xio->digital_read(XIO_PIN_C2);
+          const bool key_r2_c3 = !xio->digital_read(XIO_PIN_C3);
+          const bool key_r2_c4 = !xio->digital_read(XIO_PIN_C4);
+          xio->pin_mode(XIO_PIN_R2, gpio::FLAG_INPUT);
+
+          // Decode key presses from the built-in keypad and the 6 key wall control
+          id(minuet_keypad_control_speed_up).publish_state(key_r1_c2 && !key_r1_c3);
+          id(minuet_keypad_control_speed_down).publish_state(key_r1_c3 && !key_r1_c2);
+          id(minuet_keypad_control_open_close).publish_state(key_r1_c2 && key_r1_c3);
+          id(minuet_keypad_control_rain).publish_state(key_r1_c4);
+          id(minuet_keypad_control_on_off).publish_state(key_r2_c2);
+          id(minuet_keypad_control_in_out).publish_state(key_r2_c3);
+          id(minuet_keypad_control_auto).publish_state(key_r2_c4);
+
+          // Decode key presses from the 4 key wall control
+          id(minuet_keypad_control_4key_close).publish_state(key_r1_gnd);
+          id(minuet_keypad_control_4key_open).publish_state(key_r2_gnd);
+          id(minuet_keypad_control_4key_off).publish_state(key_r1_c1);
+          id(minuet_keypad_control_4key_on).publish_state(key_r2_c1);
     - interval: 150ms
       then:
         lambda: |-
@@ -444,10 +714,47 @@ minuet_keypad_control:
             blink_counter -= 1;
           }
 
+# Infrared remote control
+minuet_ir_control:
+  maxxfan_protocol:
+  remote_receiver:
+    - id: minuet_ir
+      pin:
+        number: 2
+        mode: input
+        inverted: true
+        ignore_strapping_warning: true
+      rmt_channel: 2
+      memory_blocks: 2
+      dump: maxxfan
+      on_maxxfan:
+        then:
+          lambda: |-
+            // TODO: Auto mode
+            const bool fan_changing_states = id(minuet_fan).state != x.fan_on;
+            id(minuet_fan_suppress_cover_movement) = true;
+            id(minuet_fan)->make_call()
+                .set_state(x.fan_on)
+                .set_speed(x.fan_speed / 10)
+                .set_direction(x.fan_exhaust ? FanDirection::FORWARD : FanDirection::REVERSE)
+                .perform();
+            if (x.cover_open && (fan_changing_states || id(minuet_cover).is_fully_closed())) {
+              id(minuet_cover).make_call().set_command_open().perform();
+            } else if (!x.cover_open && (fan_changing_states || !id(minuet_cover).is_fully_closed())) {
+              id(minuet_cover).make_call().set_command_close().perform();
+            }
+            id(minuet_fan_suppress_cover_movement) = false;
+
+            if (x.warn) {
+              id(minuet_tone)->execute("warn");
+            }
+
 # The state machine for the fan and its remote control interface
 minuet_core:
   substitutions:
     minuet_fan_speed_count: '10'
+    #minuet_fan_duty_cycle_table: '0.f, 0.1f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f, 0.25f, 0.30f, 0.34f, 1.f'
+    minuet_fan_duty_cycle_table: '0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.f'
   globals:
     - id: minuet_fan_last_duty_cycle
       type: float
@@ -487,12 +794,12 @@ minuet_core:
       on_state:
         then:
           - lambda: |-
-              constexpr float DUTY_CYCLES[] = {
-                0.f, 0.1f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f, 0.25f, 0.30f, 0.34f, 1.f
-              };
+              constexpr size_t SPEED_COUNT = (${minuet_fan_speed_count});
+              constexpr float DUTY_CYCLES[SPEED_COUNT] = { ${minuet_fan_duty_cycle_table} };
+              const int speed = id(minuet_fan).speed;
               float duty_cycle = 0.f;
-              if (id(minuet_fan).state) {
-                duty_cycle = DUTY_CYCLES[clamp(id(minuet_fan).speed, 0, 10)];
+              if (id(minuet_fan).state && speed > 0 && speed <= SPEED_COUNT) {
+                duty_cycle = DUTY_CYCLES[speed - 1];
                 if (id(minuet_fan).direction == FanDirection::REVERSE) {
                   duty_cycle = -duty_cycle;
                 }
@@ -513,8 +820,8 @@ minuet_core:
   cover:
     - id: minuet_cover
       name: "Vent Cover"
-      platform: template
       device_class: damper
+      platform: template
       optimistic: false
       assumed_state: true
       restore_mode: NO_RESTORE
@@ -539,9 +846,9 @@ minuet_core:
   climate:
     - id: minuet_thermostat
       name: "Vent Thermostat"
-      platform: thermostat
       icon: mdi:fan-auto
-      sensor: minuet_air_temperature
+      platform: thermostat
+      sensor: minuet_ambient_temperature
       visual:
         min_temperature: 10°C
         max_temperature: 50°C
@@ -574,16 +881,13 @@ minuet_core:
         open: bool
       then:
         - lambda: |-
-            id(minuet_cover_motor_enable).turn_off();
             id(minuet_cover_motor_open).set_state(open);
-            id(minuet_cover_motor_enable).turn_on();
             id(minuet_cover_motor_sleep).turn_off();
         - wait_until:
             condition:
               binary_sensor.is_on: minuet_cover_motor_fault # Wait for motor to stall
             timeout: 6s
         - lambda: |-
-            id(minuet_cover_motor_enable).turn_off();
             id(minuet_cover_motor_sleep).turn_on();
             id(minuet_cover).position = open ? COVER_OPEN : COVER_CLOSED;
             id(minuet_cover).publish_state();
@@ -615,6 +919,7 @@ minuet_core:
             if (target_duty_cycle != 0.f || last_duty_cycle != 0.f) {
               ESP_LOGD("minuet", "Fan stalled, disabling the motor for safety");
               id(minuet_fan_motor_duty_cycle).turn_off();
+              id(minuet_fan_motor_sleep).turn_on();
               id(minuet_fan)->turn_off().perform();
               last_duty_cycle = 0.f;
               target_duty_cycle = 0.f;
@@ -622,17 +927,8 @@ minuet_core:
           } else if (target_duty_cycle != last_duty_cycle) {
             // Ramp the duty cycle linearly over time up to the desired target.
             constexpr float MAX_RAMP_PER_INTERVAL = 0.01f;
-            constexpr float MIN_DUTY_CYCLE = 0.1f;
-            constexpr float MAX_DUTY_CYCLE = 0.5f;
-            float ramp = clamp(target_duty_cycle - last_duty_cycle, -MAX_RAMP_PER_INTERVAL, MAX_RAMP_PER_INTERVAL);
-            if (last_duty_cycle == 0.f && ramp != 0.f) {
-              last_duty_cycle = std::copysign(MIN_DUTY_CYCLE, ramp);
-            } else if (fabs(last_duty_cycle + ramp) < MIN_DUTY_CYCLE) {
-              last_duty_cycle = 0.f;
-            } else {
-              last_duty_cycle = clamp(last_duty_cycle + ramp, -MAX_DUTY_CYCLE, MAX_DUTY_CYCLE);
-            }
-            ESP_LOGD("minuet", "last_duty_cycle: %f, target_duty_cycle: %f, ramp: %f", last_duty_cycle, target_duty_cycle, ramp);
+            last_duty_cycle += clamp(target_duty_cycle - last_duty_cycle, -MAX_RAMP_PER_INTERVAL, MAX_RAMP_PER_INTERVAL);
             id(minuet_fan_motor_forward).set_state(last_duty_cycle >= 0.f);
             id(minuet_fan_motor_duty_cycle).set_level(fabs(last_duty_cycle));
           }
+          id(minuet_fan_motor_sleep).set_state(last_duty_cycle == 0.f && target_duty_cycle == 0.f);

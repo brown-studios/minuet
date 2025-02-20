@@ -2,6 +2,8 @@
 
 This guide describes Minuet's circuit board.
 
+**Compatibility: The information in this guide is valid for Minuet v2.0.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/hardware-guide.md) for v1.**
+
 ## Overview
 
 Minuet entirely replaces the Maxxfan's original circuit board within the fan housing using the original screws.  It has complete control over the fan's operation and can be programmed to work however you like.
@@ -10,7 +12,9 @@ Minuet has the following major components:
 
 - Brushless DC motor driver for the fan
 - Brushed DC motor driver for the cover
-- Connections for the built-in Maxxfan keypad and thermistor
+- Connections for the built-in Maxxfan keypad, thermistor, and wall controls
+- Battery voltage monitoring
+- Infrared remote control receiver
 - ESP32-C3 microcontroller with integrated WiFi antenna
 - RESET button to reset the microcontroller
 - BOOT button to enter the bootloader

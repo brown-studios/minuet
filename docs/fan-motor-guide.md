@@ -2,6 +2,8 @@
 
 This guide explains how to choose a brushless DC fan motor and adapt it for use with Minuet.
 
+**Compatibility: The information in this guide is valid for Minuet v2.0.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/fan-motor-guide.md) for v1.**
+
 ## Steps
 
 1. Choose a fan motor from the list of [compatible motors](#compatible-motors) or follow the [motor selection guide](#motor-selection-guide).
@@ -29,9 +31,9 @@ This small motor runs smoothly with minimal vibration.  It has an ample power ra
 #### Wiring chart
 
 - Motor winding connections
-  - U phase: orange wire
-  - V phase: green wire
-  - W phase: brown wire
+  - U phase: green wire
+  - V phase: brown wire
+  - W phase: orange wire
 - Hall sensor connections
   - Ground: black wire
   - U hall: white wire
@@ -57,9 +59,9 @@ This motor is somewhat larger than 42BLR53-12-01 and run smoothly though it has 
 ### Wiring chart
 
 - Motor winding connections
-  - U phase: fat yellow wire
-  - V phase: fat blue wire
-  - W phase: fat green wire
+  - U phase: fat blue wire
+  - V phase: fat green wire
+  - W phase: fat yellow wire
 - Hall sensor connections
   - Ground: thin black wire
   - U hall: thin yellow wire
@@ -79,9 +81,9 @@ The motor should have a suitable power rating, perhaps somewhere between 15 W an
 
 The motor should be designed for operation at a nominal 12 V.  The actual operating voltage will depend on the supply voltage.
 
-The motor should have a minimum current rating of 1.5 A per phase.  You will need to configure the current limit of your Minuet board to not exceed your motor's current rating.  The v1 hardware supports a maximum of 1.5 A and the v2 hardware supports a maximum of 3 A.  You can use a motor with a higher current rating than Minuet supports but beyond a certain point you are at greater risk of having problems operating the fan quietly at low speeds.
+The motor should have a minimum current rating of 1.5 A per phase.  You will need to configure the current limit of your Minuet board to not exceed your motor's current rating.  The v2 hardware supports a maximum of 4 A.  You can use a motor with a higher current rating than Minuet supports but beyond a certain point you are at greater risk of having problems operating the fan quietly at low speeds.
 
-The motor must have digital hall sensors, prefereably with 30° placement (refers to the electrical phase angle of the signals produced by the motor's hall sensors relative to the back EMF of the motor coils).  Unfortunately, this information may not be in the datasheet so you'll just have to try it out.
+The motor must have digital hall sensors.
 
 You are unlikely to find a suitable motor that is a perfect drop-in replacement for the original motor's dimensions.  That's just physics.  Brushless DC motors are generally more efficient than brushed DC motors of equivalent power so they tend to be smaller.  Refer to the Minuet documentation to make adapters for the different motor body size, mounting hole pattern, shaft diameter, shaft length, and shaft keying as required.
 
@@ -116,22 +118,28 @@ Please share your results with the Minuet project. ❤️
 
 ## Wire harness
 
-Here's how to make a Minuet compatible wire harness with [JST XH series wire-to-board connectors](https://www.jst.com/products/crimp-style-connectors-wire-to-board-type/xh-connector/).
+Here's how to make a Minuet compatible wire harness. .
 
 ### Supplies
 
-- 1x JST XH series XHP-3 3-pin housing
-- 1x JST XH series XHP-5 5-pin housing
-- 8x JST XH series SXH-001T-P0.6(N) contacts plus a few spares just in case
-- A micro connector crimping tool such as [iCrimp IWS-3220M](https://www.amazon.com/gp/product/B078WPT5M1/)
-- If your motor wires are too short (see instructions):
-  - JST XH extension cables such as these [3-pin](https://www.amazon.com/gp/product/B07QLYCVK3/) / [5-pin](https://www.amazon.com/gp/product/B07Q29TG24/)
-  - 22 AWG wire, heat shrink tubing, and soldering supplies
+- [JST VH series wire-to-board connectors](https://www.jst.com/products/crimp-style-connectors-wire-to-board-type/vh-connector/)
+  - 1x JST VH series VHR-2M housing
+  - 3x JST VH series SVH-41T-P1.1 contacts plus a few spares just in case
+  - If your wires are too short (see instructions)
+    - 18 AWG wire, heat shrink tubing, and soldering supplies
+  - A crimping tool
+- [JST XH series wire-to-board connectors](https://www.jst.com/products/crimp-style-connectors-wire-to-board-type/xh-connector/)
+  - 1x JST XH series XHP-5 5-pin housing
+  - 5x JST XH series SXH-001T-P0.6(N) contacts plus a few spares just in case
+  - If your wires are too short (see instructions)
+    - 22 AWG wire, heat shrink tubing, and soldering supplies
+    - Alternatively, JST XH extension cables such as these [5-pin](https://www.amazon.com/gp/product/B07Q29TG24/)
+  - A micro connector crimping tool such as [iCrimp IWS-3220M](https://www.amazon.com/gp/product/B078WPT5M1/)
 
 ### Instructions
 
 - Locate the wiring chart for your motor.
-- Measure your wires.  The wires need to be about 16-20" or 40-50 cm long to comfortably reach from the motor to the circuit board within the fan housing.  If your wires are too short then you can solder on some additional wire (22 AWG minimum) or use JST XH extension cables to make up the difference.
+- Measure your wires.  The wires need to be about 16-20" or 40-50 cm long to comfortably reach from the motor to the circuit board within the fan housing.  If your wires are too short then you can solder on some additional wire.  Use 18 AWG minimum for the motor connector.  Use 22 AWG minimum for the hall sensor connector or JST XH extension cables.
 - Strip the wires back about 1.5 mm.
 - Crimp the pins onto each wire.
 - Sort the wires into two groups: those for the motor windings and those for the hall sensors based on the wiring chart.

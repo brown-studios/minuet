@@ -64,6 +64,10 @@ Read these guides to learn how to build, install, and use Minuet.
 
 Good luck and enjoy your fan!
 
+## Acknowledgements
+
+Thanks to [skypeachblue](https://github.com/skypeachblue/maxxfan-reversing) for helping to reverse engineer the Maxxfan IR remote control protocol.
+
 ## Notice
 
 The Minuet software, documentation, design, and all copyright protected artifacts are released under the terms of the [MIT license](LICENSE).

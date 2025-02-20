@@ -2,6 +2,8 @@
 
 This guide explains how to install Minuet into your Maxxfan.
 
+**Compatibility: The information in this guide is valid for Minuet v2.0.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/installation-guide.md) for v1.**
+
 ## Supplies
 
 - Minuet circuit board
