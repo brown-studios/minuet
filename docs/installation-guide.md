@@ -145,10 +145,10 @@ Ensure that you have completed the set-up process for your minuet circuit board 
 For reassembly, it may help to have a second pair of hands to support the control panel while screwing it back into place.
 
 1. Hold the control panel near the unit.
-1. Plug the cover motor connector into the socket labeled **LID** (v1 hardware) or **COVER** (v2 hardware).
+1. Plug the cover motor connector into the socket labeled **COVER**.
 1. Plug the fan motor connector into the socket labeled **FAN MOTOR**.
 1. Plug the fan motor hall sensor connector into the socket labeled **FAN SENSOR**.
-1. Plug the Maxxfan wall control cable into the socket labeled **WALL CONTROL**, if you have one (v2 hardware only).
+1. Plug the Maxxfan wall control cable into the socket labeled **WALL CONTROL**, if you have one.
 1. Plug the power connector into the socket labeled **POWER**.
 1. Raise the control panel into place while guiding and gently tucking the wires into the open space within the housing behind it so they don't get pinched.
 1. Screw the control panel into place with the 4 original screws using a #2 Philips screwdriver.
