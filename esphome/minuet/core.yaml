@@ -19,9 +19,11 @@
 # use GPIO0, GPIO1, GPIO20 (RXD), GPIO21 (TXD) which are presented at the
 # GPIO expansion port for accessories.
 minuet_components:
-  # Include Minuet ESPHome components
+  # Include external ESPHome components
   external_components:
-    - source: minuet
+    - source: github://j9brown/esphome-maxxfan-protocol@main
+      components: [maxxfan_protocol]
+      refresh: 1min
 
   # Configure the board
   esp32:
