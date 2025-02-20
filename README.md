@@ -1,6 +1,6 @@
 # Minuet fan controller
 
-Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan Deluxe vent fan](https://www.maxxair.com/products/fans/maxxfan-deluxe/).
+Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/).
 
 * No more squeaking motor! Replace your fan's original brushed motor with a quieter low maintenance brushless motor.
 * Install Minuet with simple hand tools: it is a complete drop-in replacement that does not require making any irreversible modifications so you can easily revert back to the original equipment later if you want.
