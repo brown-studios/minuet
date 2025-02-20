@@ -1,8 +1,7 @@
 # MINUET CORE PACKAGE
+# SUPPORTED HARDWARE: Minuet v2.0
 #
 # ESPHome package for the Minuet fan controller built-in components.
-#
-# Supported hardware revisions: v2.0
 #
 # Include the contents of this file into your device configuration YAML
 # file as a package like this (recommended):
@@ -22,7 +21,7 @@ minuet_components:
   # Include external ESPHome components
   external_components:
     - source: github://j9brown/esphome-maxxfan-protocol@main
-      components: [maxxfan_protocol]
+      components: [ maxxfan_protocol ]
       refresh: 1min
 
   # Configure the board
