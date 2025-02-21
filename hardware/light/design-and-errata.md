@@ -8,7 +8,7 @@ Suggested applications:
 
 - Attach a dimmable LED light (or other resistive load) with PWM or ON/OFF control.
 - Attach an addressable LED strip (WS2811, WS2812B, WS2814, SK6812, or similar), attach it to the inside of the fan cowling to make it light up pretty colors.
-- Use the light accessory as a breakout board with access to all of the GPIO expansion port signals and power for making your own devices.
+- Use the accessory as a breakout board with access to all of the GPIO expansion port signals and power for making your own devices.
 
 Depending on your application, you may need to modify your Minuet ESPHome firmware YAML configuration to control the loads in the manner you desire.
 

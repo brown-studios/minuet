@@ -65,7 +65,7 @@ Minuet gets better when you take advantage of its place in the middle of your ve
 
 These accessories are specifically designed for use with Minuet:
 
-- Add lights to your fan with a [lighting and load accessory board](../hardware/load/design-and-errata.md)
+- Add lights to your fan with the [Minuet Light Accessory board](../hardware/light/design-and-errata.md)
 
 You can also make your own accessories that leverage ESPHome and parts that you can buy from hobby electronics shops.  You can find plenty of tutorials online for building stuff with ESPHome.  You might find it easier to program than an Arduino because it's all done with YAML configuration files.
 
