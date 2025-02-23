@@ -15,9 +15,9 @@ Depending on your application, you may need to modify the Minuet ESPHome firmwar
 
 The board gets its power from the Minuet fan controller board.  Please consider these specifications to appropriately size your loads to the available supply.
 
-- 12 V supply is unregulated, 1 A maximum current
-- 5 V supply is regulated, 150 mA maximum current
-- 3.3 V supply is regulated, 1 A maximum current
+- 12 V supply is unregulated, 1 A current available
+- 5 V supply is regulated, 150 mA current available
+- 3.3 V supply is regulated, 600 mA current available
 
 [View the schematics in PDF format](load.pdf)
 
