@@ -1,8 +1,8 @@
-# Minuet hardware v1 (OBSOLETE)
+# Minuet hardware v1.0 (OBSOLETE)
 
 **Status: OBSOLETE, refer to the [Errata](#errata)**
 
-The v1 revision is the first prototype of the Minuet fan controller.
+Version 1.x is the initial prototype of the Minuet fan controller.  It supports basic operation of the fan and cover with the keypad and over WiFi.
 
 [View the schematics in PDF format](minuet.pdf)
 
