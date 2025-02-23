@@ -1,5 +1,5 @@
 # MINUET CORE PACKAGE
-# SUPPORTED HARDWARE: Minuet v2.0
+# SUPPORTED HARDWARE: Minuet v2.1
 #
 # ESPHome package for the Minuet fan controller built-in components.
 #
@@ -34,8 +34,8 @@ minuet_components:
   # QWIIC connector on the board edge for accessories
   i2c:
     - id: minuet_i2c
-      scl: 7 # FIXME miswired in v2.0, will be 6 in v2.1
-      sda: 6 # FIXME miswired in v2.0, will be 7 in v2.1
+      scl: 6
+      sda: 7
       scan: true
       frequency: 100kHz
 
@@ -59,7 +59,7 @@ minuet_fan_motor_driver:
       platform: gpio
       pin:
         pca9554: minuet_xio
-        number: 14
+        number: 13
         mode: input
         inverted: true
       publish_initial_state: true
@@ -94,7 +94,7 @@ minuet_fan_motor_driver:
       platform: gpio
       pin:
         pca9554: minuet_xio
-        number: 13
+        number: 14
         mode: output
         inverted: true
     - id: minuet_fan_motor_duty_cycle
