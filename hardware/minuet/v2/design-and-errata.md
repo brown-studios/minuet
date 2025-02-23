@@ -1,8 +1,8 @@
-# Minuet hardware v2 (UNDER DEVELOPMENT)
+# Minuet hardware v2.1 (UNDER DEVELOPMENT)
 
 **Status: UNDER DEVELOPMENT**
 
-The v2 revision is the second prototype of the Minuet fan controller.
+Version 2.x is the first feature complete realization of the Minuet fan controller.  Its goal is to do everything the original equipment could do and a little more.
 
 [View the schematics in PDF format](minuet.pdf)
 
@@ -14,7 +14,8 @@ The v2 revision is the second prototype of the Minuet fan controller.
 - Senses the supply voltage to disable the fan when the battery voltage is low
 - Can either use trim pots or fixed resistors to adjust motor current limits
 - Better schematic readability
-- Expanded the expansion port
+- Expanded the expansion port and developed a light accessory that plugs into it
+- Optimized some of the part selection for production
 
 ## Design synopsis
 
@@ -22,7 +23,7 @@ The microcontroller is an [ESP32-C3](https://www.espressif.com/sites/default/fil
 
 The cover motor driver is a [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf).  It has built-in current limiting which is used to detect end-of-travel when the cover is completely opened or closed.
 
-The fan motor driver is a [MCT8315Z](https://www.ti.com/lit/ds/symlink/mct8315z.pdf).  It supports sensored brushless DC motors with trapezoidal commutation modes and built-in current limiting.  The board has jumpers to configure the driver's behavior.
+The fan motor driver is a [MCT8316Z](https://www.ti.com/lit/ds/symlink/mct8316z.pdf).  It supports sensored brushless DC motors with trapezoidal commutation and built-in current limiting.  The board has jumpers to configure the driver's behavior.
 
 There is a [TCA9555](https://www.ti.com/lit/ds/symlink/tca9555.pdf) IO expander on-board to provide 16 additional IO pins with built-in pull-up resistors via I2C.
 
@@ -96,10 +97,144 @@ You can disable the buzzer altogether in hardware by cutting a jumper on the boa
 
 And if you want to make the fan play a cheerful jingle any time it turns on then you can change the firmware to do that with [RTTTL](https://en.wikipedia.org/wiki/Ring_Tone_Text_Transfer_Language).
 
+## Fan motor configuration
+
+### Current limit (`ILIM`)
+
+The fan motor current limit protects Minuet and the motor from overcurrent which could generate excess heat and damage them.  Set Minuet's current limit below the motor's maximum current per phase as specified in its datasheet.
+
+Although the MCT8316Z supports a maximum of 8 A peak current to the motor windings, the Minuet board is specified to a maximum of 4 A.  The recommended default current limit is 3 A.
+
+The `ILIM` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor denoted here as `RV`.
+
+Formulas for current limit with `RF` = 18.2 Kohm:
+
+- Ilim = 66 A * (0.5 - RF / (2 * RF + RV))
+- RV = RF * (1 / (0.5 - Ilim / 66 A) - 2)
+
+Approximate setpoints rounded to nearest E96 series value:
+
+- Ilim = 0 A (disabled) => RV = 0 K
+- Ilim = 1 A => RV = 1.13 K
+- Ilim = 1.5 A => RV = 1.74 K
+- Ilim = 2 A => RV = 2.32 K
+- Ilim = 2.5 A => RV = 3.00 K
+- Ilim = 3 A => RV = 3.65 K (default)
+- Ilim = 3.5 A => RV = 4.32 K
+- Ilim = 4 A (maximum) => RV = 4.99 K
+
+Measure the resistance between the test points adjacent to the `ILIM` label to confirm your desired setpoint.
+
+### Advance lead angle (`ADV`)
+
+The lead angle compensates for the phase delay in motor winding current and voltage due to its inductance.
+
+The correct setting is the one that minimizes the current drawn on each motor phase divided by the motor RPM to ensure efficient operation of the motor driver.  A poor choice can result in the motor driver overheating.
+
+Testing at the bench with the motor unloaded (no fan blade) showed that 0° was more efficient whereas increasing angles were progressively less efficient, and 30° drew 3 times as much current at the same RPM.
+
+Results may be different when the motor is under load (with a fan blade).  More testing is warranted.
+
+The `ADV` pads set the MCT8316Z advance angle level.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
+
+Settings:
+
+- 0°: `ADV` tied to `AGND` (default)
+- 4°: `ADV` tied to `AGND` via 22 Kohm resistor
+- 11°: `ADV` tied to `AGND` via 100 Kohm resistor
+- 15°: Hi-Z
+- 20°: `ADV` tied to `AVDD` via 100 Kohm resistor
+- 25°: `ADV` tied to `AVDD` via 22 Kohm resistor
+- 30°: `ADV` tied to `AVDD`
+
+References:
+
+- [MCT8316Z datasheet](https://www.ti.com/lit/ds/symlink/mct8316z.pdf)
+- [Texas Instruments lead angle adjustment video](https://www.ti.com/video/6257299020001)
+- [Texas Instruments application report about tuning lead angle](https://www.ti.com/lit/an/slaa561/slaa561.pdf)
+
+### Slew rate (`SLEW`)
+
+The slew rate determines how quickly the motor driver switches states.  A low slew rate results in greater switching losses which wastes energy and produces heat.  A high slew rate improves thermal performance at the cost of increased EMI.
+
+Testing so far hasn't shown EMI to be a problem so using the maximum slew rate is recommended by default.
+
+The `SLEW` pads set the MCT8316Z slew rate.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
+
+Settings:
+
+- 25 V/uS: `SLEW` tied to `AGND`
+- 50 V/uS: Hi-Z
+- 100 V/uS: `SLEW` tied to `AVDD` via 47 Kohm resistor
+- 200 V/uS: `SLEW` connected to `AVDD` (default)
+
+References:
+
+- [MCT8316Z datasheet](https://www.ti.com/lit/ds/symlink/mct8316z.pdf)
+
+### Commutation mode (`MODE`)
+
+The commutation mode configures the switching behavior of the motor driver.  Testing so far hasn't shown any reason to change the default.
+
+The `MODE` pads set the MCT8316Z commutation mode.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
+
+Settings:
+
+- Type 2: `MODE` tied to `AGND` via 22 Kohm resistor
+  - digital hall input
+  - asynchronous modulation
+  - ASR & AAR disabled
+- Type 4: Hi-Z
+  - digital hall input
+  - synchronous modulation
+  - ASR & AAR disabled
+- Type 7: `MODE` tied to `AVDD` (default)
+  - digital hall input
+  - synchronous modulation
+  - ASR & AAR enabled
+
+References:
+
+- [MCT8316Z datasheet](https://www.ti.com/lit/ds/symlink/mct8316z.pdf)
+
+## Cover motor configuration
+
+### Current limit (`IPROPI`)
+
+The cover motor current limit lets Minuet detect when the motor has reached the end of its travel when opening or closing the cover.  It must be set high enough to allow the motor to overcome the torque demands of the cover mechanism and low enough to reliably detect stall at end of travel.
+
+If your cover does not open or close fully, try raising the cover motor current limit a little bit.
+
+The `IPROPI` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor denoted here as `RV`.
+
+Formulas for current limit with `RF` = 18.2 Kohm:
+
+- Itrip = 1000 * 3.3 V / RV
+- RV = 1000 * 3.3 V / Itrip
+
+Recommended default: RV = 2.80 Kohms, Itrip = 1.18 A
+
+Measure the resistance between the test points adjacent to the `IPROPI` label to confirm your desired setpoint.
+
+## Accessories
+
+Refer to the schematics for the pinout of the `EXPANSION` and `QWIIC` ports.
+
 ## Errata
 
+Corrected from v2.0 to v2.1:
+
+- The `BOOT` and `RESET` buttons were hard to press.  Moved them closer to the board edge.
+- The 6P6C jack for the 4 key remote was wired backwards.  Noted in the schematic that the rows are also used to detect key presses when undriven (tristate).
+- The TCA9555 SCL and SDA pins were wired backwards.  The symbol for the very similar TCA9554 used in v1 lists the pins in the opposite order.  Caveat lector!
+- Set the default lead angle to 0° after performing measurements to confirm that this setting is much more power efficient.
+- The [MCT8315Z](https://www.ti.com/lit/ds/symlink/mct8315z.pdf) 4 A motor driver previously used in v2.0 got quite hot in operation so decided to replace it with the [MCT8316Z](https://www.ti.com/lit/ds/symlink/mct8316z.pdf) 8 A motor driver that has a lower RDSon and a larger surface area for heat dissipation.
+- Swapped the X7R MLCC capacitors for X5R because they are smaller, cheaper, and Minuet won't be operated over 85 °C anyhow, adjusted capacitor voltage ratings to be more in line with what's needed.
+- Increased the fan driver 10 uF capacitor to 22 uF to reduce voltage ripple near the motor driver.
+- Replaced the aluminum electrolytic bulk capacitor with an aluminum polymer capacitor to improve resilience and reduce ESR.
+- Widened the 4 A traces from 1.8 mm to 2.2 mm to reduce impedance because there was room to do so although these traces won't be pulling anywhere near that current continuously.
+- Used via stitching to join large traces instead of one big via as new calculations with more accurate PCB plating thickness information showed a higher impedance than anticipated.
+- Started optimizing the design for production by adding LCSC part numbers and substituting some components for more readily available parts.
+- Replaced the [TPSM861253](https://www.ti.com/lit/ds/symlink/tpsm861253.pdf) buck converter with [TPS561201](https://www.ti.com/lit/ds/symlink/tps561201.pdf) which is cheaper, much more efficient at low load, and more readily available although it requires more auxiliary components than the previous module, [TPS561243](https://www.ti.com/lit/ds/symlink/tps561243.pdf) is newer and would be smaller and more efficient because it operates at higher frequencies but it isn't available on LCSC at this time.
+
 Nothing yet...
-
-## References
-
-[Remote control IR protocol](https://github.com/skypeachblue/maxxfan-reversing)

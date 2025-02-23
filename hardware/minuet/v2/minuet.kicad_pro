@@ -38,8 +38,8 @@
         "other_text_upright": false,
         "pads": {
           "drill": 0.0,
-          "height": 4.7,
-          "width": 2.7
+          "height": 2.45,
+          "width": 2.45
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -59,20 +59,19 @@
         }
       ],
       "drc_exclusions": [
-        "clearance|76706985|72853545|ecb60b78-b574-45fc-a8f8-52fd24a60f58|2f462b5a-3ab0-4c30-911c-45b508fdf77e",
-        "clearance|77727199|71833331|ea651108-b66a-4d8a-94d3-0c0663824267|fd965ed3-efc9-4cfd-bb16-5d6d871a6f4d",
-        "footprint_type_mismatch|76164124|71290470|277a184c-a5ea-4ad2-bbd6-e62548f583f1|00000000-0000-0000-0000-000000000000",
         "hole_clearance|52450000|104995000|6acbe62e-cc7c-4d7e-ade9-403d5712d3e0|65dd6ed2-cd55-48d7-a34a-5d0476543eb5",
         "hole_clearance|52450000|104995000|6acbe62e-cc7c-4d7e-ade9-403d5712d3e0|c11c3109-4d6e-4128-bfa9-d0aec0444f60",
         "hole_clearance|58550000|104995000|694c8375-fe9e-4f67-850e-d4222f3586aa|80cd5445-47e1-4f63-871e-5c0c86c04fb3",
         "hole_clearance|58550000|104995000|694c8375-fe9e-4f67-850e-d4222f3586aa|c07b29c2-5b53-487e-b6e4-1f50bb60974f",
+        "lib_footprint_mismatch|52128679|80500000|57b43e58-74f2-4848-89e4-20d4ae1d0683|00000000-0000-0000-0000-000000000000",
+        "lib_footprint_mismatch|60763864|91753903|b192ce88-7dc6-4ee6-ad44-56ae7b287f85|00000000-0000-0000-0000-000000000000",
         "shorting_items|52950000|104145000|fff0b843-68eb-409c-a2cd-d5957618b7e3|5c161d11-97f2-4bb0-bd2d-3f5e6933fc97",
         "shorting_items|57750000|104145000|c5ebc38b-6cc2-4599-826b-fe658fe8715c|6a1a5b4b-822a-475d-8be6-fd64ef527554",
-        "silk_edge_clearance|42950378|84049622|018f9cf6-60bb-4d31-b8d3-5f422153c089|35de2ebb-4d59-4ffe-bb01-efd691031f10",
-        "silk_edge_clearance|55664214|71307613|018f9cf6-60bb-4d31-b8d3-5f422153c089|3d72deb0-0540-454a-8076-ce13d4e290ee",
-        "silk_edge_clearance|55678300|71321700|018f9cf6-60bb-4d31-b8d3-5f422153c089|14a6ea81-160a-4cc2-b9e2-557b39f51069",
+        "silk_edge_clearance|42950378|84049622|018f9cf6-60bb-4d31-b8d3-5f422153c089|9f437410-5396-4b81-8338-5a1d85e5955c",
+        "silk_edge_clearance|55664214|71307613|018f9cf6-60bb-4d31-b8d3-5f422153c089|0f0fcaa9-b1c7-4632-a169-d3a53e7b8432",
+        "silk_edge_clearance|55678300|71321700|018f9cf6-60bb-4d31-b8d3-5f422153c089|a4019d6c-ffb9-40a6-b11a-89d5a082e4a3",
         "silk_over_copper|42925625|93240693|b7c5dff9-4767-4579-b99c-5e52ed271ac9|00000000-0000-0000-0000-000000000000",
-        "silk_over_copper|44574375|90259307|d0845330-4414-4366-b00a-d15cd11b1482|00000000-0000-0000-0000-000000000000"
+        "silk_over_copper|45240693|90925625|d0845330-4414-4366-b00a-d15cd11b1482|00000000-0000-0000-0000-000000000000"
       ],
       "meta": {
         "version": 2
@@ -201,7 +200,7 @@
         0.5,
         0.6,
         1.0,
-        1.8
+        2.2
       ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
@@ -247,7 +246,7 @@
           "drill": 0.6
         },
         {
-          "diameter": 1.8,
+          "diameter": 2.2,
           "drill": 1.0
         }
       ],
@@ -568,8 +567,8 @@
         "name": "Power-4A",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgb(255, 168, 14)",
-        "track_width": 1.8,
-        "via_diameter": 1.8,
+        "track_width": 2.2,
+        "via_diameter": 2.2,
         "via_drill": 1.0,
         "wire_width": 18
       }
@@ -621,12 +620,16 @@
       "Net-(J401-Pin_1)": "3A",
       "Net-(J401-Pin_2)": "3A",
       "Net-(J401-Pin_3)": "3A",
+      "Net-(JP101-B)": "Power",
       "Net-(JP101-C)": "Power",
       "Net-(Q101-C)": "Power",
       "Net-(U301-CP)": "Power",
       "Net-(U301-CPH)": "Power",
       "Net-(U301-CPL)": "Power",
       "Net-(U301-SW_BK)": "Power",
+      "Net-(VR101-EN)": "Power",
+      "Net-(VR101-SW)": "Power",
+      "Net-(VR101-VBST)": "Power",
       "Net-(VR101-VIN)": "Power"
     },
     "netclass_patterns": [
@@ -889,6 +892,18 @@
           "group_by": false,
           "label": "Label",
           "name": "Label",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC",
+          "name": "LCSC",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "Alternative",
+          "name": "Alternative",
           "show": false
         }
       ],

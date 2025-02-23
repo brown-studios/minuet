@@ -1854,16 +1854,6 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 95.25) (xy 58.42 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "480f182d-5a30-40f3-ac0d-e64b0854da64")
-	)
-	(wire
-		(pts
 			(xy 152.4 72.39) (xy 160.02 72.39)
 		)
 		(stroke
@@ -1951,16 +1941,6 @@
 			(type default)
 		)
 		(uuid "69f6bf86-60cb-4a4c-a9f7-8b762ea83015")
-	)
-	(wire
-		(pts
-			(xy 48.26 95.25) (xy 50.8 95.25)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6d9d471f-3230-490f-96a4-062ac7b3cb67")
 	)
 	(wire
 		(pts
@@ -2266,7 +2246,7 @@
 		)
 		(uuid 9cfecd36-cc13-4e09-87b5-ab6f26c3f95b)
 	)
-	(text "Set overcurrent protection trip current\n  Itrip (A) = Vref (V) / Ripropi (Ω) * 1000\nGiven Vref = 3.3 V, Ripropi = 2.8 K, Itrip = 1.18 A\n\nMust be set high enough to allow the motor to overcome\nthe resistance of opening the cover and low enough to\nreliably detect stall at end of travel."
+	(text "Set overcurrent protection trip current\n  Itrip (A) = 1000 * Vref (V) / Ripropi (Ω)\nGiven Vref = 3.3 V, Ripropi = 2.8 K, Itrip = 1.18 A\n\nMust be set high enough to allow the motor to overcome\nthe torque demands of the cover mechanism and low\nenough to reliably detect stall at end of travel."
 		(exclude_from_sim no)
 		(at 194.31 109.22 0)
 		(effects
@@ -2367,16 +2347,6 @@
 		)
 		(uuid "8ae448d7-e04c-447a-b8e1-f8eb6d82df5f")
 	)
-	(label "VREF"
-		(at 109.22 102.87 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "9147bfc6-46bd-44b8-b211-e46e8f665dd3")
-	)
 	(label "VM"
 		(at 110.49 72.39 180)
 		(effects
@@ -2446,26 +2416,6 @@
 			(justify left bottom)
 		)
 		(uuid "de06eeee-aa6f-4d4a-990d-b92c46e80cdd")
-	)
-	(label "VREF"
-		(at 58.42 95.25 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "e0cb3c16-d96a-4fc5-a6ab-4c4971e09087")
-	)
-	(label "VREF"
-		(at 109.22 87.63 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "efb54d97-4a58-48b1-ac27-6626f49d9cbe")
 	)
 	(label "CPH"
 		(at 153.67 72.39 0)
@@ -2790,7 +2740,7 @@
 				(justify left)
 			)
 		)
-		(property "Rating" "25V, X7R"
+		(property "Rating" "25V, X5R"
 			(at 82.169 81.1064 0)
 			(effects
 				(font
@@ -2824,7 +2774,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3669e6f7-63dc-48f6-9a5c-fde9ff797940")
-		(property "Reference" "#PWR0407"
+		(property "Reference" "#PWR0408"
 			(at 161.29 115.57 0)
 			(effects
 				(font
@@ -2875,7 +2825,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0407")
+					(reference "#PWR0408")
 					(unit 1)
 				)
 			)
@@ -3031,7 +2981,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "45798315-332e-4b85-9e12-f380db4d320b")
-		(property "Reference" "#PWR0408"
+		(property "Reference" "#PWR0409"
 			(at 104.14 118.11 0)
 			(effects
 				(font
@@ -3082,7 +3032,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0408")
+					(reference "#PWR0409")
 					(unit 1)
 				)
 			)
@@ -3152,7 +3102,7 @@
 				(justify left)
 			)
 		)
-		(property "Rating" "25V, X7R"
+		(property "Rating" "25V, X5R"
 			(at 162.941 81.1064 0)
 			(effects
 				(font
@@ -3312,7 +3262,7 @@
 				(justify left)
 			)
 		)
-		(property "Rating" "16V, X7R"
+		(property "Rating" "16V, X5R"
 			(at 99.949 81.1064 0)
 			(effects
 				(font
@@ -3542,6 +3492,72 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+3.3V")
+		(at 109.22 102.87 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "8274fdf0-13b2-46b9-9624-fd3785cef942")
+		(property "Reference" "#PWR0406"
+			(at 113.03 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 105.918 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 109.22 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 109.22 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 109.22 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "1d2b0524-8a3e-4ff8-91d3-68729857f8ac")
+		)
+		(instances
+			(project "minuet"
+				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
+					(reference "#PWR0406")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:NetTie_2")
 		(at 53.34 72.39 0)
 		(unit 1)
@@ -3746,7 +3762,7 @@
 				(justify right)
 			)
 		)
-		(property "Rating" "25V, X7R"
+		(property "Rating" "25V, X5R"
 			(at 65.659 81.1064 0)
 			(effects
 				(font
@@ -3843,75 +3859,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:NetTie_2")
-		(at 53.34 95.25 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8b2e71fc-e809-4a59-a38e-a39ca25aed76")
-		(property "Reference" "NT402"
-			(at 53.34 93.5299 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "NetTie_2"
-			(at 53.34 93.5298 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Generic:NetTie-2_SMD_Pad0.2mm"
-			(at 53.34 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Net tie, 2 pins"
-			(at 53.34 95.25 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b7171ed4-1d66-414a-b3a9-30c1a2db93c7")
-		)
-		(pin "2"
-			(uuid "77bc7a6f-d2fc-489b-843e-4638490568f4")
-		)
-		(instances
-			(project ""
-				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "NT402")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 231.14 101.6 0)
 		(mirror y)
@@ -3988,7 +3935,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "96f6c26a-23bc-41c5-80cf-f67bdeb0dd6a")
-		(property "Reference" "#PWR0409"
+		(property "Reference" "#PWR0410"
 			(at 161.29 118.11 0)
 			(effects
 				(font
@@ -4039,7 +3986,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0409")
+					(reference "#PWR0410")
 					(unit 1)
 				)
 			)
@@ -4194,7 +4141,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9c78f7b4-2b7b-4842-8562-b57edf785bfb")
-		(property "Reference" "#PWR0406"
+		(property "Reference" "#PWR0407"
 			(at 161.29 113.03 0)
 			(effects
 				(font
@@ -4245,7 +4192,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/713a3115-7b9d-4f98-8679-6fd4cf9d6fa9"
-					(reference "#PWR0406")
+					(reference "#PWR0407")
 					(unit 1)
 				)
 			)
@@ -4405,7 +4352,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 48.26 95.25 90)
+		(at 109.22 87.63 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -4413,7 +4360,7 @@
 		(dnp no)
 		(uuid "a3d588da-d6cf-4bc6-9346-c8ed5adedce4")
 		(property "Reference" "#PWR0404"
-			(at 52.07 95.25 0)
+			(at 113.03 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4422,7 +4369,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 44.958 95.25 90)
+			(at 105.918 87.63 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4431,7 +4378,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 48.26 95.25 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4440,7 +4387,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 48.26 95.25 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4449,7 +4396,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 48.26 95.25 0)
+			(at 109.22 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4545,7 +4492,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "da9f9235-0fe0-45ad-ab68-2c4c1c1484c6")
 		(property "Reference" "U401"
 			(at 132.08 65.6275 0)
@@ -4555,7 +4501,7 @@
 				)
 			)
 		)
-		(property "Value" "DRV8876PWPR"
+		(property "Value" "DRV8876PWP"
 			(at 132.08 68.0518 0)
 			(effects
 				(font
@@ -4713,6 +4659,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C575551"
+			(at 132.08 95.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "17"
 			(uuid "0199108c-1ee4-4350-b8ff-a1b6d667be1b")
 		)
@@ -4845,6 +4800,15 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(property "LCSC" "C81260"
+			(at 231.14 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"
@@ -5016,6 +4980,15 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+		(property "LCSC" "C158012"
+			(at 165.1 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1"

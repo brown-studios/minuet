@@ -1999,7 +1999,7 @@
 				)
 			)
 		)
-		(symbol "EVQ-P7A01P:EVQ-P7A01P"
+		(symbol "EVQ-P7A01P:EVQ-P7J01P"
 			(pin_names
 				(offset 1.016)
 			)
@@ -2015,7 +2015,7 @@
 					(justify left bottom)
 				)
 			)
-			(property "Value" "EVQ-P7A01P"
+			(property "Value" "EVQ-P7J01P"
 				(at -2.54 -2.54 0)
 				(effects
 					(font
@@ -2034,7 +2034,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" ""
+			(property "Datasheet" "https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/245500"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2043,7 +2043,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" ""
+			(property "Description" "Tactile Switch SPST-NO Side Actuated Surface Mount, Right Angle"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2072,7 +2072,7 @@
 					(hide yes)
 				)
 			)
-			(property "Package" "None"
+			(property "MP" "EVQ-P7J01P"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2082,97 +2082,25 @@
 					(hide yes)
 				)
 			)
-			(property "Price" "None"
+			(property "Alternative" "EVQ-PJA01P"
 				(at 0 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify bottom)
 					(hide yes)
 				)
 			)
-			(property "Check_prices" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=eda"
+			(property "LCSC" "C2828254"
 				(at 0 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify bottom)
 					(hide yes)
 				)
 			)
-			(property "STANDARD" "Manufacturer Recommendations"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "PARTREV" "2022.4"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "SnapEDA_Link" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=snap"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "MP" "EVQ-P7A01P"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Description_1" "\n                        \n                            Tactile Switch SPST-NO Side Actuated Surface Mount, Right Angle\n                        \n"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "Availability" "In Stock"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(property "MANUFACTURER" "Panasonic Electronic Components"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(justify bottom)
-					(hide yes)
-				)
-			)
-			(symbol "EVQ-P7A01P_0_0"
+			(symbol "EVQ-P7J01P_0_0"
 				(polyline
 					(pts
 						(xy -2.54 0) (xy -5.08 0)
@@ -4728,7 +4656,7 @@
 	)
 	(rectangle
 		(start 207.01 13.97)
-		(end 283.21 82.55)
+		(end 283.21 78.74)
 		(stroke
 			(width 0)
 			(type default)
@@ -4739,7 +4667,7 @@
 		(uuid c98e80b7-014f-4d36-a5dc-c0e0add03ff2)
 	)
 	(rectangle
-		(start 207.01 85.09)
+		(start 207.01 81.28)
 		(end 283.21 113.03)
 		(stroke
 			(width 0)
@@ -4835,7 +4763,7 @@
 	)
 	(text "QWIIC INTERFACE"
 		(exclude_from_sim no)
-		(at 208.28 87.63 0)
+		(at 208.28 83.82 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4846,9 +4774,9 @@
 		)
 		(uuid "f042b14d-a68a-4db1-af8c-cebbb95d9568")
 	)
-	(text "Host has pull-ups so accessories don't need their own"
+	(text "A great place to plug in off-the-shelf accessories\n- Host has pull-ups so accessories don't need their own\n- 3.3 V supply is regulated, 600 mA current available"
 		(exclude_from_sim no)
-		(at 208.28 90.17 0)
+		(at 208.28 86.36 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4934,7 +4862,7 @@
 			)
 		)
 	)
-	(global_label "SCL"
+	(global_label "SDA"
 		(shape input)
 		(at 143.51 54.61 180)
 		(fields_autoplaced yes)
@@ -4946,7 +4874,7 @@
 		)
 		(uuid "0730dbb1-e8f1-4cca-830f-675e2b1faeaa")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 137.0172 54.61 0)
+			(at 136.9567 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5198,7 +5126,7 @@
 			)
 		)
 	)
-	(global_label "SDA"
+	(global_label "SCL"
 		(shape input)
 		(at 143.51 57.15 180)
 		(fields_autoplaced yes)
@@ -5210,7 +5138,7 @@
 		)
 		(uuid "407486b4-bd08-4dbd-8245-b0cc0cdce43d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 136.9567 57.15 0)
+			(at 137.0172 57.15 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5921,7 +5849,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "ESP32-C3-WROOM-02"
+		(property "Value" "ESP32-C3-WROOM-02-N4"
 			(at 65.6941 58.0968 0)
 			(effects
 				(font
@@ -6021,6 +5949,15 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
+			(at 63.5 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2934560"
 			(at 63.5 80.01 0)
 			(effects
 				(font
@@ -6249,6 +6186,15 @@
 				(justify left)
 			)
 		)
+		(property "LCSC" "C41431904"
+			(at 247.65 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0e03f6f1-aa62-4abc-82fc-b85ade220697")
 		)
@@ -6358,7 +6304,7 @@
 				)
 			)
 		)
-		(property "Value" "DF3A5.6LFU"
+		(property "Value" "PESD3V3S2UT"
 			(at 261.62 57.15 0)
 			(effects
 				(font
@@ -6366,7 +6312,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-323_SC-70"
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 262.89 49.53 0)
 			(effects
 				(font
@@ -6375,7 +6321,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://toshiba.semicon-storage.com/info/DF3A5.6LFU_datasheet_en_20140301.pdf?did=22241&prodName=DF3A5.6LFU"
+		(property "Datasheet" "https://assets.nexperia.com/documents/data-sheet/PESD3V3S2UT.pdf"
 			(at 262.89 49.53 0)
 			(effects
 				(font
@@ -6385,6 +6331,15 @@
 			)
 		)
 		(property "Description" "Dual Zener diode, common anode on pin 3"
+			(at 261.62 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C84276"
 			(at 261.62 49.53 0)
 			(effects
 				(font
@@ -6611,7 +6566,7 @@
 		)
 	)
 	(symbol
-		(lib_id "EVQ-P7A01P:EVQ-P7A01P")
+		(lib_id "EVQ-P7A01P:EVQ-P7J01P")
 		(at 46.99 133.35 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6629,7 +6584,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "EVQ-P7A01P"
+		(property "Value" "EVQ-P7J01P"
 			(at 45.9486 133.35 90)
 			(effects
 				(font
@@ -6648,7 +6603,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/245500"
 			(at 46.99 133.35 0)
 			(effects
 				(font
@@ -6686,175 +6641,13 @@
 				(hide yes)
 			)
 		)
-		(property "Package" "None"
+		(property "MP" "EVQ-P7J01P"
 			(at 46.99 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Price" "None"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=eda"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "STANDARD" "Manufacturer Recommendations"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "PARTREV" "2022.4"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=snap"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MP" "EVQ-P7A01P"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "\n                        \n                            Tactile Switch SPST-NO Side Actuated Surface Mount, Right Angle\n                        \n"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MANUFACTURER" "Panasonic Electronic Components"
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Arrow Part Number" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Arrow Price/Stock" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Hold Current" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" ""
-			(at 46.99 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
 				(hide yes)
 			)
 		)
@@ -6865,6 +6658,24 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(property "Alternative" "EVQ-PJA01P"
+			(at 46.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2828254"
+			(at 46.99 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1_1"
@@ -7235,7 +7046,7 @@
 		)
 	)
 	(symbol
-		(lib_id "EVQ-P7A01P:EVQ-P7A01P")
+		(lib_id "EVQ-P7A01P:EVQ-P7J01P")
 		(at 91.44 133.35 270)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7253,7 +7064,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "EVQ-P7A01P"
+		(property "Value" "EVQ-P7J01P"
 			(at 90.3986 133.35 90)
 			(effects
 				(font
@@ -7272,7 +7083,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://api.pim.na.industrial.panasonic.com/file_stream/main/fileversion/245500"
 			(at 91.44 133.35 0)
 			(effects
 				(font
@@ -7310,175 +7121,13 @@
 				(hide yes)
 			)
 		)
-		(property "Package" "None"
+		(property "MP" "EVQ-P7J01P"
 			(at 91.44 133.35 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Price" "None"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=eda"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "STANDARD" "Manufacturer Recommendations"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "PARTREV" "2022.4"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/EVQ-P7A01P/Panasonic+Electronic+Components/view-part/?ref=snap"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MP" "EVQ-P7A01P"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "\n                        \n                            Tactile Switch SPST-NO Side Actuated Surface Mount, Right Angle\n                        \n"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "MANUFACTURER" "Panasonic Electronic Components"
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Arrow Part Number" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Arrow Price/Stock" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Height" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Hold Current" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Part_Number" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Price/Stock" ""
-			(at 91.44 133.35 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
 				(hide yes)
 			)
 		)
@@ -7489,6 +7138,24 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+			)
+		)
+		(property "Alternative" "EVQ-P7A01P"
+			(at 91.44 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2828254"
+			(at 91.44 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
 			)
 		)
 		(pin "1_2"
@@ -7679,7 +7346,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TCA9555RTWR"
+		(property "Value" "TCA9555RTW"
 			(at 168.5641 50.3498 0)
 			(effects
 				(font
@@ -7707,6 +7374,15 @@
 			)
 		)
 		(property "Description" "16-bit I/O expander, I2C and SMBus interface, interrupts, w/ pull-ups, QFN-24"
+			(at 166.37 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C140277"
 			(at 166.37 74.93 0)
 			(effects
 				(font
@@ -7895,7 +7571,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 42.8752 38.1 0)
 			(effects
 				(font
@@ -7931,7 +7607,7 @@
 				(justify right)
 			)
 		)
-		(property "Rating" "10V, X7R"
+		(property "Rating" "6.3V, X5R"
 			(at 38.989 45.5464 0)
 			(effects
 				(font
@@ -8162,7 +7838,7 @@
 				(justify right)
 			)
 		)
-		(property "Rating" "10V, X7R"
+		(property "Rating" "6.3V, X5R"
 			(at 54.229 45.5464 0)
 			(effects
 				(font
@@ -8453,6 +8129,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C2654032"
+			(at 100.33 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "9"
 			(uuid "119684c3-b547-4d3d-b83a-786f750e279a")
 		)
@@ -8694,7 +8379,7 @@
 				(justify left)
 			)
 		)
-		(property "Rating" "10V, X7R"
+		(property "Rating" "6.3V, X5R"
 			(at 157.099 40.4664 0)
 			(effects
 				(font
@@ -8855,7 +8540,7 @@
 				(justify right)
 			)
 		)
-		(property "Rating" "10V, X7R"
+		(property "Rating" "6.3V, X5R"
 			(at 57.531 136.9864 0)
 			(effects
 				(font
@@ -9082,7 +8767,7 @@
 				(justify right)
 			)
 		)
-		(property "Rating" "10V, X7R"
+		(property "Rating" "6.3V, X5R"
 			(at 101.981 136.9864 0)
 			(effects
 				(font
@@ -9289,6 +8974,24 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
+			(at 223.52 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2988369"
+			(at 223.52 46.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alternative" "GT-USB-7010ASV"
 			(at 223.52 46.99 0)
 			(effects
 				(font

@@ -2,7 +2,7 @@
 	(version 20231120)
 	(generator "kicad_symbol_editor")
 	(generator_version "8.0")
-	(symbol "MCT8315Z0HRRYR"
+	(symbol "MCT8316ZT"
 		(pin_names
 			(offset 1.016)
 		)
@@ -18,7 +18,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Value" "MCT8315Z0HRRYR"
+		(property "Value" "MCT8316ZT"
 			(at -12.7 -43.18 0)
 			(effects
 				(font
@@ -27,7 +27,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Footprint" "MCT8315Z:IC_MCT8315Z0HRRYR"
+		(property "Footprint" "MCT8316Z:MCT8316ZT"
 			(at 0 0 0)
 			(effects
 				(font
@@ -37,7 +37,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/mct8316z.pdf"
 			(at 0 0 0)
 			(effects
 				(font
@@ -95,16 +95,6 @@
 				(hide yes)
 			)
 		)
-		(property "Check_prices" "https://www.snapeda.com/parts/MCT8315Z0HRRYR/Texas+Instruments/view-part/?ref=eda"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
 		(property "STANDARD" "Manufacturer Recommendations"
 			(at 0 0 0)
 			(effects
@@ -125,7 +115,7 @@
 				(hide yes)
 			)
 		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/MCT8315Z0HRRYR/Texas+Instruments/view-part/?ref=snap"
+		(property "MP" "MCT8316Z0TRGFR"
 			(at 0 0 0)
 			(effects
 				(font
@@ -135,17 +125,7 @@
 				(hide yes)
 			)
 		)
-		(property "MP" "MCT8315Z0HRRYR"
-			(at 0 0 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Description_1" "\n                        \n                            40-V max, 4-A peak, sensored trapezoidal control 3-phase BLDC motor driver\n                        \n"
+		(property "Description_1" "40-V max, 8-A peak, sensored trapezoidal control 3-phase BLDC motor driver"
 			(at 0 0 0)
 			(effects
 				(font
@@ -175,7 +155,7 @@
 				(hide yes)
 			)
 		)
-		(symbol "MCT8315Z0HRRYR_0_0"
+		(symbol "MCT8316ZT_0_0"
 			(rectangle
 				(start -12.7 40.64)
 				(end 12.7 -40.64)
@@ -187,28 +167,10 @@
 					(type background)
 				)
 			)
-			(pin output line
-				(at -17.78 -35.56 0)
-				(length 5.08)
-				(name "FGOUT"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
 			(pin power_in line
-				(at 17.78 -35.56 180)
+				(at -17.78 38.1 0)
 				(length 5.08)
-				(name "PGND"
+				(name "VM"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -233,7 +195,7 @@
 						)
 					)
 				)
-				(number "14"
+				(number "12"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -241,53 +203,17 @@
 					)
 				)
 			)
-			(pin input line
-				(at -17.78 -20.32 0)
+			(pin power_in line
+				(at 17.78 -35.56 180)
 				(length 5.08)
-				(name "DRVOFF"
+				(name "PGND"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "15"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin output line
-				(at -17.78 -38.1 0)
-				(length 5.08)
-				(name "~{FAULT}"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "16"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -17.78 -17.78 0)
-				(length 5.08)
-				(name "~{SLEEP}"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "17"
+				(number "18"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -305,7 +231,7 @@
 						)
 					)
 				)
-				(number "18"
+				(number "2"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -314,16 +240,52 @@
 				)
 			)
 			(pin input line
-				(at 17.78 38.1 180)
+				(at -17.78 -20.32 0)
 				(length 5.08)
-				(name "FB_BK"
+				(name "DRVOFF"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "2"
+				(number "21"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin output line
+				(at -17.78 -38.1 0)
+				(length 5.08)
+				(name "~{FAULT}"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "22"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -17.78 -17.78 0)
+				(length 5.08)
+				(name "~{SLEEP}"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "23"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -341,7 +303,7 @@
 						)
 					)
 				)
-				(number "20"
+				(number "27"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -359,7 +321,7 @@
 						)
 					)
 				)
-				(number "21"
+				(number "28"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -377,7 +339,25 @@
 						)
 					)
 				)
-				(number "22"
+				(number "29"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 17.78 38.1 180)
+				(length 5.08)
+				(name "FB_BK"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "3"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -395,7 +375,7 @@
 						)
 					)
 				)
-				(number "23"
+				(number "30"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -413,7 +393,7 @@
 						)
 					)
 				)
-				(number "24"
+				(number "31"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -431,7 +411,7 @@
 						)
 					)
 				)
-				(number "25"
+				(number "32"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -449,7 +429,7 @@
 						)
 					)
 				)
-				(number "26"
+				(number "33"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -467,7 +447,7 @@
 						)
 					)
 				)
-				(number "27"
+				(number "34"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -485,7 +465,7 @@
 						)
 					)
 				)
-				(number "28"
+				(number "35"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -503,25 +483,7 @@
 						)
 					)
 				)
-				(number "29"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 25.4 180)
-				(length 5.08)
-				(name "GND_BK"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "3"
+				(number "36"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -539,7 +501,7 @@
 						)
 					)
 				)
-				(number "30"
+				(number "37"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -557,7 +519,7 @@
 						)
 					)
 				)
-				(number "31"
+				(number "38"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -575,242 +537,6 @@
 						)
 					)
 				)
-				(number "32"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "33"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -17.78 38.1 0)
-				(length 5.08)
-				(name "VM"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "8"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -17.78 38.1 0)
-				(length 5.08)
-				(name "VM"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "9"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-		)
-		(symbol "MCT8315Z0HRRYR_1_0"
-			(pin power_out line
-				(at 17.78 12.7 180)
-				(length 5.08)
-				(name "OUTA"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "11"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 17.78 10.16 180)
-				(length 5.08)
-				(name "OUTB"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "12"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 17.78 7.62 180)
-				(length 5.08)
-				(name "OUTC"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "13"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at -17.78 12.7 0)
-				(length 5.08)
-				(name "AVDD"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "19"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "34"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "35"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "36"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "37"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "38"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
-				(length 5.08)
-				(name "EP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
 				(number "39"
 					(effects
 						(font
@@ -819,10 +545,10 @@
 					)
 				)
 			)
-			(pin power_out line
-				(at 17.78 35.56 180)
+			(pin power_in line
+				(at 17.78 25.4 180)
 				(length 5.08)
-				(name "SW_BK"
+				(name "GND_BK"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -837,10 +563,10 @@
 					)
 				)
 			)
-			(pin power_in line
-				(at 17.78 -38.1 180)
+			(pin output line
+				(at -17.78 -35.56 0)
 				(length 5.08)
-				(name "EP"
+				(name "FGOUT"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -874,16 +600,36 @@
 				)
 			)
 			(pin power_in line
-				(at 17.78 -38.1 180)
+				(at -17.78 38.1 0)
 				(length 5.08)
-				(name "EP"
+				(name "VM"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "42"
+				(number "9"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+		)
+		(symbol "MCT8316ZT_1_0"
+			(pin no_connect line
+				(at 17.78 -33.02 180)
+				(length 5.08)
+				(name "NC"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "1"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -892,16 +638,52 @@
 				)
 			)
 			(pin power_in line
-				(at 17.78 -38.1 180)
+				(at -17.78 38.1 0)
 				(length 5.08)
-				(name "EP"
+				(name "VM"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "43"
+				(number "11"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 12.7 180)
+				(length 5.08)
+				(name "OUTA"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 12.7 180)
+				(length 5.08)
+				(name "OUTA"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "14"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -910,16 +692,160 @@
 				)
 			)
 			(pin power_in line
-				(at 17.78 -38.1 180)
+				(at 17.78 -35.56 180)
 				(length 5.08)
-				(name "EP"
+				(name "PGND"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "44"
+				(number "15"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 10.16 180)
+				(length 5.08)
+				(name "OUTB"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "16"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 10.16 180)
+				(length 5.08)
+				(name "OUTB"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 7.62 180)
+				(length 5.08)
+				(name "OUTC"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "19"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 7.62 180)
+				(length 5.08)
+				(name "OUTC"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "20"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at 17.78 22.86 180)
+				(length 5.08)
+				(name "VSEL_BK"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "24"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at -17.78 12.7 0)
+				(length 5.08)
+				(name "AVDD"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "25"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at -17.78 2.54 0)
+				(length 5.08)
+				(name "AGND"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "26"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 17.78 35.56 180)
+				(length 5.08)
+				(name "SW_BK"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "5"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -937,7 +863,7 @@
 						)
 					)
 				)
-				(number "5"
+				(number "6"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -955,7 +881,7 @@
 						)
 					)
 				)
-				(number "6"
+				(number "7"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -973,7 +899,7 @@
 						)
 					)
 				)
-				(number "7"
+				(number "8"
 					(effects
 						(font
 							(size 1.016 1.016)

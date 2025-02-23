@@ -1252,8 +1252,8 @@
 		)
 	)
 	(no_connect
-		(at 194.31 119.38)
-		(uuid "7eecee02-27e8-4973-9e65-457d0c002de2")
+		(at 194.31 132.08)
+		(uuid "4317befd-cfb5-4266-a371-1a7afbd4fd3c")
 	)
 	(wire
 		(pts
@@ -1307,7 +1307,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 124.46) (xy 191.77 124.46)
+			(xy 194.31 127) (xy 191.77 127)
 		)
 		(stroke
 			(width 0)
@@ -1357,7 +1357,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 129.54) (xy 190.5 129.54)
+			(xy 194.31 121.92) (xy 190.5 121.92)
 		)
 		(stroke
 			(width 0)
@@ -1377,7 +1377,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 132.08) (xy 191.77 132.08)
+			(xy 194.31 119.38) (xy 191.77 119.38)
 		)
 		(stroke
 			(width 0)
@@ -1407,7 +1407,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 127) (xy 190.5 127)
+			(xy 194.31 124.46) (xy 190.5 124.46)
 		)
 		(stroke
 			(width 0)
@@ -1427,7 +1427,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 121.92) (xy 190.5 121.92)
+			(xy 194.31 129.54) (xy 190.5 129.54)
 		)
 		(stroke
 			(width 0)
@@ -1466,7 +1466,7 @@
 		(uuid "fba81c12-a9d0-45f1-bc4c-0bdac2fe0b41")
 	)
 	(rectangle
-		(start 93.98 59.69)
+		(start 93.98 54.61)
 		(end 220.98 140.97)
 		(stroke
 			(width 0)
@@ -1477,9 +1477,9 @@
 		)
 		(uuid 9772b961-c9f0-41bd-98fc-aebd39f681ff)
 	)
-	(text "Compatible with original equipment\n\nKey matrix\n- R1+C1: Off\n- R1+C2: Speed Up\n- R1+C3: Speed Down\n- R1+C2+C3: Open/Close Vent\n- R1+C4: Rain Sensor (model 4500K only)\n- R2+C1: On and Speed Cycle\n- R2+C2: On/Off\n- R2+C3: In/Out Direction\n- R2+C4: Auto\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red (model 4500K only)\n\nKEY_Cx inputs need pull-ups\nDetect key press when KEY_Cx go low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
+	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close cover\n- R2+GND: Open cover\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close cover\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
 		(exclude_from_sim no)
-		(at 95.25 64.77 0)
+		(at 95.25 59.69 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1490,7 +1490,7 @@
 	)
 	(text "KEYPAD AND WIRED WALL CONTROL INTERFACE"
 		(exclude_from_sim no)
-		(at 95.25 62.23 0)
+		(at 95.25 57.15 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1613,7 +1613,7 @@
 	)
 	(hierarchical_label "KEY_R2"
 		(shape input)
-		(at 190.5 127 180)
+		(at 190.5 124.46 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1624,7 +1624,7 @@
 	)
 	(hierarchical_label "KEY_C1"
 		(shape output)
-		(at 190.5 121.92 180)
+		(at 190.5 129.54 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1668,7 +1668,7 @@
 	)
 	(hierarchical_label "KEY_R1"
 		(shape input)
-		(at 190.5 129.54 180)
+		(at 190.5 121.92 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1698,7 +1698,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "28bff695-09e8-4546-8a24-1416dae0fdda")
-		(property "Reference" "#PWR0501"
+		(property "Reference" "#PWR0502"
 			(at 116.84 121.92 0)
 			(effects
 				(font
@@ -1749,7 +1749,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0501")
+					(reference "#PWR0502")
 					(unit 1)
 				)
 			)
@@ -1871,6 +1871,15 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
+			(at 204.47 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C5785037"
 			(at 204.47 124.46 0)
 			(effects
 				(font
@@ -2030,6 +2039,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC" "C6105889"
+			(at 160.02 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2eae87d5-22d4-47df-bf95-69aced07a550")
 		)
@@ -2073,7 +2091,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f7d92af-f2cb-4b70-92f1-b0a52a24a1a9")
-		(property "Reference" "#PWR0502"
+		(property "Reference" "#PWR0503"
 			(at 151.13 121.92 0)
 			(effects
 				(font
@@ -2124,7 +2142,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0502")
+					(reference "#PWR0503")
 					(unit 1)
 				)
 			)
@@ -2132,7 +2150,8 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 191.77 124.46 270)
+		(at 191.77 127 270)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2140,8 +2159,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "969a0f0d-d51e-4be5-a832-f4b00329bb34")
-		(property "Reference" "#PWR0503"
-			(at 185.42 124.46 0)
+		(property "Reference" "#PWR0504"
+			(at 185.42 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2150,7 +2169,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 188.595 124.46 90)
+			(at 188.595 127 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2159,7 +2178,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 191.77 124.46 0)
+			(at 191.77 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2168,7 +2187,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 124.46 0)
+			(at 191.77 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2177,7 +2196,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 191.77 124.46 0)
+			(at 191.77 127 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2191,7 +2210,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0503")
+					(reference "#PWR0504")
 					(unit 1)
 				)
 			)
@@ -2199,7 +2218,8 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 191.77 132.08 90)
+		(at 191.77 119.38 90)
+		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -2207,8 +2227,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "afd497da-0844-4621-9d6c-11cac217b9c2")
-		(property "Reference" "#PWR0504"
-			(at 195.58 132.08 0)
+		(property "Reference" "#PWR0501"
+			(at 195.58 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2217,7 +2237,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 188.595 132.08 90)
+			(at 188.595 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2226,7 +2246,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 191.77 132.08 0)
+			(at 191.77 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2235,7 +2255,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 132.08 0)
+			(at 191.77 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2244,7 +2264,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 191.77 132.08 0)
+			(at 191.77 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2258,7 +2278,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0504")
+					(reference "#PWR0501")
 					(unit 1)
 				)
 			)
@@ -2381,6 +2401,15 @@
 			)
 		)
 		(property "Mouser Price/Stock" ""
+			(at 120.65 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C3345591"
 			(at 120.65 124.46 0)
 			(effects
 				(font
