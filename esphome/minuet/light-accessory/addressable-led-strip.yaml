@@ -42,4 +42,4 @@ minuet_light:
       effects:
         - addressable_twinkle:
         - addressable_rainbow:
-        - addressable_flicker:
+        - addressable_fireworks:
