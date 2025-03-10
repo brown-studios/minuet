@@ -134,6 +134,17 @@ minuet_fan_motor_driver:
         then:
           - lambda: |-
               id(minuet_fan_motor_duty_cycle).update_frequency(x);
+  select:
+    - id: minuet_fan_motor_type
+      platform: template
+      name: "Fan Motor Type"
+      entity_category: config
+      disabled_by_default: true
+      optimistic: true
+      restore_value: true
+      options:
+        - "Brushless (3 phase)"
+        - "Brushed (1 phase)"
 
 # Vent cover motor driver
 minuet_cover_motor_driver:
@@ -1043,6 +1054,10 @@ minuet_fan_controller:
       type: bool
       restore_value: false
       initial_value: "false"
+    - id: minuet_fan_brushed_motor_last_pulse
+      type: uint32_t
+      restore_value: false
+      initial_value: "false"
   fan:
     - id: minuet_fan
       name: "Vent Fan"
@@ -1096,19 +1111,36 @@ minuet_fan_controller:
             if (target_duty_cycle != 0.f || last_duty_cycle != 0.f) {
               ESP_LOGD("minuet", "Fan stalled, disabling the motor for safety");
               id(minuet_fan_motor_duty_cycle).turn_off();
-              id(minuet_fan_motor_sleep).turn_on();
               id(minuet_fan)->turn_off().perform();
               last_duty_cycle = 0.f;
               target_duty_cycle = 0.f;
             }
-          } else if (target_duty_cycle != last_duty_cycle) {
+          } else if (fabs(target_duty_cycle - last_duty_cycle) > 0.001f) {
             // Ramp the duty cycle linearly over time up to the desired target.
             constexpr float MAX_RAMP_PER_INTERVAL = 0.01f;
             last_duty_cycle += clamp(target_duty_cycle - last_duty_cycle, -MAX_RAMP_PER_INTERVAL, MAX_RAMP_PER_INTERVAL);
             id(minuet_fan_motor_forward).set_state(last_duty_cycle >= 0.f);
             id(minuet_fan_motor_duty_cycle).set_level(fabs(last_duty_cycle));
           }
-          id(minuet_fan_motor_sleep).set_state(last_duty_cycle == 0.f && target_duty_cycle == 0.f);
+          if (last_duty_cycle == 0.f && target_duty_cycle == 0.f) {
+            id(minuet_fan_motor_sleep).turn_on();
+          } else {
+            if (id(minuet_fan_motor_type).active_index() == 1) {
+              // When operating a brushed motor, occasionally pulse the sleep pin to reset the
+              // motor lock timeout and prevent the motor driver from stopping the motor because
+              // it doesn't observe any change in the hall sensors.  This is fine for experiments
+              // but each pulse makes the motor generate a slight tick as it skips commutation.
+              // A better solution would be to use the SPI variant of the MCT8316Z and to program
+              // it to disable the motor lock timeout.
+              uint32_t now = millis();
+              auto& last_pulse = id(minuet_fan_brushed_motor_last_pulse);
+              if (now - last_pulse > 500) {
+                id(minuet_fan_motor_sleep).turn_on();
+                last_pulse = now;
+              }
+            }
+            id(minuet_fan_motor_sleep).turn_off();
+          }
   script:
     - id: minuet_fan_set
       parameters:
