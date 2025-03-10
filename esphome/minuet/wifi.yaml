@@ -1,0 +1,33 @@
+# MINUET WIFI-SWITCH PACKAGE
+#
+# ESPHome package to control whether wifi is enabled or disabled.
+# Assumes that the wifi component exists and has the id 'minuet_wifi'.
+#
+# Include the contents of this file into your device configuration YAML
+# file as a package like this (recommended):
+#
+# packages:
+#   <<: !include minuet/wifi.yaml
+minuet_wifi:
+  switch:
+    - id: minuet_wifi_switch
+      name: "WiFi Enable"
+      icon: mdi:wifi
+      platform: template
+      optimistic: true
+      restore_mode: RESTORE_DEFAULT_ON
+      entity_category: config
+      disabled_by_default: true
+      on_turn_on:
+        then:
+          - wifi.enable:
+      on_turn_off:
+        then:
+          - wifi.disable:
+  esphome:
+    on_boot:
+      - priority: 500
+        then:
+        - lambda: |-
+            id(minuet_keypad_wifi_switch) = id(minuet_wifi_switch);
+            id(minuet_wifi).set_enable_on_boot(id(minuet_wifi_switch).state);
