@@ -19,6 +19,8 @@
 #       is_wrgb: true
 #       is_rgbw: false
 minuet_light:
+  # Shutdown behavior: The power_supply component automatically turns the light off
+  # before ESPHome restarts.
   power_supply:
     - id: minuet_light_power
       pin:

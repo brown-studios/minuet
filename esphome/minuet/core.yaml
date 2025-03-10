@@ -1462,12 +1462,22 @@ minuet_boot_restore:
     on_boot:
       - priority: 500
         then:
-        - lambda: |-
-            const auto& behavior = id(minuet_power_on_behavior).active_index();
-            if (behavior == 0 || !behavior.has_value()) {
-              id(minuet_fan_manual_state).make_call().set_state(false).perform();
-              id(minuet_cover_manual_state).make_call().set_command_close().perform();
-              id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
-              id(minuet_thermostat_reset_override).execute();
-            }
-            id(minuet_restore_manual_state).execute(/*force*/ true);
+          - lambda: |-
+              const auto& behavior = id(minuet_power_on_behavior).active_index();
+              if (behavior == 0 || !behavior.has_value()) {
+                id(minuet_fan_manual_state).make_call().set_state(false).perform();
+                id(minuet_cover_manual_state).make_call().set_command_close().perform();
+                id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
+                id(minuet_thermostat_reset_override).execute();
+              }
+              id(minuet_restore_manual_state).execute(/*force*/ true);
+
+# Shutdown behavior: Turn off the motors before ESPHome restarts, just in case.
+minuet_shutdown:
+  esphome:
+    on_shutdown:
+      - priority: 500
+        then:
+          - lambda: |-
+              id(minuet_fan_motor_sleep).turn_on();
+              id(minuet_cover_motor_sleep).turn_on();

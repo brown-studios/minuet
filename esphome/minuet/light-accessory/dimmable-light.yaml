@@ -28,3 +28,10 @@ minuet_light:
       platform: monochromatic
       output: minuet_light_pwm
       restore_mode: ALWAYS_OFF
+  # Shutdown behavior: Turn off the light before ESPHome restarts.
+  esphome:
+    on_shutdown:
+      - priority: 500
+        then:
+          - lambda: |-
+              id(minuet_light_pwm).turn_off();
