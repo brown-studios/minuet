@@ -6,8 +6,8 @@
 	(paper "A4")
 	(title_block
 		(title "Minuet Fan Controller")
-		(date "2025-02")
-		(rev "2.1")
+		(date "2025-03")
+		(rev "2.2")
 		(company "Brown Studios LLC")
 	)
 	(lib_symbols

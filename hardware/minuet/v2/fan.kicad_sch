@@ -3515,7 +3515,7 @@
 	)
 	(rectangle
 		(start 182.88 13.97)
-		(end 267.97 110.49)
+		(end 267.97 123.19)
 		(stroke
 			(width 0)
 			(type default)
@@ -3601,7 +3601,7 @@
 		)
 		(uuid "43336dc6-10e1-4eac-864b-b58f15b8d28a")
 	)
-	(text "Increasing resistance of the setpoint increases the current limit\nSpecified to a maximum of 4 A"
+	(text "Increasing resistance of the setpoint increases the current limit\nSpecified to a maximum of 5 A (default of 4 A)"
 		(exclude_from_sim no)
 		(at 184.15 19.05 0)
 		(effects
@@ -3645,7 +3645,7 @@
 		)
 		(uuid "df8091d3-abb0-407e-8f7a-add3735b572a")
 	)
-	(text "Current limit setting for sum of all phases\n- Assume CSA_GAIN = 0.15 V/A, V(AVDD) = 3.3 V\n- Calculate Ilim\n    Ilim = V(AVDD) * (0.5 - RF / (2 * RF + RV)) / CSA_GAIN * 3\n    Ilim = 66 A * (0.5 - RF / (2 * RF + RV))\n- Choose RF so that Ilim_max = 4 A with RV_max = 5 K\n    RF = 18.2 Kohm\n- Calculate RV for given Ilim\n    RV = RF * (1 / (0.5 - Ilim / 66 A) - 2)\n\nApproximate setpoints rounded to nearest E96 series value\n- Ilim = 0 A (disabled) => RV = 0 K\n- Ilim = 1 A => RV = 1.13 K\n- Ilim = 1.5 A => RV = 1.74 K\n- Ilim = 2 A => RV = 2.32 K\n- Ilim = 2.5 A => RV = 3.00 K\n- Ilim = 3 A => RV = 3.65 K (default)\n- Ilim = 3.5 A => RV = 4.32 K\n- Ilim = 4 A (maximum) => RV = 4.99 K\n"
+	(text "Current limit setting for sum of all phases\n- Assume CSA_GAIN = 0.15 V/A, V(AVDD) = 3.3 V\n- Calculate Ilim\n    Ilim = V(AVDD) * (0.5 - RF / (2 * RF + RV)) / CSA_GAIN * 3\n    Ilim = 66 A * (0.5 - RF / (2 * RF + RV))\n- Choose RF so that Ilim_max = 5 A with RV_max = 5 K\n   (allows tolerance for the default 4 A setting and a little extra beyond it)\n    RF = 14 Kohm\n- Calculate RV for given Ilim\n    RV = RF * (1 / (0.5 - Ilim / 66 A) - 2)\n\nApproximate setpoints rounded to nearest E96 series value\n- Ilim = 0 A => RV = 0 K (disabled)\n- Ilim = 1 A => RV = 0.887 K\n- Ilim = 1.5 A => RV = 1.33 K\n- Ilim = 2 A => RV = 1.82 K\n- Ilim = 2.5 A => RV = 2.32 K\n- Ilim = 3 A => RV = 2.80 K\n- Ilim = 3.5 A => RV = 3.32 K\n- Ilim = 4 A => RV = 3.83 K (default)\n- Ilim = 4.5 A => RV = 4.42 K\n- Ilim = 5 A => RV = 4.99 K (maximum)\n\nMeasurement at the bench shows average motor phase current about 75%\nof the value configured by ILIM at full duty cycle."
 		(exclude_from_sim no)
 		(at 187.96 69.85 0)
 		(effects
@@ -7021,7 +7021,7 @@
 				)
 			)
 		)
-		(property "Value" "18.2K"
+		(property "Value" "14K"
 			(at 203.2 29.1296 90)
 			(effects
 				(font
@@ -7377,7 +7377,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "18.2K"
+		(property "Value" "14K"
 			(at 240.538 53.34 0)
 			(effects
 				(font

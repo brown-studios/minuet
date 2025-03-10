@@ -1,4 +1,4 @@
-# Minuet hardware v2.1 (UNDER DEVELOPMENT)
+# Minuet hardware v2.2 (UNDER DEVELOPMENT)
 
 **Status: UNDER DEVELOPMENT**
 
@@ -101,29 +101,44 @@ And if you want to make the fan play a cheerful jingle any time it turns on then
 
 ### Current limit (`ILIM`)
 
-The fan motor current limit protects Minuet and the motor from overcurrent which could generate excess heat and damage them.  Set Minuet's current limit below the motor's maximum current per phase as specified in its datasheet.
+The fan motor current limit protects Minuet and the motor from overcurrent which could generate excess heat and damage them.  Set this value with care after consulting the motor's datasheet.
 
-Although the MCT8316Z supports a maximum of 8 A peak current to the motor windings, the Minuet board is specified to a maximum of 4 A.  The recommended default current limit is 3 A.
+The `ILIM` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor.  To set this value, measure the resistance across the variable resistor at the test point near `ILIM` and turn the potentiometer until you obtain the desired setpoint.
 
-The `ILIM` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor denoted here as `RV`.
+| Motor                       | Recommended limit | `ILIM` setpoint |
+| --------------------------- | ----------------- | --------------- |
+| StepperOnline 42BLR53-12-01 |               2 A |       1.82 Kohm |
+| StepperOnline 57BYA54-12-01 |               4 A |       3.83 Kohm |
 
-Formulas for current limit with `RF` = 18.2 Kohm:
+Determining an appropriate current limit can be a little tricky because it is bounded by several factors.
+
+- The motor's datasheet specifies a current limit per motor phase and an overall power limit, neither of which must be exceeded.
+- The MCT8316Z motor driver supports a maximum of 8 A peak current to the motor windings across all phases with built-in current limiting and overtemperature protection.  Internally the chip applies the current limit threshold to the sum of the current across all phases but at the workbench it's easier to measure the current of one motor phase at a time.  Tests show the current limit engages when the average current on one motor phase exceeds about 50-75% of the configured value.  Moreover, the chip appears to dissipate heat effectively through the PCB ground plane across the entire operating range.
+- The traces on the Minuet circuit board are sized to handle 4 A average current from the battery and to each motor phase without heating more than 10 °C.  There is a wide safety margin because the average current through the traces is much less than their peak current.
+- The wiring feeding Minuet is rated for 5 A, protected externally by a fuse, and protected internally by a 4 A polyfuse. The current drawn from the power supply is anywhere from 20-70% of what's circulating through one motor phase on average (more efficient at lower speeds) so even when a motor phase is drawing 3 A, the supply sees less than 2 A.  Circuit overload is unlikely.
+- Motor current scales quadratically with fan speed and the plastic fan blade can only handle so much.  At very high speeds the fan wobbles and makes unpleasant sounds so there's no point setting the motor current limit higher than the fan can handle.
+
+Formulas to calculate the current limit where `RV` is the value of the `ILIM` resistor in Kohms and `RF` = 14.0 Kohm:
 
 - Ilim = 66 A * (0.5 - RF / (2 * RF + RV))
 - RV = RF * (1 / (0.5 - Ilim / 66 A) - 2)
 
 Approximate setpoints rounded to nearest E96 series value:
 
-- Ilim = 0 A (disabled) => RV = 0 K
-- Ilim = 1 A => RV = 1.13 K
-- Ilim = 1.5 A => RV = 1.74 K
-- Ilim = 2 A => RV = 2.32 K
-- Ilim = 2.5 A => RV = 3.00 K
-- Ilim = 3 A => RV = 3.65 K (default)
-- Ilim = 3.5 A => RV = 4.32 K
-- Ilim = 4 A (maximum) => RV = 4.99 K
+|  Ilim |      RV | Notes                    |
+| ----- | ------- | ------------------------ |
+|   0 A |     0 K | Current limit disabled   |
+|   1 A | 0.887 K |                          |
+| 1.5 A |  1.33 K |                          |
+|   2 A |  1.82 K |                          |
+| 2.5 A |  2.32 K |                          |
+|   3 A |  2.80 K |                          |
+| 3.5 A |  3.32 K |                          |
+|   4 A |  3.83 K | Default for large motors |
+| 4.5 A |  4.42 K |                          |
+|   5 A |  4.99 K | Maximum supported        |
 
-Measure the resistance between the test points adjacent to the `ILIM` label to confirm your desired setpoint.
+You can tune the `ILIM` setpoint while the fan is running.  Run the motor at full duty cycle and turn the potentiometer to observe the effect.  When you're satisfied, unplug Minuet, measure the `RV` that you obtained, then work backwards to the current limit.
 
 ### Advance lead angle (`ADV`)
 
@@ -137,15 +152,15 @@ Results may be different when the motor is under load (with a fan blade).  More 
 
 The `ADV` pads set the MCT8316Z advance angle level.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
 
-Settings:
-
-- 0°: `ADV` tied to `AGND` (default)
-- 4°: `ADV` tied to `AGND` via 22 Kohm resistor
-- 11°: `ADV` tied to `AGND` via 100 Kohm resistor
-- 15°: Hi-Z
-- 20°: `ADV` tied to `AVDD` via 100 Kohm resistor
-- 25°: `ADV` tied to `AVDD` via 22 Kohm resistor
-- 30°: `ADV` tied to `AVDD`
+| Angle | Setting                                    |
+| ----- | ------------------------------------------ |
+|    0° | `ADV` tied to `AGND` **(default)**         |
+|    4° | `ADV` tied to `AGND` via 22 Kohm resistor  |
+|   11° | `ADV` tied to `AGND` via 100 Kohm resistor |
+|   15° | no connection (Hi-Z)                       |
+|   20° | `ADV` tied to `AVDD` via 100 Kohm resistor |
+|   25° | `ADV` tied to `AVDD` via 22 Kohm resistor  |
+|   30° | `ADV` tied to `AVDD`                       |
 
 References:
 
@@ -161,12 +176,12 @@ Testing so far hasn't shown EMI to be a problem so using the maximum slew rate i
 
 The `SLEW` pads set the MCT8316Z slew rate.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
 
-Settings:
-
-- 25 V/uS: `SLEW` tied to `AGND`
-- 50 V/uS: Hi-Z
-- 100 V/uS: `SLEW` tied to `AVDD` via 47 Kohm resistor
-- 200 V/uS: `SLEW` connected to `AVDD` (default)
+| Slew rate | Setting                                     |
+| --------- | ------------------------------------------- |
+|   25 V/uS | `SLEW` tied to `AGND`                       |
+|   50 V/uS | no connection (Hi-Z)                        |
+|  100 V/uS | `SLEW` tied to `AVDD` via 47 Kohm resistor  |
+|  200 V/uS | `SLEW` connected to `AVDD` **(default)**    |
 
 References:
 
@@ -178,20 +193,11 @@ The commutation mode configures the switching behavior of the motor driver.  Tes
 
 The `MODE` pads set the MCT8316Z commutation mode.  The `-` and `+` silkscreen designate the pads carrying `AGND` and `AVDD`.
 
-Settings:
-
-- Type 2: `MODE` tied to `AGND` via 22 Kohm resistor
-  - digital hall input
-  - asynchronous modulation
-  - ASR & AAR disabled
-- Type 4: Hi-Z
-  - digital hall input
-  - synchronous modulation
-  - ASR & AAR disabled
-- Type 7: `MODE` tied to `AVDD` (default)
-  - digital hall input
-  - synchronous modulation
-  - ASR & AAR enabled
+| Mode | Setting                                     | Hall sensor |   Modulation | ASR & AAR |
+| ---- | ------------------------------------------- | ----------- | ------------ | --------- |
+|    2 | `MODE` tied to `AGND` via 22 Kohm resistor  |     digital | asynchronous |  disabled |
+|    4 | no connection (Hi-Z)                        |     digital |  synchronous |  disabled |
+|    7 | `MODE` tied to `AVDD` **(default)**         |     digital |  synchronous |   enabled |
 
 References:
 
@@ -203,18 +209,16 @@ References:
 
 The cover motor current limit lets Minuet detect when the motor has reached the end of its travel when opening or closing the cover.  It must be set high enough to allow the motor to overcome the torque demands of the cover mechanism and low enough to reliably detect stall at end of travel.
 
-If your cover does not open or close fully, try raising the cover motor current limit a little bit.
+If your cover does not open or close fully, try increasing the cover motor current limit a little bit.
 
-The `IPROPI` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor denoted here as `RV`.
+The `IPROPI` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor.  To set this value, measure the resistance across the variable resistor at the test point near `IPROPI` and turn the potentiometer until you obtain the desired setpoint.
 
-Formulas for current limit with `RF` = 18.2 Kohm:
+Formulas to calculate the current limit where `RV` is the value of the `IPROPI` resistor in ohms.
 
 - Itrip = 1000 * 3.3 V / RV
 - RV = 1000 * 3.3 V / Itrip
 
-Recommended default: RV = 2.80 Kohms, Itrip = 1.18 A
-
-Measure the resistance between the test points adjacent to the `IPROPI` label to confirm your desired setpoint.
+**Recommended default: RV = 2.80 Kohms, Itrip = 1.18 A**
 
 ## Accessories
 
@@ -236,5 +240,9 @@ Corrected from v2.0 to v2.1:
 - Used via stitching to join large traces instead of one big via as new calculations with more accurate PCB plating thickness information showed a higher impedance than anticipated.
 - Started optimizing the design for production by adding LCSC part numbers and substituting some components for more readily available parts.
 - Replaced the [TPSM861253](https://www.ti.com/lit/ds/symlink/tpsm861253.pdf) buck converter with [TPS561201](https://www.ti.com/lit/ds/symlink/tps561201.pdf) which is cheaper, much more efficient at low load, and more readily available although it requires more auxiliary components than the previous module, [TPS561243](https://www.ti.com/lit/ds/symlink/tps561243.pdf) is newer and would be smaller and more efficient because it operates at higher frequencies but it isn't available on LCSC at this time.
+
+Corrected from v2.1 to v2.2:
+
+- The default 3 A current limit wasn't high enough for the 50 W motor to perform to its fullest.  Raised the default to 4 A and the maximum to 5 A.  Changed the fan current limit fixed resistor from 18.2 K to 14.0 K to provide that headroom and take into account the potentiometer tolerance.  My 5 K pots measured from 4.76 K to 4.93 K which was within the expected 10% tolerance.
 
 Nothing yet...
