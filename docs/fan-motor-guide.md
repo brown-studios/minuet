@@ -2,7 +2,7 @@
 
 This guide explains how to choose a brushless DC fan motor and adapt it for use with Minuet.
 
-**Compatibility: The information in this guide is valid for Minuet v2.0.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/fan-motor-guide.md) for v1.**
+**Compatibility: The information in this guide is valid for Minuet v2.1.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/fan-motor-guide.md) for v1.**
 
 ## Steps
 
@@ -43,7 +43,7 @@ This small motor runs smoothly with minimal vibration.  It has an ample power ra
 
 ### StepperOnline 57BYA54-12-01 ([supplier](https://www.omc-stepperonline.com/12v-3000rpm-0-16nm-50w-5-90a-57x57x53-5mm-brushless-dc-motor-57bya54-12-01))
 
-This motor is somewhat larger than 42BLR53-12-01 and run smoothly though it has a bit more vibration at low speeds.  It has a sufficiently high power rating for maximum air flow and continuous operation.  There's no need to use a motor any more powerful than this one: its current rating already exceeds Minuet's current limit.
+This motor is somewhat larger than 42BLR53-12-01 and run smoothly though it has a bit more vibration at low speeds.  It has a sufficiently high power rating for maximum air flow and continuous operation.  There's no need to use a motor any more powerful than this one: the plastic fan blade starts to make unpleasant sounds beyond 1000 RPM which this motor easily achieves.
 
 ### Specifications
 
@@ -215,20 +215,20 @@ The 3D printed variant should be made from a strong plastic with good heat and U
 
 #### Supplies
 
-- 2x M5 x 14 mm screws (a little longer is ok)
+- 2x M5 x 14 mm cap screws (a little longer is ok)
 - Screws (both variants) and spacers (for the metal plate variant) for your motor and shaft adapter combination
-  - For 42BLR53 with a rigid coupler and dowel pin shaft adapter, use 4x M3 x 22 mm screws with [M3 x 15 mm spacers](https://www.amazon.com/gp/product/B0CQF68HRC/)
-  - For 57BYA54 with a rigid coupler and dowel pin shaft adapter, use 4x M4 x 22 mm screws with M4 x 15 mm spacers
+  - For 42BLR53 with a rigid coupler and dowel pin shaft adapter, use 4x M3 x 22 mm cap screws with [M3 x 14/15/16 mm spacers](https://www.amazon.com/gp/product/B0CQF68HRC/)
+  - For 57BYA54 with a rigid coupler and dowel pin shaft adapter, use 4x M4 x 22 mm cap screws with [M4 x 14/15/16 mm spacers](https://www.amazon.com/PATIKIL-Aluminum-Spacers-Spacer-Standoff/dp/B0CQ3RQVVM)
 - Washers for the M5 screws and the motor screws (for the 3D printed variant)
 
 #### Instructions
 
-1. Tap the M5 screw holes.
-1. Screw the motor to the plate.
-    - Metal plate variant: Add a spacer on each screw between the plate and the motor.
-    - 3D printed variant: Add a washer on each screw between the screw head and the plate.
+1. Tap the M5 screw holes into the plate.
 1. Screw the M5 screws through the mount from the side on which the motor is installed.
     - Metal plate variant: Apply threadlocker to each screw.
+    - 3D printed variant: Tighten only until snug to avoid stripping the plastic threads.  Do not use threadlocker.
+1. Screw the motor to the plate.
+    - Metal plate variant: Add a spacer on each screw between the plate and the motor.
     - 3D printed variant: Add a washer on each screw between the screw head and the plate.
 
 ## Further reading
