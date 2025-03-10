@@ -103,11 +103,11 @@ If you don't have a datasheet, then you can make an educated guess.  The three m
     - Motor port: pin 1 to U, pin 2 to V, pin 3 to W
     - Sensor port: pin 1 to Ground, pin 2 to U', pin 3 to V', pin 4 to W', pin 5 to Power
 1. Apply 12 V DC electricity to Minuet, ideally with a current limited bench power supply set to at least 1.5 A.
-1. Start the fan at the lowest speed in the *Forward aka. Intake aka. Clockwise direction*.  Observe what happens for a moment then stop it.
+1. Start the fan at the lowest speed in the *Forward aka. Air in aka. Intake aka. Clockwise direction*.  Observe what happens for a moment then stop it.
     - If the motor spins in the wrong direction, swap the V and W phases.  Try again.
     - If the motor jerks then stalls or judders, swap the V' and W' hall sensors.  Try again.  If that doesn't work, then try all 6 possible combinations of the U', V', and W' hall sensors until the motor does spin up properly.  If after trying all combinations the motor still judders, then you may need to configure the board for a different hall sensor placement such as 0°.
     - If the motor does not start at all, stop.  Recheck your connections.  Listen to the motor, it might be trying to start it but doesn't have enough current.  Consider testing the motor using an off-the-shelf electronic speed controller to make sure it works at all.  If all else fails, the motor might simply not be compatible with Minuet.
-1. Next start the fan at the lowest speed in the *Reverse aka. Exhaust aka. Counter-clockise direction*.  Observe what happens for a moment then stop it.
+1. Next start the fan at the lowest speed in the *Reverse aka. Air out aka. Exhaust aka. Counter-clockise direction*.  Observe what happens for a moment then stop it.
     - If the motor spins in the wrong direction, stalls, judders, or runs at a different speed in the reverse direction than it was in the forward direction, then keep trying hall sensor combinations until you find one that works properly both forwards and in reverse.
 1. Finally try operating the fan in each direction and at different speeds.  The motor should run smoothly and symmetrically in each direction.
 1. Now that you have identified the correct wiring for your motor, update your labels based on how you have wired the motor and sensor ports.
