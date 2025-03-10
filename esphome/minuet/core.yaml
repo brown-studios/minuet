@@ -50,6 +50,8 @@ minuet_components:
 
 # Vent fan motor driver
 minuet_fan_motor_driver:
+  substitutions:
+    minuet_fan_motor_pwm_frequency_default: "24000"
   binary_sensor:
     - id: minuet_fan_motor_fault
       name: "Vent Fan Stalled"
@@ -104,7 +106,7 @@ minuet_fan_motor_driver:
         mode: output
         inverted: false
       channel: 5
-      frequency: 15000 Hz
+      frequency: ${minuet_fan_motor_pwm_frequency_default} Hz
     - id: minuet_fan_motor_forward
       platform: gpio
       pin:
@@ -112,6 +114,26 @@ minuet_fan_motor_driver:
         number: 12
         mode: output
         inverted: false
+  number:
+    - id: minuet_fan_motor_pwm_frequency
+      name: "Fan Motor PWM Frequency"
+      icon: mdi:square-wave
+      unit_of_measurement: Hz
+      device_class: frequency
+      entity_category: config
+      disabled_by_default: true
+      platform: template
+      min_value: 1000
+      max_value: 60000
+      step: 1
+      mode: box
+      optimistic: true
+      initial_value: ${minuet_fan_motor_pwm_frequency_default}
+      restore_value: false
+      set_action:
+        then:
+          - lambda: |-
+              id(minuet_fan_motor_duty_cycle).update_frequency(x);
 
 # Vent cover motor driver
 minuet_cover_motor_driver:
