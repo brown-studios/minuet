@@ -1204,9 +1204,9 @@ minuet_cover_controller:
       then:
         - lambda: |-
             auto& cover = id(minuet_cover);
-            if (open && (force || cover->position != COVER_OPEN)) {
+            if (open && (force || cover->position != COVER_OPEN || cover->current_operation == COVER_OPERATION_CLOSING)) {
               id(minuet_cover).make_call().set_command_open().perform();
-            } else if (!open && (force || cover->position != COVER_CLOSED)) {
+            } else if (!open && (force || cover->position != COVER_CLOSED || cover->current_operation == COVER_OPERATION_OPENING)) {
               id(minuet_cover).make_call().set_command_close().perform();
             }
     - id: minuet_cover_perform_operation
