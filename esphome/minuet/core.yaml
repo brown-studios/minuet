@@ -1115,10 +1115,15 @@ minuet_fan_controller:
               last_duty_cycle = 0.f;
               target_duty_cycle = 0.f;
             }
-          } else if (fabs(target_duty_cycle - last_duty_cycle) > 0.001f) {
+          } else if (target_duty_cycle != last_duty_cycle) {
             // Ramp the duty cycle linearly over time up to the desired target.
             constexpr float MAX_RAMP_PER_INTERVAL = 0.01f;
-            last_duty_cycle += clamp(target_duty_cycle - last_duty_cycle, -MAX_RAMP_PER_INTERVAL, MAX_RAMP_PER_INTERVAL);
+            const float delta = target_duty_cycle - last_duty_cycle;
+            if (fabs(delta) < MAX_RAMP_PER_INTERVAL) {
+              last_duty_cycle = target_duty_cycle;
+            } else {
+              last_duty_cycle += copysign(MAX_RAMP_PER_INTERVAL, delta);
+            }
             id(minuet_fan_motor_forward).set_state(last_duty_cycle >= 0.f);
             id(minuet_fan_motor_duty_cycle).set_level(fabs(last_duty_cycle));
           }
