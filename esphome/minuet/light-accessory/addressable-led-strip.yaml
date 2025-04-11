@@ -34,7 +34,6 @@ minuet_light:
       platform: esp32_rmt_led_strip
       pin: 1
       restore_mode: ALWAYS_OFF
-      rmt_channel: 0
       num_leds: ${num_leds}
       chipset: ${chipset}
       rgb_order: ${rgb_order}

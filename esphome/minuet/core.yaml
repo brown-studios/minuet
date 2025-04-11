@@ -28,7 +28,7 @@ minuet_components:
   esp32:
     board: esp32-c3-devkitm-1
     framework:
-      type: arduino
+      type: esp-idf
 
   # The I2C bus is used by built-in components and is presented via a
   # QWIIC connector on the board edge for accessories
@@ -568,8 +568,8 @@ minuet_keypad_control:
           const auto do_press_4_on = [which_menu]{
             auto& fan = id(minuet_fan);
             if (fan->state) {
-              constexpr auto SPEED_CYCLE = { 1, 3, 7, 10, };
-              const auto it = std::find_if(SPEED_CYCLE.begin(), SPEED_CYCLE.end(), [which_menu](int speed) { return speed > fan->speed; });
+              const auto SPEED_CYCLE = { 1, 3, 7, 10, };
+              const auto it = std::find_if(SPEED_CYCLE.begin(), SPEED_CYCLE.end(), [](int speed) { return speed > fan->speed; });
               const bool going_up = it != SPEED_CYCLE.end();
               fan->make_call().set_speed(going_up ? *it : *SPEED_CYCLE.begin()).perform();
               id(minuet_tone)->execute(going_up ? "manual_speed_up" : "manual_speed_down");
@@ -872,7 +872,7 @@ minuet_keypad_control:
           constexpr uint32_t KEY_COMBO_AUTO_POWER = KEY_AUTO | KEY_POWER;
           constexpr uint32_t KEY_COMBO_POWER_UP = KEY_POWER | KEY_UP;
           constexpr uint32_t KEY_COMBO_POWER_DOWN = KEY_POWER | KEY_DOWN;
-          constexpr auto VALID_KEY_COMBOS = {
+          const auto VALID_KEY_COMBOS = {
               KEY_UP, KEY_DOWN, KEY_RAIN, KEY_POWER, KEY_DIRECTION, KEY_AUTO,
               KEY_4_CLOSE, KEY_4_OPEN, KEY_4_OFF, KEY_4_ON,
               KEY_COMBO_OPEN_CLOSE, KEY_COMBO_AUTO_UP, KEY_COMBO_AUTO_DOWN,
@@ -1012,8 +1012,6 @@ minuet_ir_control:
         mode: input
         inverted: true
         ignore_strapping_warning: true
-      rmt_channel: 2
-      memory_blocks: 2
       dump: maxxfan
       on_maxxfan:
         then:

@@ -11,5 +11,4 @@ minuet_web:
   web_server:
     local: true
     log: true
-    ota: true
     version: 3
