@@ -88,7 +88,7 @@ When the rain sensor detects moisture, it turns off the fan, closes the cover, a
 
 ### Enable or disable WiFi
 
-Hold `in/out` for 5 seconds to toggle WiFi on or off.  By default, WiFi is enabled.
+Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is enabled.
 
 When WiFi is enabled, Minuet confirms with two quick tones followed by a long high tone.
 
@@ -96,7 +96,7 @@ When WiFi is disabled, Minuet confirms with two quick tones followed by a long l
 
 ### Power on restore
 
-Hold `in/out` and `on/off` together for 5 seconds to toggle power on restore behavior.  By default, power on restore is disabled.
+Hold `on/off` and `up` together for 5 seconds to toggle power on restore behavior.  By default, power on restore is disabled.
 
 When power on restore is enabled, Minuet will restore the fan operating state, speed, direction, and cover open/close state when it is connected to power.  It confirms this setting with three quick tones followed by a long high tone.
 
@@ -105,6 +105,12 @@ When power on restore is disabled, Minuet will leave the fan off and close the c
 ### Factory reset
 
 Hold `on/off` for 15 seconds to turn the fan off and perform a factory reset.  Minuet confirms with two long tones then erases all of its settings including saved WiFi credentials.  Follow the [Getting started](#getting-started) guide to get started again.
+
+### Lighting accessory (if installed)
+
+Hold `in/out` for 1 second to toggle the light on or off.
+
+Note: To dim the light, change its color, or activate effects, use the Minuet web app or your home automation app.  (Or try to implement better lighting controls in the Minuet firmware.  Perhaps holding `in/out` together with `up`, `down`, or `on/off` could change the state of the light.  Or maybe stick a rotary encoder or a custom keypad somewhere for better control.)
 
 ## Using the 4 key wall remote
 

@@ -35,3 +35,5 @@ minuet_light:
         then:
           - lambda: |-
               id(minuet_light_pwm).turn_off();
+
+<<: !include common.yaml

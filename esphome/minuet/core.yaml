@@ -494,6 +494,10 @@ minuet_keypad_control:
       type: Switch*
       restore_value: false
       initial_value: "nullptr"
+    - id: minuet_keypad_accessory_toggle # Injected from accessories
+      type: bool(*)()
+      restore_value: false
+      initial_value: "nullptr"
   button:
     - id: minuet_restart
       platform: restart
@@ -544,7 +548,7 @@ minuet_keypad_control:
           // Declare all of the possible actions
           // This code might be tidier in separate functions but that would require putting them
           // in a separate header file which is less convenient
-          const auto do_press_on_off = [which_menu]{
+          const auto do_press_power = [which_menu]{
             const auto menu = which_menu();
             if (menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
@@ -654,7 +658,7 @@ minuet_keypad_control:
             cover->make_call().set_command_close().perform();
             id(minuet_tone)->execute("manual_cover_close");
           };
-          const auto do_press_in_out = [which_menu]{
+          const auto do_press_direction = [which_menu]{
             auto& fan = id(minuet_fan);
             if (fan->state) {
               if (fan->direction == FanDirection::FORWARD) {
@@ -714,7 +718,7 @@ minuet_keypad_control:
               id(minuet_tone)->execute("auto_temp_default");
             }
           };
-          const auto do_press_auto_on_off = [which_menu]{
+          const auto do_press_auto_power = [which_menu]{
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               auto& therm = id(minuet_thermostat);
@@ -727,7 +731,7 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_auto_in_out = [which_menu]{
+          const auto do_press_auto_direction = [which_menu]{
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               id(minuet_thermostat_fan_direction).make_call().select_next(true).perform();
@@ -784,6 +788,10 @@ minuet_keypad_control:
             id(minuet_tone)->execute("!factory_reset");
             return true;
           };
+          const auto do_hold_accessory_toggle = [which_menu]() -> bool {
+            const auto& fn = id(minuet_keypad_accessory_toggle);
+            return !!fn && fn();
+          };
 
           // Scan the keypad matrix
           // All of the pins have internal pull-up resistors
@@ -823,8 +831,8 @@ minuet_keypad_control:
           constexpr uint32_t KEY_UP = 1u << 0;
           constexpr uint32_t KEY_DOWN = 1u << 1;
           constexpr uint32_t KEY_RAIN = 1u << 2;
-          constexpr uint32_t KEY_ON_OFF = 1u << 3;
-          constexpr uint32_t KEY_IN_OUT = 1u << 4;
+          constexpr uint32_t KEY_POWER = 1u << 3;
+          constexpr uint32_t KEY_DIRECTION = 1u << 4;
           constexpr uint32_t KEY_AUTO = 1u << 5;
           constexpr uint32_t KEY_4_CLOSE = 1u << 6;
           constexpr uint32_t KEY_4_OPEN = 1u << 7;
@@ -834,8 +842,8 @@ minuet_keypad_control:
               (key_r1_c2 ? KEY_UP : 0) |
               (key_r1_c3 ? KEY_DOWN : 0) |
               (key_r1_c4 ? KEY_RAIN : 0) |
-              (key_r2_c2 ? KEY_ON_OFF : 0) |
-              (key_r2_c3 ? KEY_IN_OUT : 0) |
+              (key_r2_c2 ? KEY_POWER : 0) |
+              (key_r2_c3 ? KEY_DIRECTION : 0) |
               (key_r2_c4 ? KEY_AUTO : 0) |
               (key_r1_gnd ? KEY_4_CLOSE : 0) |
               (key_r2_gnd ? KEY_4_OPEN : 0) |
@@ -860,15 +868,16 @@ minuet_keypad_control:
           constexpr uint32_t KEY_COMBO_AUTO_UP = KEY_AUTO | KEY_UP;
           constexpr uint32_t KEY_COMBO_AUTO_DOWN = KEY_AUTO | KEY_DOWN;
           constexpr uint32_t KEY_COMBO_AUTO_OPEN_CLOSE = KEY_AUTO | KEY_COMBO_OPEN_CLOSE;
-          constexpr uint32_t KEY_COMBO_AUTO_IN_OUT = KEY_AUTO | KEY_IN_OUT;
-          constexpr uint32_t KEY_COMBO_AUTO_ON_OFF = KEY_AUTO | KEY_ON_OFF;
-          constexpr uint32_t KEY_COMBO_IN_OUT_ON_OFF = KEY_IN_OUT | KEY_ON_OFF;
+          constexpr uint32_t KEY_COMBO_AUTO_DIRECTION = KEY_AUTO | KEY_DIRECTION;
+          constexpr uint32_t KEY_COMBO_AUTO_POWER = KEY_AUTO | KEY_POWER;
+          constexpr uint32_t KEY_COMBO_POWER_UP = KEY_POWER | KEY_UP;
+          constexpr uint32_t KEY_COMBO_POWER_DOWN = KEY_POWER | KEY_DOWN;
           constexpr auto VALID_KEY_COMBOS = {
-              KEY_UP, KEY_DOWN, KEY_RAIN, KEY_ON_OFF, KEY_IN_OUT, KEY_AUTO,
+              KEY_UP, KEY_DOWN, KEY_RAIN, KEY_POWER, KEY_DIRECTION, KEY_AUTO,
               KEY_4_CLOSE, KEY_4_OPEN, KEY_4_OFF, KEY_4_ON,
               KEY_COMBO_OPEN_CLOSE, KEY_COMBO_AUTO_UP, KEY_COMBO_AUTO_DOWN,
-              KEY_COMBO_AUTO_OPEN_CLOSE, KEY_COMBO_AUTO_IN_OUT, KEY_COMBO_AUTO_ON_OFF,
-              KEY_COMBO_IN_OUT_ON_OFF,
+              KEY_COMBO_AUTO_OPEN_CLOSE, KEY_COMBO_AUTO_DIRECTION, KEY_COMBO_AUTO_POWER,
+              KEY_COMBO_POWER_UP, KEY_COMBO_POWER_DOWN,
           };
           bool key_valid = std::find(VALID_KEY_COMBOS.begin(), VALID_KEY_COMBOS.end(), key_state) != VALID_KEY_COMBOS.end();
 
@@ -876,6 +885,7 @@ minuet_keypad_control:
           constexpr uint32_t MIN_PRESS_DURATION = 100;
           constexpr uint32_t MAX_PRESS_DURATION = 800;
           constexpr uint32_t MIN_HOLD_UP_DOWN_DURATION = 1000;
+          constexpr uint32_t MIN_HOLD_ACCESSORY_TOGGLE_DURATION = 1000;
           constexpr uint32_t MIN_HOLD_AUTO_DURATION = 3000;
           constexpr uint32_t MIN_HOLD_SETTING_DURATION = 5000;
           constexpr uint32_t MIN_HOLD_FACTORY_RESET_DURATION = 15000;
@@ -887,10 +897,10 @@ minuet_keypad_control:
                 do_press_down();
               } else if (key_state == KEY_RAIN) {
                 do_press_rain();
-              } else if (key_state == KEY_ON_OFF) {
-                do_press_on_off();
-              } else if (key_state == KEY_IN_OUT) {
-                do_press_in_out();
+              } else if (key_state == KEY_POWER) {
+                do_press_power();
+              } else if (key_state == KEY_DIRECTION) {
+                do_press_direction();
               } else if (key_state == KEY_AUTO) {
                 do_press_auto();
               } else if (key_state == KEY_4_ON) {
@@ -909,10 +919,10 @@ minuet_keypad_control:
                 do_press_auto_down();
               } else if (key_state == KEY_COMBO_AUTO_OPEN_CLOSE) {
                 do_press_auto_reset();
-              } else if (key_state == KEY_COMBO_AUTO_IN_OUT) {
-                do_press_auto_in_out();
-              } else if (key_state == KEY_COMBO_AUTO_ON_OFF) {
-                do_press_auto_on_off();
+              } else if (key_state == KEY_COMBO_AUTO_DIRECTION) {
+                do_press_auto_direction();
+              } else if (key_state == KEY_COMBO_AUTO_POWER) {
+                do_press_auto_power();
               }
             }
           };
@@ -921,17 +931,19 @@ minuet_keypad_control:
               return do_hold_up();
             } else if (key_state == KEY_DOWN && hold_duration >= MIN_HOLD_UP_DOWN_DURATION) {
               return do_hold_down();
+            } else if (key_state == KEY_DIRECTION && hold_duration >= MIN_HOLD_ACCESSORY_TOGGLE_DURATION) {
+              return do_hold_accessory_toggle();
             } else if (key_state == KEY_AUTO && hold_duration >= MIN_HOLD_AUTO_DURATION) {
               return do_hold_auto();
             } else if (key_state == KEY_COMBO_AUTO_UP && hold_duration >= MIN_HOLD_SETTING_DURATION) {
               return do_hold_use_enhanced_controls();
             } else if (key_state == KEY_COMBO_AUTO_DOWN && hold_duration >= MIN_HOLD_SETTING_DURATION) {
               return do_hold_use_standard_controls();
-            } else if (key_state == KEY_IN_OUT && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+            } else if (key_state == KEY_COMBO_POWER_DOWN && hold_duration >= MIN_HOLD_SETTING_DURATION) {
               return do_hold_wifi_toggle();
-            } else if (key_state == KEY_COMBO_IN_OUT_ON_OFF && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+            } else if (key_state == KEY_COMBO_POWER_UP && hold_duration >= MIN_HOLD_SETTING_DURATION) {
               return do_hold_power_on_behavior_toggle();
-            } else if (key_state == KEY_ON_OFF && hold_duration >= MIN_HOLD_FACTORY_RESET_DURATION) {
+            } else if (key_state == KEY_POWER && hold_duration >= MIN_HOLD_FACTORY_RESET_DURATION) {
               return do_hold_factory_reset();
             }
             return false;

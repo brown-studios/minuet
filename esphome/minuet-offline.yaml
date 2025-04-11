@@ -24,7 +24,7 @@ packages:
   #   file: minuet/light-accessory/addressable-led-strip.yaml
   #   vars:
   #     name: 'Light'
-  #     num_leds: 40
+  #     num_leds: 19
   #     chipset: WS2811
   #     rgb_order: RGB
   #     is_wrgb: true
