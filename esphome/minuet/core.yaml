@@ -1494,7 +1494,7 @@ minuet_thermostat:
                 //const float ambient_temperature = therm->current_temperature;
                 //const float target_temperature = therm->target_temperature_high;
                 const auto& fan_mode = therm->fan_mode;
-                auto_fan_speed = fan_mode == CLIMATE_FAN_AUTO ? 1 : 0; // TODO: choose a speed automatically
+                auto_fan_speed = fan_mode == CLIMATE_FAN_AUTO ? 3 : 0; // TODO: choose a speed automatically
                 auto_cover_open = true;
               } else {
                 auto_fan_speed = 0;
