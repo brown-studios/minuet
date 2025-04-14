@@ -1469,7 +1469,8 @@ minuet_thermostat:
         - lambda: |-
             const auto& therm = id(minuet_thermostat);
             if (id(minuet_thermostat_auto_fan_speed) != (fan_state ? fan_speed : 0)
-                || id(minuet_thermostat_auto_fan_direction) != fan_direction) {
+                || (id(minuet_thermostat_auto_fan_direction) != fan_direction
+                    && id(minuet_thermostat_fan_direction).active_index() != 0)) {
               id(minuet_thermostat_maybe_set_override).execute();
             }
     - id: minuet_thermostat_reconcile_cover_manual_state_change
