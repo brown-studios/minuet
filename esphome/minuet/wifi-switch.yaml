@@ -7,15 +7,22 @@
 # file as a package like this (recommended):
 #
 # packages:
-#   <<: !include minuet/wifi.yaml
-minuet_wifi:
+#   <<: !include
+#     file: minuet/wifi-switch.yaml
+#     vars:
+#       default_state: 'OFF'
+#
+# The default state can be 'OFF' or 'ON' and it takes effect when the firmware is first
+# installed and after a factory reset.  It is recommended to set the default state to
+# 'OFF' for security when using a captive portal and no WiFi credentials have been configured.
+minuet_wifi_switch:
   switch:
     - id: minuet_wifi_switch
       name: "WiFi Enable"
       icon: mdi:wifi
       platform: template
       optimistic: true
-      restore_mode: RESTORE_DEFAULT_ON
+      restore_mode: RESTORE_DEFAULT_${default_state}
       entity_category: config
       disabled_by_default: true
       on_turn_on:

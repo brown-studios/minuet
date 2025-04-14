@@ -38,8 +38,11 @@ packages:
   # Include the core logic (required).
   <<: !include minuet/core.yaml
 
-  # Include the controls for configuring wifi (optional).
-  <<: !include minuet/wifi.yaml
+  # Include the switch for enabling or disabling wifi (optional).
+  <<: !include
+    file: minuet/wifi-switch.yaml
+    vars:
+      default_state: 'ON'
 
   # Include the web interface (optional).
   # Commented out by default assuming you're integrating Minuet with another front-end.
