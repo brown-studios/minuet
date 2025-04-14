@@ -1071,8 +1071,8 @@ minuet_ir_control:
 minuet_fan_controller:
   substitutions:
     minuet_fan_speed_count: '10'
-    #minuet_fan_duty_cycle_table: '0.f, 0.1f, 0.12f, 0.14f, 0.16f, 0.18f, 0.20f, 0.25f, 0.30f, 0.34f, 1.f'
-    minuet_fan_duty_cycle_table: '0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.f'
+    minuet_fan_duty_cycle_table: '0.08f, 0.11f, 0.14f, 0.18f, 0.22f, 0.26f, 0.3f, 0.35f, 0.4f, 0.45f'
+    #minuet_fan_duty_cycle_table: '0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.f'
   globals:
     - id: minuet_fan_last_duty_cycle
       type: float
