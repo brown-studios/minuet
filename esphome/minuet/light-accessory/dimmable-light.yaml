@@ -28,6 +28,7 @@ minuet_light:
       platform: monochromatic
       output: minuet_light_pwm
       restore_mode: ALWAYS_OFF
+      default_transition_length: 0.5s
   # Shutdown behavior: Turn off the light before ESPHome restarts.
   esphome:
     on_shutdown:

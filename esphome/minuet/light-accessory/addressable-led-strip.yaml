@@ -26,7 +26,7 @@ minuet_light:
       pin:
         number: 0
         mode: output
-      enable_time: 50ms
+      enable_time: 10ms
       keep_on_time: 5s
   light:
     - id: minuet_light
@@ -40,6 +40,8 @@ minuet_light:
       is_wrgb: ${is_wrgb}
       is_rgbw: ${is_rgbw}
       power_supply: minuet_light_power
+      default_transition_length: 0.5s
+      gamma_correct: 1.0
       effects:
         - addressable_rainbow:
         - addressable_twinkle:
