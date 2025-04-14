@@ -74,8 +74,8 @@ Hold the `auto` button and press other buttons as described below to configure t
 - Press `auto`: enable the thermostat if it is disabled, re-engage the thermostat if it is overridden, otherwise disable the thermostat
 - Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick rising tone
 - Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick falling tone
-- Hold `auto` and press `open/close` (`up` and `down` together): reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick trill
-- Hold `auto` and press `in/out`: toggle thermostat controlled fan direction between same as manual, air in, and air out, Minuet confirms air in with a quick descending scale, air out with a quick rising scale, and same with a quick trill
+- Hold `auto` and press `open/close` (`up` and `down` together): reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
+- Hold `auto` and press `in/out`: toggle thermostat controlled fan direction between same as manual, air in, and air out, Minuet confirms air in with a quick descending scale, air out with a quick rising scale, and same with two quick tones
 - Hold `auto` and press `on/off`: toggle thermostat controlled fan state to be on or off (with the cover open in either case), Minuet confirms with a long rising tone for on or a long falling tone for off
 
 ### Rain sensor (only some models)
@@ -85,6 +85,12 @@ Press the `rain sensor` button to toggle the rain sensor on or off.
 When the rain sensor is disabled, the LED will turn red to warn that water could enter your vehicle if it rains.
 
 When the rain sensor detects moisture, it turns off the fan, closes the cover, and makes the LED flash red.  Press the `rain sensor` button again to reset the flashing LED.
+
+### Lighting accessory (if installed)
+
+Hold `in/out` for 1 second to toggle the light on or off.
+
+Note: To dim the light, change its color, or activate effects, use the Minuet web app or your home automation app.  (Or try to implement better lighting controls in the Minuet firmware.  Perhaps holding `in/out` together with `up`, `down`, or `on/off` could change the state of the light.  Or maybe stick a rotary encoder or a custom keypad somewhere for better control.)
 
 ### Enable or disable WiFi
 
@@ -98,19 +104,13 @@ When WiFi is disabled, Minuet confirms with two quick tones followed by a long l
 
 Hold `on/off` and `up` together for 5 seconds to toggle power on restore behavior.  By default, power on restore is disabled.
 
-When power on restore is enabled, Minuet will restore the fan operating state, speed, direction, and cover open/close state when it is connected to power.  It confirms this setting with three quick tones followed by a long high tone.
+When power on restore is enabled, Minuet will restore the fan operating state, speed, direction, and cover open/close state when it is connected to power.  It confirms this setting with a quick turn followed by a long high tone.
 
-When power on restore is disabled, Minuet will leave the fan off and close the cover when it is connected to power.  It confirms this setting with three quick tones followed by a long low tone.
+When power on restore is disabled, Minuet will leave the fan off and close the cover when it is connected to power.  It confirms this setting with a quick turn followed by a long low tone.
 
 ### Factory reset
 
-Hold `on/off` for 15 seconds to turn the fan off and perform a factory reset.  Minuet confirms with two long tones then erases all of its settings including saved WiFi credentials.  Follow the [Getting started](#getting-started) guide to get started again.
-
-### Lighting accessory (if installed)
-
-Hold `in/out` for 1 second to toggle the light on or off.
-
-Note: To dim the light, change its color, or activate effects, use the Minuet web app or your home automation app.  (Or try to implement better lighting controls in the Minuet firmware.  Perhaps holding `in/out` together with `up`, `down`, or `on/off` could change the state of the light.  Or maybe stick a rotary encoder or a custom keypad somewhere for better control.)
+Hold `on/off` for 15 seconds to turn the fan off and perform a factory reset.  Minuet confirms with four descending tones then erases all of its settings including saved WiFi credentials.  Follow the [Getting started](#getting-started) guide to get started again.
 
 ## Using the 4 key wall remote
 
