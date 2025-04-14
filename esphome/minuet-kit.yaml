@@ -1,4 +1,7 @@
-# MINUET STANDALONE CONFIGURATION
+# MINUET KIT CONFIGURATION
+#
+# This is the default configuration programmed at the factory for a kit that includes the
+# Minuet board, lighting accessory, and addressable LED lights.
 #
 # ESPHome device configuration for operating Minuet with a WiFi captive portal
 # and a simple web based user interface for a connected out-of-the-box experience.
@@ -51,15 +54,15 @@ packages:
 
   # Include configuration for an accessory plugged into the expansion port (optional).
   # Choose at most one of these packages to uncomment.
-  # <<: !include
-  #   file: minuet/light-accessory/addressable-led-strip.yaml
-  #   vars:
-  #     name: 'Light'
-  #     num_leds: 19
-  #     chipset: WS2811
-  #     rgb_order: RGB
-  #     is_wrgb: true
-  #     is_rgbw: false
+  <<: !include
+    file: minuet/light-accessory/addressable-led-strip.yaml
+    vars:
+      name: 'Light'
+      num_leds: 19
+      chipset: WS2811
+      rgb_order: RGB
+      is_wrgb: true
+      is_rgbw: false
   # <<: !include
   #   file: minuet/light-accessory/dimmable-light.yaml
   #   vars:
