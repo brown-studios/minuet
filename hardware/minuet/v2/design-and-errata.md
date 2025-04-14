@@ -105,10 +105,10 @@ The fan motor current limit protects Minuet and the motor from overcurrent which
 
 The `ILIM` pads set the current limit either using a fixed resistor or a 5 Kohm variable resistor.  To set this value, measure the resistance across the variable resistor at the test point near `ILIM` and turn the potentiometer until you obtain the desired setpoint.
 
-| Motor                       | Recommended limit | `ILIM` setpoint |
-| --------------------------- | ----------------- | --------------- |
-| StepperOnline 42BLR53-12-01 |               2 A |       1.82 Kohm |
-| StepperOnline 57BYA54-12-01 |               4 A |       3.83 Kohm |
+| Motor                       | Recommended limit | `ILIM` setpoint (v2.2+) | `ILIM` setpoint (v2.1) |
+| --------------------------- | ----------------- | ----------------------- | ---------------------- |
+| StepperOnline 42BLR53-12-01 |               2 A |               1.82 Kohm |              2.35 Kohm |
+| StepperOnline 57BYA54-12-01 |               4 A |               3.83 Kohm |                 5 Kohm |
 
 Determining an appropriate current limit can be a little tricky because it is bounded by several factors.
 
@@ -139,6 +139,8 @@ Approximate setpoints rounded to nearest E96 series value:
 |   5 A |  4.99 K | Maximum supported        |
 
 You can tune the `ILIM` setpoint while the fan is running.  Run the motor at full duty cycle and turn the potentiometer to observe the effect.  When you're satisfied, unplug Minuet, measure the `RV` that you obtained, then work backwards to the current limit.
+
+Note: v2.1 used `RF` = 18.2 Kohm.
 
 ### Advance lead angle (`ADV`)
 
@@ -245,4 +247,6 @@ Corrected from v2.1 to v2.2:
 
 - The default 3 A current limit wasn't high enough for the 50 W motor to perform to its fullest.  Raised the default to 4 A and the maximum to 5 A.  Changed the fan current limit fixed resistor from 18.2 K to 14.0 K to provide that headroom and take into account the potentiometer tolerance.  My 5 K pots measured from 4.76 K to 4.93 K which was within the expected 10% tolerance.
 
-Nothing yet...
+Not yet corrected from v2.1:
+
+- The THERM and RAIN connectors interfere with a plastic pillar in the fan housing, they must be moved to a different location on the board.
