@@ -911,61 +911,92 @@ minuet_keypad_control:
           constexpr uint32_t MIN_HOLD_AUTO_DURATION = 3000;
           constexpr uint32_t MIN_HOLD_SETTING_DURATION = 5000;
           constexpr uint32_t MIN_HOLD_FACTORY_RESET_DURATION = 15000;
+          const auto log_press = [](const char* key) {
+            ESP_LOGD("minuet", "Key press: %s", key);
+          };
           const auto do_press = [=](uint32_t key_state, uint32_t press_duration) {
             if (press_duration >= MIN_PRESS_DURATION && press_duration <= MAX_PRESS_DURATION) {
               if (key_state == KEY_UP) {
+                log_press("KEY_UP");
                 do_press_up();
               } else if (key_state == KEY_DOWN) {
+                log_press("KEY_DOWN");
                 do_press_down();
               } else if (key_state == KEY_RAIN) {
+                log_press("KEY_RAIN");
                 do_press_rain();
               } else if (key_state == KEY_POWER) {
+                log_press("KEY_POWER");
                 do_press_power();
               } else if (key_state == KEY_DIRECTION) {
+                log_press("KEY_DIRECTION");
                 do_press_direction();
               } else if (key_state == KEY_AUTO) {
+                log_press("KEY_AUTO");
                 do_press_auto();
               } else if (key_state == KEY_4_ON) {
+                log_press("KEY_4_ON");
                 do_press_4_on();
               } else if (key_state == KEY_4_OFF) {
+                log_press("KEY_4_OFF");
                 do_press_4_off();
               } else if (key_state == KEY_4_OPEN) {
+                log_press("KEY_4_OPEN");
                 do_press_4_open();
               } else if (key_state == KEY_4_CLOSE) {
+                log_press("KEY_4_CLOSE");
                 do_press_4_close();
               } else if (key_state == KEY_COMBO_OPEN_CLOSE) {
+                log_press("KEY_COMBO_OPEN_CLOSE");
                 do_press_open_close();
               } else if (key_state == KEY_COMBO_AUTO_UP) {
+                log_press("KEY_COMBO_AUTO_UP");
                 do_press_auto_up();
               } else if (key_state == KEY_COMBO_AUTO_DOWN) {
+                log_press("KEY_COMBO_AUTO_DOWN");
                 do_press_auto_down();
               } else if (key_state == KEY_COMBO_AUTO_OPEN_CLOSE) {
+                log_press("KEY_COMBO_AUTO_OPEN_CLOSE");
                 do_press_auto_reset();
               } else if (key_state == KEY_COMBO_AUTO_DIRECTION) {
+                log_press("KEY_COMBO_AUTO_DIRECTION");
                 do_press_auto_direction();
               } else if (key_state == KEY_COMBO_AUTO_POWER) {
+                log_press("KEY_COMBO_AUTO_POWER");
                 do_press_auto_power();
               }
             }
           };
+          const auto log_hold = [](const char* key) {
+            ESP_LOGD("minuet", "Key hold: %s", key);
+          };
           const auto do_hold = [=](uint32_t key_state, uint32_t hold_duration) -> bool {
             if (key_state == KEY_UP && hold_duration >= MIN_HOLD_UP_DOWN_DURATION) {
+              log_hold("KEY_UP");
               return do_hold_up();
             } else if (key_state == KEY_DOWN && hold_duration >= MIN_HOLD_UP_DOWN_DURATION) {
+              log_hold("KEY_DOWN");
               return do_hold_down();
             } else if (key_state == KEY_DIRECTION && hold_duration >= MIN_HOLD_ACCESSORY_TOGGLE_DURATION) {
+              log_hold("KEY_DIRECTION");
               return do_hold_accessory_toggle();
             } else if (key_state == KEY_AUTO && hold_duration >= MIN_HOLD_AUTO_DURATION) {
+              log_hold("KEY_AUTO");
               return do_hold_auto();
             } else if (key_state == KEY_COMBO_AUTO_UP && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+              log_hold("KEY_COMBO_AUTO_UP");
               return do_hold_use_enhanced_controls();
             } else if (key_state == KEY_COMBO_AUTO_DOWN && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+              log_hold("KEY_COMBO_AUTO_DOWN");
               return do_hold_use_standard_controls();
             } else if (key_state == KEY_COMBO_POWER_DOWN && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+              log_hold("KEY_COMBO_POWER_DOWN");
               return do_hold_wifi_toggle();
             } else if (key_state == KEY_COMBO_POWER_UP && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+              log_hold("KEY_COMBO_POWER_UP");
               return do_hold_power_on_behavior_toggle();
             } else if (key_state == KEY_POWER && hold_duration >= MIN_HOLD_FACTORY_RESET_DURATION) {
+              log_hold("KEY_POWER");
               return do_hold_factory_reset();
             }
             return false;
@@ -1133,12 +1164,30 @@ minuet_fan_controller:
                 }
               }
               id(minuet_fan_target_duty_cycle) = duty_cycle;
+  number:
+    - id: minuet_fan_duty_cycle_override_for_testing
+      name: "Fan Duty Cycle Override for Testing"
+      icon: mdi:square-wave
+      unit_of_measurement: '%'
+      entity_category: config
+      disabled_by_default: true
+      platform: template
+      min_value: 0
+      max_value: 1
+      step: 0.01
+      mode: slider
+      optimistic: true
+      initial_value: 0
+      restore_value: false
   interval:
     - interval: 50ms
       then:
         lambda: |-
           float& last_duty_cycle = id(minuet_fan_last_duty_cycle);
           float& target_duty_cycle = id(minuet_fan_target_duty_cycle);
+          if (id(minuet_fan_duty_cycle_override_for_testing).state > 0 && target_duty_cycle != 0.f) {
+            target_duty_cycle = copysign(id(minuet_fan_duty_cycle_override_for_testing).state, target_duty_cycle);
+          }
           if (id(minuet_fan_motor_fault).state) {
             if (target_duty_cycle != 0.f || last_duty_cycle != 0.f) {
               ESP_LOGD("minuet", "Fan stalled, disabling the motor for safety");
