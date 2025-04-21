@@ -1250,6 +1250,11 @@ minuet_fan_controller:
 
 # Cover controller
 minuet_cover_controller:
+  globals:
+    - id: minuet_cover_movement_interrupted
+      type: bool
+      restore_value: false
+      initial_value: "false"
   cover:
     - id: minuet_cover
       name: "Vent Cover"
@@ -1300,16 +1305,34 @@ minuet_cover_controller:
       parameters:
         open: bool
       then:
+        # Stop the motor first in case the previous operation was interrupted
         - lambda: |-
+            id(minuet_cover_motor_sleep).turn_on();
+
+            const auto& current_op = id(minuet_cover).current_operation;
+            id(minuet_cover_movement_interrupted) =
+                current_op == COVER_OPERATION_OPENING || current_op == COVER_OPERATION_CLOSING;
+              ESP_LOGD("minuet", "Interrupt: %d", id(minuet_cover_movement_interrupted));
+
             id(minuet_cover).current_operation = open ? COVER_OPERATION_OPENING : COVER_OPERATION_CLOSING;
             id(minuet_cover).publish_state();
-
+        # Allow the motor's inertia to settle to avoid prematurely triggering a fault
+        # when abruptly changing directions
+        - if:
+            condition:
+              - lambda: 'return id(minuet_cover_movement_interrupted);'
+            then:
+              - delay: 2s
+        # Start the motor
+        - lambda: |-
             id(minuet_cover_motor_open).set_state(open);
             id(minuet_cover_motor_sleep).turn_off();
+        # Wait for the motor to stall at end of travel or for a timeout to expire
         - wait_until:
             condition:
-              binary_sensor.is_on: minuet_cover_motor_fault # Wait for motor to stall
+              binary_sensor.is_on: minuet_cover_motor_fault
             timeout: 6s
+        # Stop the motor and report completion
         - lambda: |-
             id(minuet_cover_motor_sleep).turn_on();
 
