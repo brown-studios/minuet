@@ -1144,12 +1144,8 @@ minuet_fan_controller:
         then:
           - lambda: |-
               if (!id(minuet_suppress_manual_state_change)) {
-                auto& fan = id(minuet_fan);
-                auto& manual = id(minuet_fan_manual_state);
-                manual->state = fan->state;
-                manual->speed = fan->speed;
-                manual->direction = fan->direction;
-                manual->publish_state();
+                id(minuet_fan_snapshot_manual_state).execute();
+                const auto& fan = id(minuet_fan);
                 id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, fan->direction);
               }
           - lambda: |-
@@ -1247,6 +1243,15 @@ minuet_fan_controller:
                   .perform();
               id(minuet_fan_suppress_cover_movement) = false;
             }
+    - id: minuet_fan_snapshot_manual_state
+      then:
+        - lambda: |-
+            const auto& fan = id(minuet_fan);
+            auto& manual = id(minuet_fan_manual_state);
+            manual->state = fan->state;
+            manual->speed = fan->speed;
+            manual->direction = fan->direction;
+            manual->publish_state();
 
 # Cover controller
 minuet_cover_controller:
@@ -1299,6 +1304,15 @@ minuet_cover_controller:
               id(minuet_cover).make_call().set_command_open().perform();
             } else if (!open && (force || cover->position != COVER_CLOSED || cover->current_operation == COVER_OPERATION_OPENING)) {
               id(minuet_cover).make_call().set_command_close().perform();
+            }
+    - id: minuet_cover_snapshot_manual_state
+      then:
+        - lambda: |-
+            auto& cover = id(minuet_cover);
+            if (cover->position == COVER_OPEN || cover->current_operation == COVER_OPERATION_OPENING) {
+              id(minuet_cover_manual_state).make_call().set_command_open().perform();
+            } else {
+              id(minuet_cover_manual_state).make_call().set_command_close().perform();
             }
     - id: minuet_cover_perform_operation
       mode: restart
@@ -1519,6 +1533,8 @@ minuet_thermostat:
         - lambda: |-
             if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF) {
               if (id(minuet_controls).active_index() == 1 /*Enhanced*/) {
+                id(minuet_fan_snapshot_manual_state).execute();
+                id(minuet_cover_snapshot_manual_state).execute();
                 id(minuet_thermostat_override) = true;
                 id(minuet_thermostat_update).execute();
               } else {
