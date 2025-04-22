@@ -1501,18 +1501,16 @@ minuet_thermostat:
           default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
       default_preset: 'Default'
       on_boot_restore_from: memory
-  binary_sensor:
-    - id: minuet_thermostat_override_sensor
-      name: "Vent Thermostat Overridden"
+  switch:
+    - id: minuet_thermostat_override_switch
+      name: "Vent Thermostat Manual Override"
       icon: mdi:thermostat
       platform: template
       lambda: 'return id(minuet_thermostat_override);'
-  button:
-    - id: minuet_thermostat_reset_override_button
-      name: "Vent Thermostat Reset Override"
-      icon: mdi:thermostat
-      platform: template
-      on_press:
+      turn_on_action:
+        then:
+          - script.execute: minuet_thermostat_maybe_set_override
+      turn_off_action:
         then:
           - script.execute: minuet_thermostat_reset_override
   script:
