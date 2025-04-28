@@ -42,6 +42,7 @@ minuet_light:
       power_supply: minuet_light_power
       default_transition_length: 0.5s
       gamma_correct: 1.0
+      color_correct: [1, 0.6, 0.6, 1]
       effects:
         - addressable_rainbow:
         - addressable_twinkle:
