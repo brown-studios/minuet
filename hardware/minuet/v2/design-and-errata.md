@@ -1,6 +1,6 @@
-# Minuet hardware v2.2 (UNDER DEVELOPMENT)
+# Minuet hardware v2.2 (OBSOLETE)
 
-**Status: UNDER DEVELOPMENT**
+**Status: OBSOLETE, refer to the [Errata](#errata)**
 
 Version 2.x is the first feature complete realization of the Minuet fan controller.  Its goal is to do everything the original equipment could do and a little more.
 
