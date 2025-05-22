@@ -91,9 +91,9 @@ The temperature sensor is driven by an IO pin to minimize resistive self-heating
 
 The piezo buzzer is designed with politeness in mind which may be a matter of personal preference.
 
-You can customize or disable the sounds it makes in software.  Refer to the [user guide](../../docs/user-guide.md) for details.
+You can customize or disable the sounds it makes in software.  Refer to the [user guide](../../../docs/user-guide.md) for details.
 
-You can disable the buzzer altogether in hardware by cutting a jumper on the board.  Or you can make the buzzer louder by cutting and soldering the jumper to the 12 V position instead of the default 3.3 V position.  Refer to the [setup guide](../../docs/setup-guide.md) for details.
+You can disable the buzzer altogether in hardware by cutting a jumper on the board.  Or you can make the buzzer louder by cutting and soldering the jumper to the 12 V position instead of the default 3.3 V position.  Refer to the [setup guide](../../../docs/setup-guide.md) for details.
 
 And if you want to make the fan play a cheerful jingle any time it turns on then you can change the firmware to do that with [RTTTL](https://en.wikipedia.org/wiki/Ring_Tone_Text_Transfer_Language).
 
