@@ -1477,7 +1477,7 @@
 		)
 		(uuid 9772b961-c9f0-41bd-98fc-aebd39f681ff)
 	)
-	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close cover\n- R2+GND: Open cover\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close cover\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
+	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close lid\n- R2+GND: Open lid\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close lid\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
 		(exclude_from_sim no)
 		(at 95.25 59.69 0)
 		(effects
@@ -1698,7 +1698,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "28bff695-09e8-4546-8a24-1416dae0fdda")
-		(property "Reference" "#PWR0502"
+		(property "Reference" "#PWR069"
 			(at 116.84 121.92 0)
 			(effects
 				(font
@@ -1749,7 +1749,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0502")
+					(reference "#PWR069")
 					(unit 1)
 				)
 			)
@@ -1764,7 +1764,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "466c2d08-d713-4d33-a31b-194aa9358eef")
-		(property "Reference" "J503"
+		(property "Reference" "J12"
 			(at 204.724 111.252 0)
 			(effects
 				(font
@@ -1909,7 +1909,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "J503")
+					(reference "J12")
 					(unit 1)
 				)
 			)
@@ -1924,7 +1924,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5a4250fd-81fe-4e62-a6c3-a78135ce7917")
-		(property "Reference" "J502"
+		(property "Reference" "J11"
 			(at 160.02 110.236 0)
 			(effects
 				(font
@@ -2075,7 +2075,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "J502")
+					(reference "J11")
 					(unit 1)
 				)
 			)
@@ -2091,7 +2091,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f7d92af-f2cb-4b70-92f1-b0a52a24a1a9")
-		(property "Reference" "#PWR0503"
+		(property "Reference" "#PWR070"
 			(at 151.13 121.92 0)
 			(effects
 				(font
@@ -2142,7 +2142,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0503")
+					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -2159,7 +2159,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "969a0f0d-d51e-4be5-a832-f4b00329bb34")
-		(property "Reference" "#PWR0504"
+		(property "Reference" "#PWR071"
 			(at 185.42 127 0)
 			(effects
 				(font
@@ -2210,7 +2210,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0504")
+					(reference "#PWR071")
 					(unit 1)
 				)
 			)
@@ -2227,7 +2227,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "afd497da-0844-4621-9d6c-11cac217b9c2")
-		(property "Reference" "#PWR0501"
+		(property "Reference" "#PWR068"
 			(at 195.58 119.38 0)
 			(effects
 				(font
@@ -2278,7 +2278,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR0501")
+					(reference "#PWR068")
 					(unit 1)
 				)
 			)
@@ -2294,7 +2294,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bc47ec0e-332b-4338-98e9-31eeab015788")
-		(property "Reference" "J501"
+		(property "Reference" "J10"
 			(at 110.998 110.236 0)
 			(effects
 				(font
@@ -2445,7 +2445,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "J501")
+					(reference "J10")
 					(unit 1)
 				)
 			)

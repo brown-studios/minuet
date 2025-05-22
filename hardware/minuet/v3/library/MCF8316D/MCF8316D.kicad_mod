@@ -1,4 +1,4 @@
-(footprint "MCT8316ZT"
+(footprint "MCF8316D"
 	(version 20240108)
 	(generator "pcbnew")
 	(generator_version "8.0")
@@ -14,7 +14,7 @@
 			)
 		)
 	)
-	(property "Value" "MCT8316Z"
+	(property "Value" "MCF8316D"
 		(at 8.345 4.585 0)
 		(layer "F.Fab")
 		(uuid "9e10341f-6e1e-4d08-8482-5aaaaccaa87c")
