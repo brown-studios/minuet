@@ -1,1 +1,11 @@
+(version 1)
 
+(rule exempt_tooling_hole_courtyard_overlap
+	(constraint courtyard_clearance)
+	(severity ignore)
+	(condition "A.Reference == 'H1'"))
+
+(rule exempt_tooling_hole_silk_overlap
+	(constraint silk_clearance)
+	(severity ignore)
+	(condition "A.memberOfFootprint('C1')"))

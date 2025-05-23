@@ -143,7 +143,7 @@
         "min_track_width": 0.127,
         "min_via_annular_width": 0.1,
         "min_via_diameter": 0.5,
-        "solder_mask_to_copper_clearance": 0.0,
+        "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
       "teardrop_options": [
@@ -913,6 +913,18 @@
           "group_by": false,
           "label": "Alternative",
           "name": "Alternative",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Field16",
+          "name": "Field16",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC_Alternative",
+          "name": "LCSC_Alternative",
           "show": false
         }
       ],

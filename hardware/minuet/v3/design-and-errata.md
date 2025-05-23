@@ -151,7 +151,7 @@ Formulas to calculate the current limit where `RV` is the value of the `IPROPI` 
 **Safe default: RV = 2.21 Kohms, Itrip = 1.5 A**
 **Recommended setting: RV = 2.80 Kohms, Itrip = 1.18 A**
 
-The [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf) data sheet recommends adding a small value capacitor such as 10 nF to `IPROPI` to reduce glitches if faults are detected prematurely.  It might be possible to adjust the value of this capacitor to a larger value to delay premature faults slightly for a sticky motor that needs more current to get moving.  Alternatively, `IMODE` can be configured to apply cycle-by-cycle current limiting (but it will prevent end of travel detection).
+The [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf) data sheet recommends adding a small value capacitor such as 10 nF to `IPROPI` to reduce glitches if faults are detected prematurely.  It might be possible to adjust the value of this capacitor to a larger value to delay premature faults for a sticky motor that needs more current to get moving.  Alternatively, `IMODE` could be configured to apply fixed off-time current chopping (but it will prevent end of travel detection).
 
 ### Expansion port
 
@@ -183,7 +183,7 @@ Connect [QWIIC](https://www.sparkfun.com/qwiic) peripherals to the `QWIIC` port,
 The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to components that need specific functions first and the remaining pins are assigned to the expansion port.
 
 - `GPIO0` & `GPIO1`: Reserved for the GPIO expansion port (IO, ADC, LEDC PWM, 32 kHz XTAL, and more functions)
-- `GPIO2`:` IR receiver (RMT function), strapping pin
+- `GPIO2`: IR receiver (RMT function), strapping pin
 - `GPIO3`: Voltage sensor (ADC function)
 - `GPIO4`: Thermistor (ADC function)
 - `GPIO5` & `GPIO6`: Reserved for the GPIO expansion port (IO, LEDC PWM, and more functions)
@@ -194,7 +194,7 @@ The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to co
 - `GPIO18` & `GPIO19`: USB full-speed transceiver
 - `GPIO20` & `GPIO21`: Serial port UART
 
-The TCA9555 IO expander handles the remaining low speed digital logic functions.  These pins are designated `XIO` on the schematic.  All of the `XIO` pins have been assigned to built-in features of the board.  Refer to the schematics for details.
+The TCA9555 IO expander handles the remaining low speed digital logic functions.  These pins are designated `XIO` on the schematic.  All of the `XIO` pins have been assigned to peripherals.  Refer to the schematics for details.
 
 ## Errata
 
