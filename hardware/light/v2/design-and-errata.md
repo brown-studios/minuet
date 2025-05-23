@@ -64,4 +64,6 @@ Recommendation: Use RGBW addressable LED strips with a warm white or cold white 
 
 ## Errata
 
-Nothing yet...
+Not yet corrected from v2.5:
+
+- The enlarged "handsoldering" footprints result in excess solder paste on the board and make it harder to position components for reflow soldering.  Should switch back to normal sized footprints.
