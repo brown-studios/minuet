@@ -1,4 +1,4 @@
-# Minuet light accessory
+# Minuet light accessory v2.5
 
 **Status: UNDER DEVELOPMENT**
 
