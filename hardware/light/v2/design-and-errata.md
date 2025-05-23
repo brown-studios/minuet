@@ -1,6 +1,6 @@
-# Minuet light accessory v2.5
+# Minuet light accessory v2.5 (OBSOLETE)
 
-**Status: UNDER DEVELOPMENT**
+**Status: OBSOLETE - SUPERSEDED BY V3 WITH A REDESIGNED EXPANSION PORT**
 
 The Minuet light accessory lets you attach a light to your fan.
 

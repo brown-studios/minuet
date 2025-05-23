@@ -1,6 +1,6 @@
-# Minuet lighting and load accessory
+# Minuet lighting and load accessory (ABANDONED)
 
-**Status: ABANDONED - SUPERSEDED BY THE SIMPLER 'LIGHT' ACCESSORY - SEE ERRATA**
+**Status: ABANDONED - SUPERSEDED BY THE SIMPLER 'LIGHT' ACCESSORY TO REMEDY [ERRATA](#errata)**
 
 The Minuet lighting and load accessory adds the capability to drive up to two independent loads attached to the fan.  The accessory can be configure to drive each independent load at 12 V, 5 V, or 3.3 V.
 

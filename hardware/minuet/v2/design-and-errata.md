@@ -1,6 +1,6 @@
 # Minuet hardware v2.2 (OBSOLETE)
 
-**Status: OBSOLETE, refer to the [Errata](#errata)**
+**Status: OBSOLETE - SUPERSEDED BY V3 TO REMEDY [ERRATA](#errata)**
 
 Version 2.x is the first feature complete realization of the Minuet fan controller.  Its goal is to do everything the original equipment could do and a little more.
 
@@ -250,3 +250,4 @@ Corrected from v2.1 to v2.2:
 Not yet corrected from v2.1:
 
 - The THERM and RAIN connectors interfere with a plastic pillar in the fan housing, they must be moved to a different location on the board.
+- The trapezoidal commutation noise is a bit annoying at low speeds.  Would be better to find a motor driver with better acoustic performance.
