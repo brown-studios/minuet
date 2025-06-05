@@ -12,13 +12,11 @@ Suggested applications:
 
 Depending on your application, you may need to modify your Minuet ESPHome firmware YAML configuration to control the loads in the manner you desire.
 
-[View the schematics in PDF format](light.pdf)
-
 ## Design synopsis
 
 The board consists of a high side P-Channel MOSFET driver and a 5 V voltage shifter.  Using a high side driver ensures there is a common ground reference which is necessary for driving addressable LED lights.
 
-The on-board 5 V voltage regulator has an extremely small quiescent current: 71 uA with no load, 750 uA at full load.  Perfect for not draining the battery.
+The on-board 5 V voltage regulator has an extremely small quiescent current: 71 uA with no load, 750 uA at full load so it won't drain your battery.
 
 The board is laid out to be amenable to hand soldering.  The components are fairly small to fit within the allotted space but the pads are fully exposed.
 
@@ -28,23 +26,41 @@ The board gets its power from the Minuet fan controller board.  Please consider 
 - 5 V supply is regulated, 150 mA current available
 - 3.3 V supply is regulated, 600 mA current available
 
-## Connecting the light
+The board includes a small prototyping area of 0.1" (2.54 mm) pitch through-hole pads for building your own circuits.
+
+[View the schematics in PDF format](light.pdf)
+
+## Circuit board
+
+![Front side of circuit board](light-front.png)
+
+![Back side of circuit board](light-back.png)
+
+## Installation
 
 Make sure your light is designed for 12 V!
+
+Turn off power to the fan while making these connections.
 
 Connect the light to the [JST XH](https://www.jst.com/wp-content/uploads/2021/01/eXH-new.pdf) port labeled `LIGHT`.  Refer to the labels on the circuit board for the correct orientation.
 
 - pin 1 labeled `GND` is ground
-- pin 2 labeled `DAT` is 5 V data, controlled by `GPIO6`, 32 mA maximum output current
-- pin 3 labeled `PWR` is 12 V power, controlled by `GPIO5`, 1 A maximum output current
+- pin 2 labeled `DAT` is 5 V data, controlled by `GPIO5`, 32 mA maximum output current
+- pin 3 labeled `PWR` is 12 V power, controlled by `GPIO6`, 1 A maximum output current
 
 When attaching a dimmable LED light, you only need to connect power and ground to the light; leave the data pin unconnected.
 
 When attaching an addressable LED strip, you need to connect power, data, and ground to the strip.
 
-## The 12 V supply may not actually be 12 V
+Plug the accessory into the Minuet `EXPANSION PORT`.  Take care that the pins are aligned with the socket.
 
-Be aware that the 12 V supply is unregulated and will reflect the voltage of whatever the fan is connected to, such as a battery whose voltage may vary widely by a few volts as it charges and discharges.
+## Usage
+
+Refer to the [user guide](../../../docs/user-guide.md) for how to operate the light accessory using the fan's keypad or an infrared remote.
+
+## The 12 V supply is unregulated
+
+The 12 V supply is unregulated and will reflect the voltage of whatever the fan is connected to, such as a battery whose voltage may vary by a few volts as it charges and discharges.
 
 Typically, LED lights won't mind being driven a few volts more or less than 12 V but they will dissipate more heat at higher voltages and could potentially be damaged if operated as full brightness that way for a long time.
 
@@ -56,9 +72,9 @@ It depends on the LED strip that you use.  Here's some general guidance.  If you
 
 As a rough estimate, a typical RGB LED pixel draws 0.3 W when red, green, and blue are at full brightness and a typical RGBW LED pixel draws an extra 0.1 W when the white channel is also lit at full brightness.  It adds up quickly when you multiply by the number of pixels!
 
-In practice, you can drive a lot more LEDs if you don't run them at full brightness.  If you run them at 50% intensity uses about 1/4 the power, they're still plenty bright, and they will last longer because they produce less waste heat.
+In practice, you can drive a lot more LEDs if you don't run them at full brightness.  If you run them at 50% intensity, they use about 1/4 the power, they're still plenty bright, and they will last longer because they produce less waste heat.
 
-With the available 12 W of power, you should be able to light about 40 RGB pixels at full brightness and a few times more when operated at a reduced brightness.  Plenty for lighting up the fan cowling or part of the ceiling.
+With the available 12 W of power from the `LIGHT` connector, you should be able to light about 40 RGB pixels at full brightness and many more when operated at a reduced brightness.  Plenty for lighting up the fan cowling or part of the ceiling.
 
 Recommendation: Use RGBW addressable LED strips with a warm white or cold white channel to improve [color rendering](https://en.wikipedia.org/wiki/Color_rendering_index) when used for white light general illumination.  Mixing RGB to produce white without a dedicated white channel makes everything look weird.
 

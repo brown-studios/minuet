@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "8.0")
 	(layer "F.Cu")
-	(property "Reference" "J104"
+	(property "Reference" "REF**"
 		(at 2 -5.38 180)
 		(layer "F.SilkS")
 		(hide yes)
@@ -65,7 +65,7 @@
 			)
 		)
 	)
-	(attr through_hole exclude_from_bom)
+	(attr through_hole exclude_from_pos_files exclude_from_bom)
 	(fp_rect
 		(start -1 -1)
 		(end 1 21.28)
