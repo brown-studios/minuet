@@ -3,40 +3,17 @@
 # Do not include this file directly.
 minuet_light_common:
   esphome:
+    includes:
+      - minuet/light-accessory/light-accessory.h
     on_boot:
       - priority: 500
         then:
         - lambda: |-
             id(minuet_keypad_accessory_toggle) = []() -> bool {
-              const auto& light = id(minuet_light);
-              if (light->remote_values.is_on()) {
-                light->turn_off().perform();
-              } else if (light->get_traits().supports_color_mode(ColorMode::RGB_WHITE)) {
-                light->turn_on()
-                    .set_color_mode(ColorMode::RGB_WHITE)
-                    .set_brightness(1.f)
-                    .set_color_brightness(0.f)
-                    .set_rgbw(1.f, 1.f, 1.f, 1.f)
-                    .perform();
-              } else if (light->get_traits().supports_color_mode(ColorMode::WHITE)) {
-                light->turn_on()
-                    .set_color_mode(ColorMode::WHITE)
-                    .set_brightness(1.f)
-                    .set_white(1.f)
-                    .perform();
-              } else if (light->get_traits().supports_color_mode(ColorMode::RGB)) {
-                light->turn_on()
-                    .set_color_mode(ColorMode::RGB)
-                    .set_brightness(1.f)
-                    .set_rgb(1.f, 1.f, 1.f)
-                    .perform();
-              } else if (light->get_traits().supports_color_mode(ColorMode::BRIGHTNESS)) {
-                light->turn_on()
-                    .set_color_mode(ColorMode::BRIGHTNESS)
-                    .set_brightness(1.f)
-                    .perform();
-              } else {
-                light->turn_on().perform();
-              }
+              minuet::light_accessory::toggle(id(minuet_light));
               return true;
+            };
+
+            id(minuet_ir_control_accessory_nec) = [](esphome::remote_base::NECData code) {
+              minuet::light_accessory::apply_nec_code(id(minuet_light), code);
             };

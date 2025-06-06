@@ -41,10 +41,54 @@ minuet_light:
       is_rgbw: ${is_rgbw}
       power_supply: minuet_light_power
       default_transition_length: 0.5s
-      gamma_correct: 1.0
-      color_correct: [1, 0.6, 0.6, 1]
+      gamma_correct: 1.4
+      color_correct: [1, 0.9, 0.9, 1]
       effects:
         - addressable_rainbow:
         - addressable_twinkle:
+        - pulse:
+        - lambda:
+            name: Fade
+            update_interval: 20ms
+            lambda: |-
+              auto color = esphome::light::ESPHSVColor((millis() / 80) & 0xff, 255, 255).to_rgb();
+              id(minuet_light).make_call()
+                  .set_transition_length(0)
+                  .set_color_brightness(1.f)
+                  .set_color_mode(esphome::light::ColorMode::RGB_WHITE)
+                  .set_rgbw(color.r / 255.f, color.g / 255.f, color.b / 255.f, 0.f)
+                  .set_publish(false)
+                  .perform();
+        - lambda:
+            name: Random
+            update_interval: 7s
+            lambda: |-
+              auto color = esphome::light::ESPHSVColor(random_uint32() & 0xff, 255, 255).to_rgb();
+              id(minuet_light).make_call()
+                  .set_transition_length(1000)
+                  .set_color_brightness(1.f)
+                  .set_color_mode(esphome::light::ColorMode::RGB_WHITE)
+                  .set_rgbw(color.r / 255.f, color.g / 255.f, color.b / 255.f, 0.f)
+                  .set_publish(false)
+                  .perform();
+      on_state:
+        then:
+          lambda: |-
+            // Some effects don't clear the white channel when changing colors which makes the
+            // effect overly bright so we clear the white channel and restart the effect.
+            auto& light = id(minuet_light);
+            const auto& values = light->remote_values;
+            if (values.get_white() != 0.f) {
+              std::string effect = light->get_effect_name();
+              if (effect == "Rainbow") {
+                ESP_LOGD("minuet", "Clear white channel for RGBW unaware light effect: %s", effect.c_str());
+                //light->make_call()
+                //    .set_transition_length(0.f)
+                //    .set_color_mode(esphome::light::ColorMode::RGB_WHITE)
+                //    .set_color_brightness(1.f)
+                //    .set_rgbw(1.f, 0.f, 0.f, 0.f).perform();
+                static_cast<AddressableLight*>(light->get_output())->all().set_white(0.f);
+              }
+            }
 
 <<: !include common.yaml

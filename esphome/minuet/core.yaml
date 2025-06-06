@@ -1057,6 +1057,11 @@ minuet_keypad_control:
 
 # Infrared remote control
 minuet_ir_control:
+  globals:
+    - id: minuet_ir_control_accessory_nec # Injected from accessories
+      type: void(*)(esphome::remote_base::NECData)
+      restore_value: false
+      initial_value: "nullptr"
   maxxfan_protocol:
   remote_receiver:
     - id: minuet_ir
@@ -1065,7 +1070,7 @@ minuet_ir_control:
         mode: input
         inverted: true
         ignore_strapping_warning: true
-      dump: maxxfan
+      dump: [ maxxfan, nec ]
       on_maxxfan:
         then:
           lambda: |-
@@ -1094,6 +1099,12 @@ minuet_ir_control:
               id(minuet_cover_set).execute(x.cover_open, fan_changing_states);
             }
             id(minuet_tone)->execute(x.warn ? "ir_warn" : "ir_confirm");
+      on_nec:
+        then:
+          lambda: |-
+            const auto& fn = id(minuet_ir_control_accessory_nec);
+            if (!!fn) fn(x);
+
 
 # Fan controller
 #
