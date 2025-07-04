@@ -648,6 +648,18 @@
           "label": "LCSC",
           "name": "LCSC",
           "show": true
+        },
+        {
+          "group_by": false,
+          "label": "FT Rotation Offset",
+          "name": "FT Rotation Offset",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Alternative",
+          "name": "Alternative",
+          "show": false
         }
       ],
       "filter_string": "",

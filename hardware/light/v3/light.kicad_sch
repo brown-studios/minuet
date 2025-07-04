@@ -4899,7 +4899,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "LP2985-50DBVR"
+		(property "LCSC" "C74511"
 			(at 146.05 68.58 0)
 			(effects
 				(font
@@ -5749,6 +5749,15 @@
 				(hide yes)
 			)
 		)
+		(property "Alternative" "10129381-916001BLF"
+			(at 74.93 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "4"
 			(uuid "40a5f279-5cd7-4043-8eff-9df76e953dda")
 		)
@@ -6409,7 +6418,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "SN74LVC1G17DBVR"
+		(property "LCSC" "C7836"
 			(at 151.13 118.11 0)
 			(effects
 				(font
