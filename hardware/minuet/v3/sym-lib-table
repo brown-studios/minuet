@@ -1,6 +1,5 @@
 (sym_lib_table
   (version 7)
-  (lib (name "EVQ-P7A01P")(type "KiCad")(uri "${KIPRJMOD}/library/EVQ-P7A01P/EVQ-P7A01P.kicad_sym")(options "")(descr ""))
   (lib (name "DRV8876PWPR")(type "KiCad")(uri "${KIPRJMOD}/library/DRV8876PWPR/DRV8876PWPR.kicad_sym")(options "")(descr ""))
   (lib (name "TSOP39238")(type "KiCad")(uri "${KIPRJMOD}/library/TSOP39238/TSOP39238.kicad_sym")(options "")(descr ""))
   (lib (name "MCF8316D")(type "KiCad")(uri "${KIPRJMOD}/library/MCF8316D/MCF8316D.kicad_sym")(options "")(descr ""))

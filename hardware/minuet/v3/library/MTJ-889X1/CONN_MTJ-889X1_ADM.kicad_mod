@@ -306,4 +306,15 @@
 		(remove_unused_layers no)
 		(uuid "9a015f7e-8ee5-4995-a814-c4ae4d03d026")
 	)
+	(model "${KIPRJMOD}/library/MTJ-889X1/MTJ-880X1.stp"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
 )

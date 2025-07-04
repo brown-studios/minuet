@@ -1,6 +1,5 @@
 (fp_lib_table
   (version 7)
-  (lib (name "EVQ-P7A01P")(type "KiCad")(uri "${KIPRJMOD}/library/EVQ-P7A01P")(options "")(descr ""))
   (lib (name "RGEF")(type "KiCad")(uri "${KIPRJMOD}/library/RGEF")(options "")(descr ""))
   (lib (name "DRV8876PWPR")(type "KiCad")(uri "${KIPRJMOD}/library/DRV8876PWPR")(options "")(descr ""))
   (lib (name "Generic")(type "KiCad")(uri "${KIPRJMOD}/library/Generic/Generic.pretty")(options "")(descr ""))

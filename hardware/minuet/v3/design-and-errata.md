@@ -2,25 +2,13 @@
 
 **Status: UNDER DEVELOPMENT**
 
-Minuet version 3.x is a feature complete replacement for the Maxxfan circuit board.  Minuet integrates a brushless DC fan motor driver with field-oriented control optimized for quiet operation and it has a microcontroller with built-in WiFi for home automation.
-
-[View the schematics in PDF format](minuet.pdf)
-
-## Changes from v2
-
-- New BLDC fan motor driver with field-oriented control optimized for quiet operation
-  - All fan motor parameters are programmed in software via I2C; no more jumpers
-  - Works with sensorless BLDC motors
-  - Directly governs the fan rotor speed (instead of the motor duty cycle as before)
-- Added a safely lock signal to stop the fan, close the lid, and inhibit operation
-  - When paired with a reed switch, Minuet can detect when an insulating cover is installed and engage the safety lock until it is removed
-- Optimized the bill of materials for fabrication by JLCPCB PCBA
+Minuet v3 is a feature complete replacement for the Maxxfan circuit board.  Minuet integrates a brushless DC fan motor driver with field-oriented control optimized for quiet operation and it has a microcontroller with built-in WiFi for home automation.
 
 ## Design synopsis
 
 The microcontroller is an [ESP32-C3](https://www.espressif.com/sites/default/files/documentation/esp32-c3-wroom-02_datasheet_en.pdf) with 4 MB of flash, a single core, and an integrated 2.4 GHz antenna.  It is ample for running ESPHome.
 
-The fan motor driver is a [MCF8316D](https://www.ti.com/lit/ds/symlink/mcf8316d.pdf).  It supports sensorless brushless DC motors with field oriented control with current limiting, built-in motor parameter estimation, and I2C interface.
+The fan motor driver is a [MCF8316D](https://www.ti.com/lit/ds/symlink/mcf8316d.pdf).  It supports sensorless brushless DC motors with field oriented control with current limiting, built-in motor parameter estimation, and I2C interface.  The integrated buck converter is disabled as per this [application note](https://www.ti.com/lit/an/slla643/slla643.pdf).
 
 The lid motor driver is a [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf).  It has built-in current limiting which is used to detect stalls at the end-of-travel when the lid is completely opened or closed.
 
@@ -46,6 +34,14 @@ A simple voltage divider measures the supply voltage and triggers a software-con
 
 A piezo buzzer provides audible feedback.  Minuet aims to be polite about its use of audible feedback.  It can be configured in software or disabled in hardware by cutting a jumper trace.
 
+[View the schematics in PDF format](minuet.pdf)
+
+## Circuit board
+
+![Front side of circuit board](minuet-front.png)
+
+![Back side of circuit board](minuet-back.png)
+
 ## Recommended operational parameters
 
 Recommended electrical supply specifications:
@@ -59,13 +55,13 @@ Recommended motor specifications:
 - Fan motor: Brushless DC motor rated for the supply voltage and constant operation, no hall sensors needed, driven with up to 4 A current per phase
 - Lid motor: Brushed DC motor rated for the supply voltage and intermittent operation, can draw up to 2 A current
 
-Please test your set up carefully and monitor heat dissipation if you choose to push Minuet beyond these recommendations.
+Please test your set up carefully and monitor heat dissipation if you choose to operate Minuet beyond these recommendations.
 
 ## PCB assembly
 
 The KiCad project contains the bill of materials.  It includes part numbers and orientations of all SMT components for the JLCPCB PCBA service.
 
-You will need advanced soldering skills to completely assemble this project by hand.  Although most of the components can be soldered by hand, a few parts have very fine pitch pads that are inaccessible from the sides.  You will need a solder stencil, fine solder paste, and a temperature controlled hot plate or a reflow oven.  The fan motor driver chip in particular must be carefully soldered to ensure an efficient thermal bond to the PCB.  You may find it easier to buy a board with the SMT components pre-assembled and then solder the remaining through-hole components by hand.
+You will need advanced soldering skills to completely assemble this project by hand.  Although most of the components can be soldered by hand, a few parts have very fine pitch pads that are inaccessible from the sides.  You will need a solder stencil, fine solder paste, and a temperature controlled hot plate or a reflow oven.  The fan motor driver chip in particular must be carefully soldered to ensure an efficient thermal bond to the PCB.  You may find it easier to buy a board with the SMT components pre-assembled and then solder the remaining through-hole components by hand.  The IR receiver cannot be installed at the factory because it requires a standoff.
 
 All of the SMT components are on the front side of the board.  They should be soldered first before moving on to the through hole components.
 
@@ -77,9 +73,7 @@ The IR receiver must be raised above the board as far as the leads can be extend
 
 There are test points on the board near the lid motor current limit trim potentiometer to help you measure the resistance as you make adjustments.
 
-You can safely upgrade passive components to equivalent values with higher voltage or current ratings or more precise tolerances as long as the package size remains the same.
-
-You can safely omit certain components that you don't need including the IR receiver, the 6P6C and 8P8C connectors for wired wall controls, the rain sensor circuitry, the buzzer, and the current limit trim potentiometers (if you add fixed resistors instead).
+You can safely omit certain components that you don't need including the IR receiver, the 6P6C and 8P8C connectors for wired wall controls, the rain sensor circuitry, the buzzer, and the current limit trim potentiometer (if you add a fixed resistor instead).
 
 To improve the circuit board's moisture resistance, you can spray it with an insulative conformal coating after taking care to mask off all connectors before spraying so they don't get coated unintentionally.
 
@@ -107,7 +101,7 @@ Connect a switch to the `LOCK` port with a JST XH-2 plug to trigger a safety loc
 
 Here are some suggested applications:
 
-- Attach a magnet to your vent fan insulating cover and a reed switch connected to the `LOCK` port somewhere in the fan trim ring or ceiling to inhibit operation while the insulating cover is installed.
+- Attach a magnet to your vent fan insulating cover and a normally-open reed switch connected to the `LOCK` port somewhere in the fan trim ring or ceiling to inhibit operation while the insulating cover is installed.
 - Connect a relay or optocoupler to inhibit operation of the fan while the engine is running.
 - Refer to the [user guide](../../../docs/setup-guide.md) for details.
 
@@ -195,6 +189,19 @@ The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to co
 - `GPIO20` & `GPIO21`: Serial port UART
 
 The TCA9555 IO expander handles the remaining low speed digital logic functions.  These pins are designated `XIO` on the schematic.  All of the `XIO` pins have been assigned to peripherals.  Refer to the schematics for details.
+
+## Changes from v2
+
+- New BLDC fan motor driver with field-oriented control optimized for quiet operation
+  - All fan motor parameters are programmed in software via I2C; no more jumpers
+  - Works with sensorless BLDC motors
+  - Directly governs the fan rotor speed (instead of the motor duty cycle as before)
+- Added a safely lock signal to stop the fan, close the lid, and inhibit operation
+  - When paired with a normally-open reed switch, Minuet can detect when an insulating cover is installed and engage the safety lock until it is removed
+- Optimized the bill of materials for fabrication by JLCPCB PCBA
+- Marked the schematic with the voltage ratings of the actual parts instead of the minimum necessary
+- Improved the left-to-right reading order of the schematic
+- Moved all of the components except some connectors and the trim pot to the front side of the board to best take advantage of LCSC single-sided economic PCBA although it would perhaps be better to keep the PTC fuse on the back side (facing up when installed) for improved free air convection
 
 ## Errata
 

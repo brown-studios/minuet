@@ -2114,4 +2114,15 @@
 		(zone_connect 2)
 		(uuid "ecf4d98a-8261-4320-8d2a-f07cf9f87fa0")
 	)
+	(model "${KIPRJMOD}/library/MCF8316D/MCF8316D.STEP"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 0)
+		)
+	)
 )

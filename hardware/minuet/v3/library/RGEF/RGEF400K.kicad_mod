@@ -200,4 +200,15 @@
 		(solder_mask_margin 0.102)
 		(uuid "05694826-bf28-41de-8232-7e140f35ddae")
 	)
+	(model "${KIPRJMOD}/library/RGEF/RGEF400.stp"
+		(offset
+			(xyz 0 0.635 7.62)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 0)
+		)
+	)
 )

@@ -59,14 +59,8 @@
         }
       ],
       "drc_exclusions": [
-        "hole_clearance|52450000|104995000|6acbe62e-cc7c-4d7e-ade9-403d5712d3e0|65dd6ed2-cd55-48d7-a34a-5d0476543eb5",
-        "hole_clearance|52450000|104995000|6acbe62e-cc7c-4d7e-ade9-403d5712d3e0|c11c3109-4d6e-4128-bfa9-d0aec0444f60",
-        "hole_clearance|58550000|104995000|694c8375-fe9e-4f67-850e-d4222f3586aa|80cd5445-47e1-4f63-871e-5c0c86c04fb3",
-        "hole_clearance|58550000|104995000|694c8375-fe9e-4f67-850e-d4222f3586aa|c07b29c2-5b53-487e-b6e4-1f50bb60974f",
         "lib_footprint_mismatch|52128679|80500000|57b43e58-74f2-4848-89e4-20d4ae1d0683|00000000-0000-0000-0000-000000000000",
         "lib_footprint_mismatch|60763864|91753903|b192ce88-7dc6-4ee6-ad44-56ae7b287f85|00000000-0000-0000-0000-000000000000",
-        "shorting_items|52950000|104145000|fff0b843-68eb-409c-a2cd-d5957618b7e3|5c161d11-97f2-4bb0-bd2d-3f5e6933fc97",
-        "shorting_items|57750000|104145000|c5ebc38b-6cc2-4599-826b-fe658fe8715c|6a1a5b4b-822a-475d-8be6-fd64ef527554",
         "silk_edge_clearance|42950378|84049622|018f9cf6-60bb-4d31-b8d3-5f422153c089|9f437410-5396-4b81-8338-5a1d85e5955c",
         "silk_edge_clearance|55664214|71307613|018f9cf6-60bb-4d31-b8d3-5f422153c089|0f0fcaa9-b1c7-4632-a169-d3a53e7b8432",
         "silk_edge_clearance|55678300|71321700|018f9cf6-60bb-4d31-b8d3-5f422153c089|a4019d6c-ffb9-40a6-b11a-89d5a082e4a3"
@@ -775,7 +769,7 @@
           "group_by": false,
           "label": "LCSC_Alternative",
           "name": "LCSC_Alternative",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -788,6 +782,12 @@
           "label": "FT Position Offset",
           "name": "FT Position Offset",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC_Preferred",
+          "name": "LCSC_Preferred",
+          "show": true
         }
       ],
       "filter_string": "",

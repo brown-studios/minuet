@@ -1477,7 +1477,7 @@
 		)
 		(uuid 9772b961-c9f0-41bd-98fc-aebd39f681ff)
 	)
-	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close lid\n- R2+GND: Open lid\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close lid\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
+	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close lid\n- R2+GND: Open lid\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close lid\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red with 2 V voltage drop (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
 		(exclude_from_sim no)
 		(at 95.25 59.69 0)
 		(effects
@@ -2193,7 +2193,25 @@
 				(hide yes)
 			)
 		)
+		(property "Alternative" "0022284081"
+			(at 120.65 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "LCSC" "C3345591"
+			(at 120.65 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC_Alternative" "C3339252"
 			(at 120.65 124.46 0)
 			(effects
 				(font

@@ -3,9 +3,19 @@
 (rule exempt_tooling_hole_courtyard_overlap
 	(constraint courtyard_clearance)
 	(severity ignore)
-	(condition "A.Reference == 'H1'"))
+	(condition "A.Reference == 'TH*'"))
 
 (rule exempt_tooling_hole_silk_overlap
 	(constraint silk_clearance)
 	(severity ignore)
 	(condition "A.memberOfFootprint('C1')"))
+
+(rule exempt_usb_connector_hole_clearance
+	(constraint hole_clearance)
+	(severity ignore)
+	(condition "A.memberOfFootprint('J6')"))
+
+(rule exempt_usb_connector_shorted_pads
+	(constraint clearance)
+	(severity ignore)
+	(condition "A.memberOfFootprint('J6') && A.Type == 'Pad' && B.Type == 'Pad'"))
