@@ -5,7 +5,7 @@ TODO: keypad, captive portal web interface, Home Assistant
 
 ## Getting started
 
-
+(TODO)
 
 ## Using the built-in keypad and the 6 key wall remote
 
@@ -40,13 +40,13 @@ In manual mode, the up/down buttons control the fan speed and the on/off button 
 
 In auto mode, the up/down buttons control the thermostat temperature setpoint, the on/off button exits auto mode, and the thermostat controls the fan speed based on the ambient temperature.  The thermostat will turn the fan on in the direction it last operated in.
 
-- Press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C)
-- Press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C)
+- Press `auto`: return to manual mode, turn fan off, close cover
+- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
+- Press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick rising tone
+- Press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick falling tone
 - Press `open/close` (`up` and `down` together): *inoperable in this mode*
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: return to manual mode, turn fan off, close cover
-- Press `auto`: return to manual mode, turn fan off, close cover
-- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (~ 25.5 °C)
 
 ### Enhanced controls
 
@@ -72,9 +72,9 @@ Hold the `auto` button and press other buttons as described below to configure t
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: toggle the fan off or turn it on at its last configured manual fan speed
 - Press `auto`: enable the thermostat if it is disabled, re-engage the thermostat if it is overridden, otherwise disable the thermostat
+- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
 - Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick rising tone
 - Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick falling tone
-- Hold `auto` and press `open/close` (`up` and `down` together): reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
 - Hold `auto` and press `in/out`: toggle thermostat controlled fan direction between same as manual, air in, and air out, Minuet confirms air in with a quick descending scale, air out with a quick rising scale, and same with two quick tones
 - Hold `auto` and press `on/off`: toggle thermostat controlled fan state to be on or off (with the cover open in either case), Minuet confirms with a long rising tone for on or a long falling tone for off
 
@@ -85,12 +85,6 @@ Press the `rain sensor` button to toggle the rain sensor on or off.
 When the rain sensor is disabled, the LED will turn red to warn that water could enter your vehicle if it rains.
 
 When the rain sensor detects moisture, it turns off the fan, closes the cover, and makes the LED flash red.  Press the `rain sensor` button again to reset the flashing LED.
-
-### Lighting accessory (if installed)
-
-Hold `in/out` for 1 second to toggle the light on or off.
-
-Note: To dim the light, change its color, or activate effects, use the Minuet web app or your home automation app.  (Or try to implement better lighting controls in the Minuet firmware.  Perhaps holding `in/out` together with `up`, `down`, or `on/off` could change the state of the light.  Or maybe stick a rotary encoder or a custom keypad somewhere for better control.)
 
 ### Enable or disable WiFi
 
@@ -128,7 +122,7 @@ When you press any button on the remote while the automatic thermostat is enable
 - Press `open`: open cover
 - Press `close`: close cover
 
-## Using the infrared remote
+## Using the Maxxfan infrared remote
 
 Please refer to the instructions originally provided with the remote.
 
@@ -138,6 +132,40 @@ Consequently, there is no difference in the remote's behavior regardless of your
 
 What you see is what you get.
 
-## Using the web app and API
+## Using the web app
 
 (TODO)
+
+## Using the API
+
+(TODO)
+
+# Lighting accessory (if installed)
+
+## Using the built-in keypad
+
+Use the built-in keypad to control the light as follows.
+
+- Hold `in/out` for 1 second: toggle the light on or off, the light's default color is white
+- Hold `in/out` and press `up`: increase the brightness by one step, does nothing if the light is off or is already at maximum brightness
+- Hold `in/out` and press `down`: decrease the brightness by one step, does nothing if the light is off or is already at minimum brightness
+
+## Using the 24-key RGBW LED infrared remote control
+
+Use a 24-key RGBW LED remote control to dim the light, change its color, or activate effects as follows.
+
+- Press `on`: turn the light on white, the light's default color is white
+- Press `off`: turn the light off
+- Press `brightness up`: increase the brightness by one step, does nothing if the light is off or is already at maximum brightness
+- Press `brightness down`: decrease the brightness by one step, does nothing if the light is off or is already at minimum brightness
+- Press `R`, `G`, `B`, `W`, or any colored button: set the light to the indicated color (approximately), does nothing if the light is off or if it doesn't support changing the color
+- Press `Flash`: activate a twinkling color effect, does nothing if the light is off or does not support effects
+- Press `Strobe`: activate a pulsing color effect, does nothing if the light is off or does not support effects
+- Press `Fade`: activate a solid rainbow color effect, does nothing if the light is off or does not support effects
+- Press `Smooth`: activate a chasing rainbow color effect, does nothing if the light is off or does not support effects
+
+Your lighting kit should include one of these remotes. If you'd like to buy another one, search for "24-key RGBW LED IR remote control" in an online marketplace and you should find some, such as [this listing](https://www.amazon.com/dp/B09C1BFX48). These remotes are fairly generic and inexpensive so they are often included with light fixtures.
+
+You can customize the table of colors and effects by modifying the firmware according to your preferences. Refer to [light-accessory.h](../esphome/minuet/light-accessory/light-accessory.h).
+
+![](./24%20key%20rgbw%20led%20remote.jpg)

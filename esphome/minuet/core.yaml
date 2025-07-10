@@ -512,11 +512,19 @@ minuet_keypad_control:
       type: bool
       restore_value: false
       initial_value: "false"
-    - id: minuet_keypad_wifi_switch # Injected from wifi.yaml
+    - id: minuet_keypad_wifi_switch # Injected by wifi.yaml
       type: Switch*
       restore_value: false
       initial_value: "nullptr"
-    - id: minuet_keypad_accessory_toggle # Injected from accessories
+    - id: minuet_keypad_accessory_toggle # Injected by accessories
+      type: bool(*)()
+      restore_value: false
+      initial_value: "nullptr"
+    - id: minuet_keypad_accessory_up # Injected by accessories
+      type: bool(*)()
+      restore_value: false
+      initial_value: "nullptr"
+    - id: minuet_keypad_accessory_down # Injected by accessories
       type: bool(*)()
       restore_value: false
       initial_value: "nullptr"
@@ -570,7 +578,7 @@ minuet_keypad_control:
           // Declare all of the possible actions
           // This code might be tidier in separate functions but that would require putting them
           // in a separate header file which is less convenient
-          const auto do_press_power = [which_menu]{
+          const auto do_press_power = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
@@ -587,7 +595,7 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_4_on = [which_menu]{
+          const auto do_press_4_on = [which_menu]() {
             auto& fan = id(minuet_fan);
             if (fan->state) {
               const auto SPEED_CYCLE = { 1, 3, 7, 10, };
@@ -600,12 +608,12 @@ minuet_keypad_control:
               id(minuet_tone)->execute("manual_fan_on");
             }
           };
-          const auto do_press_4_off = [which_menu]{
+          const auto do_press_4_off = [which_menu]() {
             auto& fan = id(minuet_fan);
             fan->turn_off().perform();
             id(minuet_tone)->execute("manual_fan_off");
           };
-          const auto do_press_up = [which_menu]{
+          const auto do_press_up = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
@@ -631,7 +639,7 @@ minuet_keypad_control:
             }
             return false;
           };
-          const auto do_press_down = [which_menu]{
+          const auto do_press_down = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
@@ -657,7 +665,7 @@ minuet_keypad_control:
             }
             return false;
           };
-          const auto do_press_open_close = [which_menu]{
+          const auto do_press_open_close = [which_menu]() {
             const auto menu = which_menu();
             if (menu != Menu::STANDARD_AUTO) {
               auto& cover = id(minuet_cover);
@@ -670,17 +678,17 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_4_open = [which_menu]{
+          const auto do_press_4_open = [which_menu]() {
             auto& cover = id(minuet_cover);
             cover->make_call().set_command_open().perform();
             id(minuet_tone)->execute("manual_cover_open");
           };
-          const auto do_press_4_close = [which_menu]{
+          const auto do_press_4_close = [which_menu]() {
             auto& cover = id(minuet_cover);
             cover->make_call().set_command_close().perform();
             id(minuet_tone)->execute("manual_cover_close");
           };
-          const auto do_press_direction = [which_menu]{
+          const auto do_press_direction = [which_menu]() {
             auto& fan = id(minuet_fan);
             if (fan->state) {
               if (fan->direction == FanDirection::FORWARD) {
@@ -692,7 +700,7 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_auto = [which_menu]{
+          const auto do_press_auto = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
@@ -716,7 +724,7 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_auto_up = [which_menu]{
+          const auto do_press_auto_up = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               auto& therm = id(minuet_thermostat);
@@ -724,7 +732,7 @@ minuet_keypad_control:
               id(minuet_tone)->execute("auto_temp_up");
             }
           };
-          const auto do_press_auto_down = [which_menu]{
+          const auto do_press_auto_down = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               auto& therm = id(minuet_thermostat);
@@ -732,15 +740,7 @@ minuet_keypad_control:
               id(minuet_tone)->execute("auto_temp_down");
             }
           };
-          const auto do_press_auto_reset = [which_menu]{
-            const auto menu = which_menu();
-            if (menu == Menu::ENHANCED) {
-              auto& therm = id(minuet_thermostat);
-              therm->make_call().set_target_temperature(fahrenheit_to_celsius(${minuet_thermostat_default_temperature})).perform();
-              id(minuet_tone)->execute("auto_temp_default");
-            }
-          };
-          const auto do_press_auto_power = [which_menu]{
+          const auto do_press_auto_power = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               auto& therm = id(minuet_thermostat);
@@ -753,7 +753,7 @@ minuet_keypad_control:
               }
             }
           };
-          const auto do_press_auto_direction = [which_menu]{
+          const auto do_press_auto_direction = [which_menu]() {
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED) {
               id(minuet_thermostat_fan_direction).make_call().select_next(true).perform();
@@ -763,7 +763,7 @@ minuet_keypad_control:
           };
           const auto do_hold_auto = [which_menu]() -> bool {
             const auto menu = which_menu();
-            if (menu == Menu::STANDARD_AUTO) {
+            if (menu == Menu::ENHANCED || menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
               therm->make_call().set_target_temperature(fahrenheit_to_celsius(${minuet_thermostat_default_temperature})).perform();
               id(minuet_tone)->execute("auto_temp_default");
@@ -771,7 +771,7 @@ minuet_keypad_control:
             }
             return false;
           };
-          const auto do_press_rain = [which_menu]{
+          const auto do_press_rain = [which_menu]() {
             if (id(minuet_rain_sensor_did_stop_fan).state || !id(minuet_rain_sensor_should_stop_fan).state) {
               id(minuet_rain_sensor_reset).press();
               id(minuet_tone)->execute("rain_on");
@@ -812,6 +812,14 @@ minuet_keypad_control:
           };
           const auto do_hold_accessory_toggle = [which_menu]() -> bool {
             const auto& fn = id(minuet_keypad_accessory_toggle);
+            return !!fn && fn();
+          };
+          const auto do_press_accessory_up = [which_menu]() -> bool {
+            const auto& fn = id(minuet_keypad_accessory_up);
+            return !!fn && fn();
+          };
+          const auto do_press_accessory_down = [which_menu]() -> bool {
+            const auto& fn = id(minuet_keypad_accessory_down);
             return !!fn && fn();
           };
 
@@ -889,17 +897,19 @@ minuet_keypad_control:
           constexpr uint32_t KEY_COMBO_OPEN_CLOSE = KEY_UP | KEY_DOWN;
           constexpr uint32_t KEY_COMBO_AUTO_UP = KEY_AUTO | KEY_UP;
           constexpr uint32_t KEY_COMBO_AUTO_DOWN = KEY_AUTO | KEY_DOWN;
-          constexpr uint32_t KEY_COMBO_AUTO_OPEN_CLOSE = KEY_AUTO | KEY_COMBO_OPEN_CLOSE;
           constexpr uint32_t KEY_COMBO_AUTO_DIRECTION = KEY_AUTO | KEY_DIRECTION;
           constexpr uint32_t KEY_COMBO_AUTO_POWER = KEY_AUTO | KEY_POWER;
           constexpr uint32_t KEY_COMBO_POWER_UP = KEY_POWER | KEY_UP;
           constexpr uint32_t KEY_COMBO_POWER_DOWN = KEY_POWER | KEY_DOWN;
+          constexpr uint32_t KEY_COMBO_DIRECTION_UP = KEY_DIRECTION | KEY_UP;
+          constexpr uint32_t KEY_COMBO_DIRECTION_DOWN = KEY_DIRECTION | KEY_DOWN;
           const auto VALID_KEY_COMBOS = {
               KEY_UP, KEY_DOWN, KEY_RAIN, KEY_POWER, KEY_DIRECTION, KEY_AUTO,
               KEY_4_CLOSE, KEY_4_OPEN, KEY_4_OFF, KEY_4_ON,
-              KEY_COMBO_OPEN_CLOSE, KEY_COMBO_AUTO_UP, KEY_COMBO_AUTO_DOWN,
-              KEY_COMBO_AUTO_OPEN_CLOSE, KEY_COMBO_AUTO_DIRECTION, KEY_COMBO_AUTO_POWER,
+              KEY_COMBO_OPEN_CLOSE,
+              KEY_COMBO_AUTO_UP, KEY_COMBO_AUTO_DOWN, KEY_COMBO_AUTO_DIRECTION, KEY_COMBO_AUTO_POWER,
               KEY_COMBO_POWER_UP, KEY_COMBO_POWER_DOWN,
+              KEY_COMBO_DIRECTION_UP, KEY_COMBO_DIRECTION_DOWN,
           };
           bool key_valid = std::find(VALID_KEY_COMBOS.begin(), VALID_KEY_COMBOS.end(), key_state) != VALID_KEY_COMBOS.end();
 
@@ -955,15 +965,18 @@ minuet_keypad_control:
               } else if (key_state == KEY_COMBO_AUTO_DOWN) {
                 log_press("KEY_COMBO_AUTO_DOWN");
                 do_press_auto_down();
-              } else if (key_state == KEY_COMBO_AUTO_OPEN_CLOSE) {
-                log_press("KEY_COMBO_AUTO_OPEN_CLOSE");
-                do_press_auto_reset();
               } else if (key_state == KEY_COMBO_AUTO_DIRECTION) {
                 log_press("KEY_COMBO_AUTO_DIRECTION");
                 do_press_auto_direction();
               } else if (key_state == KEY_COMBO_AUTO_POWER) {
                 log_press("KEY_COMBO_AUTO_POWER");
                 do_press_auto_power();
+              } else if (key_state == KEY_COMBO_DIRECTION_UP) {
+                log_press("KEY_COMBO_DIRECTION_UP");
+                do_press_accessory_up();
+              } else if (key_state == KEY_COMBO_DIRECTION_DOWN) {
+                log_press("KEY_COMBO_DIRECTION_DOWN");
+                do_press_accessory_down();
               }
             }
           };
@@ -1013,7 +1026,7 @@ minuet_keypad_control:
           } else if (key_valid && last_key_state == 0) {
             // A key was pressed on its own
             last_key_time = millis();
-          } else if (key_valid && last_key_valid && key_state != last_key_state && key_state == (key_state | last_key_state)) {
+          } else if (key_valid && key_state != last_key_state && key_state == (key_state | last_key_state)) {
             // A key was pressed that adds to a previously pressed key to form a combo
             last_key_time = millis();
           } else if (key_valid && last_key_valid && key_state == last_key_state) {
@@ -1026,8 +1039,14 @@ minuet_keypad_control:
             // A key that was previously combined with auto has been released while auto remains held
             const uint32_t press_duration = millis() - last_key_time;
             do_press(last_key_state, press_duration);
+            key_valid = false; // cancel processing of the modifier itself
+          } else if (key_valid && key_state == KEY_DIRECTION && last_key_valid && (last_key_state & KEY_DIRECTION) != 0) {
+            // A key that was previously combined with direction has been released while direction remains held
+            const uint32_t press_duration = millis() - last_key_time;
+            do_press(last_key_state, press_duration);
+            key_valid = false; // cancel processing of the modifier itself
           } else if (key_valid) {
-            // A different key is pressed now than was pressed before
+            // A different key is pressed now than was pressed before and does not form a valid combo sequence
             key_valid = false; // cancel further processing of this key
           }
           last_key_state = key_state;

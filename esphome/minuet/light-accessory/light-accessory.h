@@ -57,6 +57,15 @@ void toggle(esphome::light::LightState* light) {
   }
 }
 
+void change_brightness(esphome::light::LightState* light, int direction) {
+  if (light->remote_values.is_on()) {
+    constexpr int BRIGHTNESS_LEVELS = 5;
+    const int brightness = int(light->remote_values.get_brightness() * BRIGHTNESS_LEVELS);
+    light->make_call().set_brightness(
+        float(std::max(std::min(brightness + direction, BRIGHTNESS_LEVELS), 1)) / BRIGHTNESS_LEVELS).perform();
+  }
+}
+
 struct IndexedColor {
   unsigned index;
   unsigned rgb;
@@ -85,8 +94,6 @@ void apply_nec_code(esphome::light::LightState* light, esphome::remote_base::NEC
   unsigned command = code.command & 0xff;
   if (command != ((code.command >> 8) ^ 0xff)) return;
 
-  constexpr int BRIGHTNESS_LEVELS = 5;
-  const int brightness = int(light->remote_values.get_brightness() * BRIGHTNESS_LEVELS);
   const bool on = light->remote_values.is_on();
 
   // Handle color commands from a table of indexed colors
@@ -111,13 +118,13 @@ void apply_nec_code(esphome::light::LightState* light, esphome::remote_base::NEC
     case 0x00:
       log_command("BRIGHTNESS UP");
       if (on) {
-        light->make_call().set_brightness(float(std::min(brightness + 1, BRIGHTNESS_LEVELS)) / BRIGHTNESS_LEVELS).perform();
+        change_brightness(light, 1);
       }
       return;
     case 0x01:
       log_command("BRIGHTNESS DOWN");
       if (on) {
-        light->make_call().set_brightness(float(std::max(brightness - 1, 1)) / BRIGHTNESS_LEVELS).perform();
+        change_brightness(light, -1);
       }
       return;
     case 0x02:
