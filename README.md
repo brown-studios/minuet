@@ -8,49 +8,43 @@ Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan](https:
 * Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
 * Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
 * Connect lights to your fan with the [Minuet Light Accessory board](hardware/light/design-and-errata.md).
+* Use the safety lock feature to disable operation when a vent fan cover is installed or while driving.
 * Connect your own environmental sensors and accessories to Minuet's [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion port.
 * The hardware and software is open source: help make it better and share your improvements with others.
 
 ## Author's note and project status
 
-**Minuet is in early development.  It is not ready for use by the general public yet.  You cannot buy the hardware pre-assembled; you have to make it yourself.  These statements will change as the project matures.**
-
 As the author of Minuet, I want to give you a sense of what to expect from this project now and in the near future.
 
-The first revision of the Minuet hardware is installed in my campervan and it works somewhat well.  I do not recommend building this revision of the hardware due to schematic errata noted in the accompanying documentation.  It is after all a prototype.
+Minuet is currently in active development. After further testing and refinement of the prototypes, I plan to make a hardware kit available for sale in low volume including the circuit board, cables, and BLDC fan motor. Because the hardware and software is open source, you can also assemble your own kit from scratch and customize the design to your liking (although I suggest reviewing the published errata in detail and waiting for a production-ready revision to be proven out).
 
-The second revision of the Minuet hardware is feature complete.  It supports more powerful fan motors, IR remote control, wall controls, rain sensor, thermistor, piezo buzzer for (polite and configurable) audible feedback.  I've ordered the circuit boards and hopefully the design works well and is closer to a final version that I can send to folks.
+Here's a brief history of the project's development.
 
-If there is sufficient interest, I would like to commission a small manufacturing run of a hardware kit to make it easier for people to install Minuet.
+- [v1](hardware/minuet/v1/design-and-errata.md) proved out the basic operation of the BLDC fan motor, lid motor, built-in keypad, and integration with Home Assistant, while omitting non-essential functions for simplicity. I used an off-the-shelf BLDC fan motor, made adapters to mount it in the fan housing, hand-assembled the PCB, and installed the components in my van. It worked! This revision encouraged me to polish the design further and share it with others.
 
-As a former software engineer, I have no prior experience designing open source hardware and delivering it to end-users.  It is certainly the case that I don't know what I don't know at this stage in the project.  If you're interested in helping this project along, please consider becoming a contributor.
+- [v2](hardware/minuet/v2/design-and-errata.md) achieved feature parity with the original Maxxfan control board. It added support for the an IR remote control, wire wall controls, rain sensor, thermistor, piezo buzzer for (polite and configurable) audible feedback, and had a more powerful BLDC fan motor driver. I implemented thermostat controls, designed an optional lighting accessory, and the fan really came to life!
 
-I'm looking for folks to assist in lots of ways:
+- [v3](hardware/minuet/v3/design-and-errata.md) is the current revision, now in testing. It adds a safety lock feature and uses a different BLDC fan motor driver with field-oriented control with the goal of improving the acoustic performance of the fan. This revision takes a big step towards production readiness and can be fabricated by JLCPCB's PCBA service.
 
-- Reviewing circuit board schematics and layouts for EMC, safety, and correctness.
-- Polishing the control systems and user interface.
-- Writing end-user documentation.
-- Creating videos to show folks how to install and use Minuet.
-- Testing prototypes in different environments.
-- Making custom parts.
-- Optimizing the bill of materials for production.
-- Preparing manufacturing artifacts and engaging suppliers.
-- Selecting packaging materials and shipping methods.
-- Everything else that I haven't thought of that would make this project more useful to more people!
+As a former software engineer, I have no prior experience designing open source hardware and delivering it to end-users so I'm figuring this out as I go along. If you have experience in these areas and would like to help develop the Minuet project, please consider joining the project as a contributor.
 
 ## Prototype in action
+
+Here are some early videos of Minuet in action.
 
 [Link to Minuet playlist on YouTube](https://www.youtube-nocookie.com/embed/videoseries?si=fa14cJ42dhqO0x0U&amp;list=PL8ZnNA3SFfE8v-qSholF0Ovc9Exv59-uN)
 
 ## Compatibility
 
-Minuet v1, the initial prototype, has been tested and works well with the following Maxxfan models though it does not support the IR remote control or wired wall controls.
+Minuet v3 is anticipated to be compatible with the following Maxxfan models.
 
-- Maxxfan Deluxe 7500K
+- Maxxfan Deluxe 7500K (verified)
+- Maxxfan Deluxe 7000K (not yet tested)
+- Maxxfan Deluxe 6200K (not yet tested)
+- Maxxfan Deluxe 5100K (not yet tested)
+- Maxxfan Plus 4500K (not yet tested)
 
-Minuet v2, the feature complete revision, should work with most Maxxfan Deluxe and Maxxfan Plus models, the IR remote control, and wired wall controls.  This section will be updated once testing is underway.
-
-Please contact the author if you would like to volunteer to help test Minuet with other models.
+Minuet might also work with other Maxxfan models that have similar electronics. Please contact the author if you would like to volunteer to help test Minuet with models that have yet to be tested.
 
 ## Getting started
 
