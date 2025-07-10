@@ -150,7 +150,7 @@ For reassembly, it may help to have a second pair of hands to support the contro
 1. Plug the fan motor hall sensor connector into the socket labeled **FAN SENSOR**.
 1. Plug the Maxxfan wall control cable into the socket labeled **WALL CONTROL**, if you have one.
 1. Plug the power connector into the socket labeled **POWER**.
-1. Raise the control panel into place while guiding and gently tucking the wires into the open space within the housing behind it so they don't get pinched.
+1. Raise the control panel into place while guiding and gently tucking the wires into the open space within the housing behind it so they don't get pinched and damaged during reinstallation.
 1. Screw the control panel into place with the 4 original screws using a #2 Philips screwdriver.
 1. Screw the cover knob into place using a #2 Philips screwdriver.
 1. Press the fan blade onto the shaft and tighten the grub screw with a 7/64" allen key.  Make sure it spins freely.
