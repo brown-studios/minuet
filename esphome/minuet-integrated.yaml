@@ -12,7 +12,9 @@ esphome:
 # Configure logging.
 logger:
   level: DEBUG
-  baud_rate: 921600
+  # Set to 0 to disable serial port log output and improve performance
+  # Set to 921600 to enable serial port log output for debugging
+  baud_rate: 0
 
 # Set up WiFi to connect to your network.
 wifi:
