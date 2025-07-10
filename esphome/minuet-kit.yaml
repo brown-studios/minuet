@@ -38,6 +38,7 @@ ota:
 # Enable the ESPHome API to control the device and retrieve logs.
 # Typically used by ESPHome Builder and Home Assistant.
 api:
+  reboot_timeout: 0s
   encryption:
     key: !secret minuet_api_encryption_key
 
