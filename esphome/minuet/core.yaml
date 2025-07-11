@@ -232,6 +232,7 @@ minuet_battery_monitor:
       device_class: problem
       entity_category: diagnostic
       platform: template
+      publish_initial_state: true
   sensor:
     - id: minuet_battery_voltage
       name: "Battery Voltage"
@@ -321,6 +322,7 @@ minuet_rain_sensor:
       device_class: problem
       entity_category: diagnostic
       platform: template
+      publish_initial_state: true
   switch:
     - id: minuet_rain_sensor_should_stop_fan
       name: "Stop Fan When Rain Detected"
@@ -344,6 +346,12 @@ minuet_rain_sensor:
               id: minuet_rain_sensor_did_stop_fan
               state: OFF
           - switch.turn_on: minuet_rain_sensor_should_stop_fan
+  esphome:
+    on_boot:
+      - priority: 800
+        then:
+          - lambda: |-
+              id(minuet_rain_sensor_did_stop_fan).publish_initial_state(false);
 
 
 # Provides audible feedback
