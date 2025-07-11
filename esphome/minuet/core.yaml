@@ -23,6 +23,9 @@ minuet_components:
     - source: github://j9brown/esphome-maxxfan-protocol@main
       components: [ maxxfan_protocol ]
       refresh: 1min
+  esphome:
+    includes:
+      - minuet/core.h
 
   # Configure the board
   esp32:
@@ -47,6 +50,7 @@ minuet_components:
       i2c_id: minuet_i2c
       address: 0x20
       pin_count: 16
+
 
 # Vent fan motor driver
 minuet_fan_motor_driver:
@@ -146,6 +150,7 @@ minuet_fan_motor_driver:
         - "Brushless (3 phase)"
         - "Brushed (1 phase)"
 
+
 # Vent cover motor driver
 minuet_cover_motor_driver:
   binary_sensor:
@@ -172,6 +177,7 @@ minuet_cover_motor_driver:
         number: 11
         mode: output
         inverted: false
+
 
 # Ambient temperature sensor
 minuet_ambient_temperature_sensor:
@@ -216,6 +222,7 @@ minuet_ambient_temperature_sensor:
           id(minuet_thermistor_power).turn_on();
           id(minuet_thermistor_voltage).update();
           id(minuet_thermistor_power).turn_off();
+
 
 # Battery monitor
 minuet_battery_monitor:
@@ -281,6 +288,7 @@ minuet_battery_monitor:
       restore_value: true
       initial_value: 15.2
 
+
 # Rain sensor
 minuet_rain_sensor:
   binary_sensor:
@@ -305,6 +313,7 @@ minuet_rain_sensor:
           - lambda: |-
               if (id(minuet_fan).state && id(minuet_rain_sensor_should_stop_fan).state) {
                 id(minuet_rain_sensor_did_stop_fan).publish_state(true);
+                // TODO: Use safety lock function here instead of modifying the fan state
                 id(minuet_fan).make_call().set_state(false).perform();
               }
     - id: minuet_rain_sensor_did_stop_fan
@@ -335,6 +344,7 @@ minuet_rain_sensor:
               id: minuet_rain_sensor_did_stop_fan
               state: OFF
           - switch.turn_on: minuet_rain_sensor_should_stop_fan
+
 
 # Provides audible feedback
 minuet_tone:
@@ -479,6 +489,7 @@ minuet_tone:
           - script.execute:
               id: minuet_tone
               name: beep
+
 
 # Read the keypad controls and determine an action
 # Refer to the user guide for the control scheme
@@ -691,13 +702,9 @@ minuet_keypad_control:
           const auto do_press_direction = [which_menu]() {
             auto& fan = id(minuet_fan);
             if (fan->state) {
-              if (fan->direction == FanDirection::FORWARD) {
-                fan->make_call().set_direction(FanDirection::REVERSE).perform();
-                id(minuet_tone)->execute("manual_dir_out");
-              } else {
-                fan->make_call().set_direction(FanDirection::FORWARD).perform();
-                id(minuet_tone)->execute("manual_dir_in");
-              }
+              const bool exhaust = !minuet::fan_direction_is_exhaust(fan->direction);
+              fan->make_call().set_direction(minuet::fan_direction(exhaust)).perform();
+              id(minuet_tone)->execute(exhaust ? "manual_dir_out" : "manual_dir_in");
             }
           };
           const auto do_press_auto = [which_menu]() {
@@ -1074,6 +1081,7 @@ minuet_keypad_control:
             }
             id(minuet_keypad_rain_indicator).set_state(state);
 
+
 # Infrared remote control
 minuet_ir_control:
   globals:
@@ -1098,7 +1106,7 @@ minuet_ir_control:
             auto& therm = id(minuet_thermostat);
             if (x.auto_mode) {
               fan->make_call()
-                  .set_direction(x.fan_exhaust ? FanDirection::REVERSE : FanDirection::FORWARD)
+                  .set_direction(minuet::fan_direction(x.fan_exhaust))
                   .perform();
               id(minuet_thermostat_fan_direction).make_call().set_index(0).perform();
               therm->make_call()
@@ -1112,8 +1120,7 @@ minuet_ir_control:
                   .set_target_temperature(fahrenheit_to_celsius(x.auto_temperature))
                   .perform();
               const bool fan_changing_states = fan->state != x.fan_on;
-              id(minuet_fan_set).execute(x.fan_on, x.fan_speed / 10,
-                  x.fan_exhaust ? FanDirection::REVERSE : FanDirection::FORWARD,
+              id(minuet_fan_set).execute(x.fan_on, x.fan_speed / 10, x.fan_exhaust,
                   /*suppress_cover_movement*/ true, /*force*/ false);
               id(minuet_cover_set).execute(x.cover_open, fan_changing_states);
             }
@@ -1157,7 +1164,7 @@ minuet_fan_controller:
       platform: template
       has_direction: true
       speed_count: ${minuet_fan_speed_count}
-      restore_mode: ALWAYS_OFF
+      restore_mode: NO_RESTORE
       on_turn_on:
         then:
           - lambda: |-
@@ -1173,10 +1180,10 @@ minuet_fan_controller:
       on_state:
         then:
           - lambda: |-
-              if (!id(minuet_suppress_manual_state_change)) {
-                id(minuet_fan_snapshot_manual_state).execute();
+              if (!minuet::is_transient_operation()) {
+                id(minuet_snapshot_fan_persistent_state).execute();
                 const auto& fan = id(minuet_fan);
-                id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, fan->direction);
+                id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, minuet::fan_direction_is_exhaust(fan->direction));
               }
           - lambda: |-
               constexpr size_t SPEED_COUNT = (${minuet_fan_speed_count});
@@ -1258,30 +1265,22 @@ minuet_fan_controller:
       parameters:
         state: bool
         speed: int
-        direction: FanDirection
+        exhaust: bool
         suppress_cover_movement: bool
         force: bool
       then:
         - lambda: |-
             auto& fan = id(minuet_fan);
-            if (force || fan->state != state || fan->speed != speed || fan->direction != direction) {
+            if (force || fan->state != state || fan->speed != speed || fan->direction != minuet::fan_direction(exhaust)) {
               id(minuet_fan_suppress_cover_movement) = suppress_cover_movement;
               fan->make_call()
                   .set_state(state)
                   .set_speed(speed)
-                  .set_direction(direction)
+                  .set_direction(minuet::fan_direction(exhaust))
                   .perform();
               id(minuet_fan_suppress_cover_movement) = false;
             }
-    - id: minuet_fan_snapshot_manual_state
-      then:
-        - lambda: |-
-            const auto& fan = id(minuet_fan);
-            auto& manual = id(minuet_fan_manual_state);
-            manual->state = fan->state;
-            manual->speed = fan->speed;
-            manual->direction = fan->direction;
-            manual->publish_state();
+
 
 # Cover controller
 minuet_cover_controller:
@@ -1301,20 +1300,12 @@ minuet_cover_controller:
       open_action:
         then:
           - lambda: |-
-              if (!id(minuet_suppress_manual_state_change)) {
-                id(minuet_cover_manual_state).make_call().set_command_open().perform();
-                id(minuet_thermostat_reconcile_cover_manual_state_change)->execute(/*open*/ true);
-              }
               if (id(minuet_cover).current_operation != COVER_OPERATION_OPENING) {
                 id(minuet_cover_perform_operation).execute(true);
               }
       close_action:
         then:
           - lambda: |-
-              if (!id(minuet_suppress_manual_state_change)) {
-                id(minuet_cover_manual_state).make_call().set_command_close().perform();
-                id(minuet_thermostat_reconcile_cover_manual_state_change)->execute(/*open*/ false);
-              }
               if (id(minuet_cover).current_operation != COVER_OPERATION_CLOSING) {
                 id(minuet_cover_perform_operation).execute(false);
               }
@@ -1330,19 +1321,10 @@ minuet_cover_controller:
       then:
         - lambda: |-
             auto& cover = id(minuet_cover);
-            if (open && (force || cover->position != COVER_OPEN || cover->current_operation == COVER_OPERATION_CLOSING)) {
+            if (open && (force || !minuet::cover_is_open_or_opening(cover))) {
               id(minuet_cover).make_call().set_command_open().perform();
-            } else if (!open && (force || cover->position != COVER_CLOSED || cover->current_operation == COVER_OPERATION_OPENING)) {
+            } else if (!open && (force || minuet::cover_is_open_or_opening(cover))) {
               id(minuet_cover).make_call().set_command_close().perform();
-            }
-    - id: minuet_cover_snapshot_manual_state
-      then:
-        - lambda: |-
-            auto& cover = id(minuet_cover);
-            if (cover->position == COVER_OPEN || cover->current_operation == COVER_OPERATION_OPENING) {
-              id(minuet_cover_manual_state).make_call().set_command_open().perform();
-            } else {
-              id(minuet_cover_manual_state).make_call().set_command_close().perform();
             }
     - id: minuet_cover_perform_operation
       mode: restart
@@ -1356,16 +1338,21 @@ minuet_cover_controller:
             const auto& current_op = id(minuet_cover).current_operation;
             id(minuet_cover_movement_interrupted) =
                 current_op == COVER_OPERATION_OPENING || current_op == COVER_OPERATION_CLOSING;
-              ESP_LOGD("minuet", "Interrupt: %d", id(minuet_cover_movement_interrupted));
 
             id(minuet_cover).current_operation = open ? COVER_OPERATION_OPENING : COVER_OPERATION_CLOSING;
             id(minuet_cover).publish_state();
+
+            if (!minuet::is_transient_operation()) {
+              id(minuet_snapshot_cover_persistent_state).execute();
+              id(minuet_thermostat_reconcile_cover_manual_state_change)->execute(open);
+            }
         # Allow the motor's inertia to settle to avoid prematurely triggering a fault
         # when abruptly changing directions
         - if:
             condition:
               - lambda: 'return id(minuet_cover_movement_interrupted);'
             then:
+              - logger.log: "Cover movement was interrupted, waiting for inertia to settle before changing directions"
               - delay: 2s
         # Start the motor
         - lambda: |-
@@ -1384,47 +1371,15 @@ minuet_cover_controller:
             id(minuet_cover).position = open ? COVER_OPEN : COVER_CLOSED;
             id(minuet_cover).publish_state();
 
-# Record manually initiated state changes and distinguish them from automatic changes
-minuet_manual_state:
-  globals:
-    - id: minuet_suppress_manual_state_change
-      type: bool
-      restore_value: false
-      initial_value: "false"
-  fan:
-    - id: minuet_fan_manual_state
-      platform: template
-      has_direction: true
-      speed_count: ${minuet_fan_speed_count}
-      restore_mode: RESTORE_DEFAULT_OFF
-  cover:
-    - id: minuet_cover_manual_state
-      platform: template
-      optimistic: true
-      assumed_state: true
-      restore_mode: RESTORE
-  script:
-    - id: minuet_restore_manual_state
-      parameters:
-        force: bool
-      then:
-        - lambda: |-
-            id(minuet_suppress_manual_state_change) = true;
-            const auto& fan_manual = id(minuet_fan_manual_state);
-            id(minuet_fan_set).execute(fan_manual->state, fan_manual->speed, fan_manual->direction,
-                  /*suppress_cover_movement*/ true, force);
-            const auto& cover_manual = id(minuet_cover_manual_state);
-            id(minuet_cover_set).execute(cover_manual->is_fully_open(), force);
-            id(minuet_suppress_manual_state_change) = false;
 
 # Thermostat controller
 #
 # Both the user and the thermostat can modify the state of the same fan and cover entities.
-# To resolve this conflict, the thermostat sets a flag whenever it changes the state so that
-# the fan and cover state change handlers can distinguish whether a given change was initiated
+# To resolve this conflict, the thermostat sets the transient flag whenever it changes the state so
+# that the fan and cover state change handlers can distinguish whether a given change was initiated
 # by the user or by the thermostat.  Only changes made by the user are ever saved to flash.
-# When the thermostat is disabled, it restores the state of the fan and cover entities back
-# to their manual settings.
+# When the thermostat is disabled, it turns the fan off but restores the user's last commanded
+# speed and direction.
 #
 # When using standard controls, the keypad forbids the user from changing the fan speed
 # or cover position while the thermostat is enabled (because that's what the original firmware
@@ -1432,8 +1387,8 @@ minuet_manual_state:
 # through that interface then the thermostat is disabled to reconcile who's in charge.
 #
 # When using enhanced controls, the keypad allows the user to take control by incrementally
-# modifying whatever state the thermostat last set the fan and cover to.  The thermostat
-# remains enabled but powerless until the override flag is reset.  The same behavior applies
+# modifying whatever state to which the thermostat last set the fan and cover.  The thermostat
+# remains enabled but ignored until the override flag is reset.  The same behavior applies
 # to changes intiated by the ESPHome API.
 #
 # This design was chosen so that the fan and cover entities always reflect the true
@@ -1451,10 +1406,10 @@ minuet_thermostat:
       type: int
       restore_value: false
       initial_value: "0"
-    - id: minuet_thermostat_auto_fan_direction
-      type: FanDirection
+    - id: minuet_thermostat_auto_fan_exhaust
+      type: bool
       restore_value: false
-      initial_value: "FanDirection::REVERSE"
+      initial_value: "true"
     - id: minuet_thermostat_auto_cover_open
       type: bool
       restore_value: false
@@ -1523,18 +1478,14 @@ minuet_thermostat:
       off_mode:
         then:
           - lambda: |-
-              id(minuet_restore_manual_state).execute(/*force*/ false);
               id(minuet_thermostat_reset_override).execute();
-      cool_mode:
-        then:
-          - lambda: |-
-              // When the user turns on the thermostat, they're essentially saying that they
-              // want the fan off unless the thermostat says otherwise, so record that intent
-              // as a manual change.  That way when the fan doesn't come on unexpectedly when
-              // the thermostat is disengaged or if a loss of power occurs.  Preserve the
-              // fan speed and direction.
-              id(minuet_fan_manual_state).make_call().set_state(false).perform();
-              id(minuet_cover_manual_state).make_call().set_command_close().perform();
+              if (!minuet::is_transient_operation()) {
+                // When the user turns off the thermostat, turn the fan off but restore its
+                // last commanded speed and direction.
+                const auto& state = minuet::persistent_state();
+                id(minuet_fan_set).execute(false, state.fan_speed, state.fan_exhaust,
+                      /*suppress_cover_movement*/ false, /*force*/ false);
+              }
       on_state:
         then:
           - script.execute: minuet_thermostat_update
@@ -1550,6 +1501,7 @@ minuet_thermostat:
       name: "Vent Thermostat Manual Override"
       icon: mdi:thermostat
       platform: template
+      restore_mode: DISABLED
       lambda: 'return id(minuet_thermostat_override);'
       turn_on_action:
         then:
@@ -1558,34 +1510,16 @@ minuet_thermostat:
         then:
           - script.execute: minuet_thermostat_reset_override
   script:
-    - id: minuet_thermostat_maybe_set_override
-      then:
-        - lambda: |-
-            if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF) {
-              if (id(minuet_controls).active_index() == 1 /*Enhanced*/) {
-                id(minuet_fan_snapshot_manual_state).execute();
-                id(minuet_cover_snapshot_manual_state).execute();
-                id(minuet_thermostat_override) = true;
-                id(minuet_thermostat_update).execute();
-              } else {
-                id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
-              }
-            }
-    - id: minuet_thermostat_reset_override
-      then:
-        - lambda: |-
-            id(minuet_thermostat_override) = false;
-            id(minuet_thermostat_update).execute();
     - id: minuet_thermostat_reconcile_fan_manual_state_change
       parameters:
         fan_state: bool
         fan_speed: int
-        fan_direction: FanDirection
+        fan_exhaust: bool
       then:
         - lambda: |-
             const auto& therm = id(minuet_thermostat);
             if (id(minuet_thermostat_auto_fan_speed) != (fan_state ? fan_speed : 0)
-                || (id(minuet_thermostat_auto_fan_direction) != fan_direction
+                || (id(minuet_thermostat_auto_fan_exhaust) != fan_exhaust
                     && id(minuet_thermostat_fan_direction).active_index() != 0)) {
               id(minuet_thermostat_maybe_set_override).execute();
             }
@@ -1598,13 +1532,39 @@ minuet_thermostat:
             if (id(minuet_thermostat_auto_cover_open) != cover_open) {
               id(minuet_thermostat_maybe_set_override).execute();
             }
+    - id: minuet_thermostat_maybe_set_override
+      then:
+        - lambda: |-
+            if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override)) {
+              if (id(minuet_controls).active_index() == 1 /*Enhanced*/) {
+                // With enhanced controls, activate override mode
+                ESP_LOGD("minuet", "Manual state change while thermostat enabled: engaging override");
+                id(minuet_snapshot_fan_persistent_state).execute();
+                id(minuet_snapshot_cover_persistent_state).execute();
+                id(minuet_thermostat_override) = true;
+                id(minuet_thermostat_update).execute();
+              } else {
+                // With standard controls, override mode isn't supported so turn off the thermostat
+                // and leave the fan running in whatever state the user just tried to set it to
+                // which is similar to how overriding behaves
+                ESP_LOGD("minuet", "Manual state change while thermostat enabled: disabling thermostat");
+                minuet::perform_transient_operation([] {
+                  id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
+                });
+              }
+            }
+    - id: minuet_thermostat_reset_override
+      then:
+        - lambda: |-
+            id(minuet_thermostat_override) = false;
+            id(minuet_thermostat_update).execute();
     - id: minuet_thermostat_update
       then:
         - lambda: |-
             const auto& therm = id(minuet_thermostat);
             if (therm->mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override)) {
               auto& auto_fan_speed = id(minuet_thermostat_auto_fan_speed);
-              auto& auto_fan_direction = id(minuet_thermostat_auto_fan_direction);
+              auto& auto_fan_exhaust = id(minuet_thermostat_auto_fan_exhaust);
               auto& auto_cover_open = id(minuet_thermostat_auto_cover_open);
               if (id(minuet_thermostat).action == CLIMATE_ACTION_COOLING) {
                 //const float ambient_temperature = therm->current_temperature;
@@ -1616,24 +1576,30 @@ minuet_thermostat:
                 auto_fan_speed = 0;
                 auto_cover_open = false;
               }
-              id(minuet_suppress_manual_state_change) = true;
-              if (auto_fan_speed != 0) {
-                const auto& direction_index = id(minuet_thermostat_fan_direction).active_index();
-                auto_fan_direction = direction_index == 1 ? FanDirection::REVERSE :
-                    direction_index == 2 ? FanDirection::FORWARD : id(minuet_fan_manual_state).direction;
-                id(minuet_fan_set).execute(true, auto_fan_speed, auto_fan_direction,
+              const auto& state = minuet::persistent_state();
+              const auto& direction_index = id(minuet_thermostat_fan_direction).active_index();
+              auto_fan_exhaust = direction_index == 1 ? true :
+                  direction_index == 2 ? false : state.fan_exhaust;
+
+              minuet::perform_transient_operation([=] {
+                id(minuet_fan_set).execute(
+                    auto_fan_speed != 0,
+                    auto_fan_speed != 0 ? auto_fan_speed : state.fan_speed,
+                    auto_fan_speed != 0 ? auto_fan_exhaust : state.fan_exhaust,
                     /*suppress_cover_movement*/ true, /*force*/ false);
-              } else {
-                auto_fan_direction = id(minuet_fan_manual_state).direction;
-                id(minuet_fan_set).execute(false, id(minuet_fan_manual_state).speed, auto_fan_direction,
-                    /*suppress_cover_movement*/ true, /*force*/ false);
-              }
-              id(minuet_cover_set).execute(auto_cover_open, /*force*/ false);
-              id(minuet_suppress_manual_state_change) = false;
+                id(minuet_cover_set).execute(auto_cover_open, /*force*/ false);
+              });
             }
 
-# Configure whether the fan state is restored on boot
-minuet_boot_restore:
+
+# Save state to preserve the user's intention when turning the fan off or after a restart.
+# The state is not updated by transient operations.
+minuet_persistence:
+  globals:
+    - id: minuet_persistent_state_raw
+      type: uint8_t # actually holds minuet::PersistentState
+      restore_value: true
+      initial_value: "minuet::PersistentState{}.to_storage()"
   select:
     - id: minuet_power_on_behavior
       platform: template
@@ -1644,19 +1610,54 @@ minuet_boot_restore:
       options:
         - "Off"
         - "Restore"
+  script:
+    - id: minuet_snapshot_fan_persistent_state
+      then:
+        - lambda: |-
+            const auto& fan = id(minuet_fan);
+            auto& state = minuet::persistent_state();
+            state.fan_on = fan->state;
+            state.fan_speed = fan->speed;
+            state.fan_exhaust = minuet::fan_direction_is_exhaust(fan->direction);
+    - id: minuet_snapshot_cover_persistent_state
+      then:
+        - lambda: |-
+            const auto& cover = id(minuet_cover);
+            auto& state = minuet::persistent_state();
+            state.cover_open = minuet::cover_is_open_or_opening(cover);
   esphome:
     on_boot:
+      - priority: 1000
+        then:
+          - lambda: |-
+              // Prevent the thermostat off_mode handler from overwriting the persistent state
+              // of the fan prior to restoration on boot
+              minuet::transient_operation_depth++;
       - priority: 500
         then:
           - lambda: |-
+              minuet::transient_operation_depth--;
+
+              // Revert to defaults if not restoring persistent state
               const auto& behavior = id(minuet_power_on_behavior).active_index();
-              if (behavior == 0 || !behavior.has_value()) {
-                id(minuet_fan_manual_state).make_call().set_state(false).perform();
-                id(minuet_cover_manual_state).make_call().set_command_close().perform();
-                id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
-                id(minuet_thermostat_reset_override).execute();
+              if (!behavior.has_value() || behavior == 0) {
+                minuet::persistent_state() = minuet::PersistentState{};
+                minuet::perform_transient_operation([] {
+                  id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
+                });
               }
-              id(minuet_restore_manual_state).execute(/*force*/ true);
+
+              // Restore persistent state
+              minuet::perform_transient_operation([] {
+                const auto& state = minuet::persistent_state();
+                id(minuet_fan_set).execute(state.fan_on, state.fan_speed, state.fan_exhaust,
+                      /*suppress_cover_movement*/ true, /*force*/ true);
+                id(minuet_cover_set).execute(state.cover_open, /*force*/ true);
+              });
+
+              // Apply thermostat updates
+              id(minuet_thermostat_update).execute();
+
 
 # Shutdown behavior: Turn off the motors before ESPHome restarts, just in case.
 minuet_shutdown:

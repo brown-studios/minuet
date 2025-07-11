@@ -1,4 +1,4 @@
-// Light accessory functions
+// Minuet light accessory declarations
 #include "esphome/components/light/light_state.h"
 #include "esphome/components/remote_base/nec_protocol.h"
 #include "esphome/core/log.h"
