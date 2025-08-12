@@ -68,7 +68,7 @@ minuet_fan_motor_driver:
         number: 13
         mode: input
         inverted: true
-      publish_initial_state: true
+      trigger_on_initial_state: true
       filters:
         - delayed_on_off: 0.5s
   sensor:
@@ -161,7 +161,7 @@ minuet_cover_motor_driver:
         number: 9
         mode: input
         inverted: true
-      publish_initial_state: true
+      trigger_on_initial_state: true
   output:
     - id: minuet_cover_motor_sleep
       platform: gpio
@@ -232,7 +232,7 @@ minuet_battery_monitor:
       device_class: problem
       entity_category: diagnostic
       platform: template
-      publish_initial_state: true
+      trigger_on_initial_state: true
   sensor:
     - id: minuet_battery_voltage
       name: "Battery Voltage"
@@ -304,7 +304,7 @@ minuet_rain_sensor:
         number: 8
         mode: input
         inverted: true
-      publish_initial_state: true
+      trigger_on_initial_state: true
       filters:
         - delayed_on_off:
             time_on: 2s
@@ -322,7 +322,7 @@ minuet_rain_sensor:
       device_class: problem
       entity_category: diagnostic
       platform: template
-      publish_initial_state: true
+      trigger_on_initial_state: true
   switch:
     - id: minuet_rain_sensor_should_stop_fan
       name: "Stop Fan When Rain Detected"
