@@ -1,5 +1,5 @@
 # MINUET CORE PACKAGE
-# SUPPORTED HARDWARE: Minuet v2.1
+# SUPPORTED HARDWARE: Minuet v3.0
 #
 # ESPHome package for the Minuet fan controller built-in components.
 #
@@ -15,17 +15,27 @@
 #
 # To expand the capabilities of your Minuet fan controller, you may attach
 # additional components to the I2C bus using the QWIIC connection and
-# use GPIO0, GPIO1, GPIO20 (RXD), GPIO21 (TXD) which are presented at the
-# GPIO expansion port for accessories.
+# use GPIO0, GPIO1, GPIO5, GPIO6, GPIO20 (RXD), GPIO21 (TXD) which are presented
+# at the GPIO expansion port for accessories.
 minuet_components:
   # Include external ESPHome components
   external_components:
     - source: github://j9brown/esphome-maxxfan-protocol@main
       components: [ maxxfan_protocol ]
       refresh: 1min
+    # - source: github://j9brown/esphome-mcf8316@main
+    #   components: [ mcf8316 ]
+    - source: ../../esphome-mcf8316/components
+
+  # Configure build options
   esphome:
     includes:
       - minuet/core.h
+      - minuet/fan_motor.h
+    platformio_options:
+      build_flags: >
+        -Wno-packed-bitfield-compat
+        -DCONFIG_ADC_SUPPRESS_DEPRECATE_WARN=1
 
   # Configure the board
   esp32:
@@ -37,8 +47,11 @@ minuet_components:
   # QWIIC connector on the board edge for accessories
   i2c:
     - id: minuet_i2c
-      scl: 6
-      sda: 7
+      scl:
+        number: 8
+        ignore_strapping_warning: true
+      sda:
+        number: 7
       scan: true
       frequency: 100kHz
 
@@ -53,102 +66,121 @@ minuet_components:
 
 
 # Vent fan motor driver
+# TODO:
+# - Add keep awake setting to help with tuning (never sleep)
+# - Add select entity for motor descriptor
+# - Add service to set custom motor parameters
 minuet_fan_motor_driver:
-  substitutions:
-    minuet_fan_motor_pwm_frequency_default: "24000"
-  binary_sensor:
-    - id: minuet_fan_motor_fault
-      name: "Vent Fan Stalled"
-      icon: mdi:fan-alert
-      device_class: problem
-      entity_category: diagnostic
-      platform: gpio
-      pin:
+  mcf8316:
+    - id: minuet_fan_motor_driver
+      wake:
         pca9554: minuet_xio
         number: 13
+        mode: output
+      nfault:
+        pca9554: minuet_xio
+        number: 12
         mode: input
-        inverted: true
-      trigger_on_initial_state: true
-      filters:
-        - delayed_on_off: 0.5s
+      watchdog: true
+      on_fault:
+        then:
+          - lambda: |-
+              if (x.is_faulted()) {
+                ESP_LOGD(minuet::TAG, "Fan stalled, disabling the motor for safety");
+                id(minuet_fan)->turn_off().perform();
+              }
   sensor:
     - id: minuet_fan_motor_tach
-      name: "Vent Fan Tachometer"
+      name: "Fan Tachometer"
       icon: mdi:fan
       state_class: measurement
       entity_category: diagnostic
       unit_of_measurement: rpm
       accuracy_decimals: 0
-      platform: pulse_counter
-      pin:
-        number: 8
-        mode: input
-        ignore_strapping_warning: true
-      count_mode:
-        rising_edge: DISABLE
-        falling_edge: INCREMENT
+      platform: template
       update_interval: 5s
       filters:
-        # The tachometer ticks with each hall sensor pulse (3 times per complete cycle)
-        # and the motor has 4 poles so it takes two cycles to rotate completely.
-        # Thus we divide the pulses by 6 to obtain the motor shaft speed.
-        - multiply: 0.1667
         - round_to_multiple_of: 10
-        - delta: 20
-  output:
-    - id: minuet_fan_motor_sleep
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 14
-        mode: output
-        inverted: true
-    - id: minuet_fan_motor_duty_cycle
-      platform: ledc
-      pin:
-        number: 5
-        mode: output
-        inverted: false
-      channel: 5
-      frequency: ${minuet_fan_motor_pwm_frequency_default} Hz
-    - id: minuet_fan_motor_forward
-      platform: gpio
-      pin:
-        pca9554: minuet_xio
-        number: 12
-        mode: output
-        inverted: false
-  number:
-    - id: minuet_fan_motor_pwm_frequency
-      name: "Fan Motor PWM Frequency"
-      icon: mdi:square-wave
-      unit_of_measurement: Hz
-      device_class: frequency
-      entity_category: config
+        - delta: 5
+      lambda: 'return minuet::fan_motor::control.get_tachometer_rpm();'
+    - id: minuet_fan_driver_bus_current
+      name: "Fan Driver Bus Current"
+      state_class: measurement
+      device_class: current
+      entity_category: diagnostic
+      unit_of_measurement: A
+      accuracy_decimals: 2
       disabled_by_default: true
       platform: template
-      min_value: 1000
-      max_value: 60000
-      step: 1
-      mode: box
+      update_interval: never
+      filters:
+        - round_to_multiple_of: 0.01
+        - delta: 0.005
+      lambda: 'return minuet::fan_motor::control.get_bus_current();'
+    - id: minuet_fan_driver_motor_phase_peak_current
+      name: "Fan Driver Motor Phase Peak Current"
+      state_class: measurement
+      device_class: current
+      entity_category: diagnostic
+      unit_of_measurement: A
+      accuracy_decimals: 2
+      disabled_by_default: true
+      platform: template
+      update_interval: never
+      filters:
+        - round_to_multiple_of: 0.01
+        - delta: 0.005
+      lambda: 'return minuet::fan_motor::control.get_motor_phase_peak_current();'
+    - id: minuet_fan_driver_vm_voltage
+      name: "Fan Driver VM Voltage"
+      state_class: measurement
+      device_class: voltage
+      entity_category: diagnostic
+      unit_of_measurement: V
+      accuracy_decimals: 2
+      disabled_by_default: true
+      platform: template
+      update_interval: never
+      filters:
+        - round_to_multiple_of: 0.01
+        - delta: 0.005
+      lambda: 'return minuet::fan_motor::control.get_vm_voltage();'
+  switch:
+    - id: minuet_fan_driver_diagnostics
+      name: "Fan Driver Diagnostics"
+      icon: mdi:bug-outline
+      platform: template
+      restore_mode: DISABLED
       optimistic: true
-      initial_value: ${minuet_fan_motor_pwm_frequency_default}
-      restore_value: false
-      set_action:
+      entity_category: diagnostic
+      disabled_by_default: true
+  button:
+    - id: minuet_fan_motor_mpet
+      name: "Start Motor Parameter Extraction Tool"
+      icon: mdi:gear
+      platform: template
+      disabled_by_default: true
+      entity_category: config
+      on_press:
         then:
           - lambda: |-
-              id(minuet_fan_motor_duty_cycle).update_frequency(x);
-  select:
-    - id: minuet_fan_motor_type
-      platform: template
-      name: "Fan Motor Type"
-      entity_category: config
-      disabled_by_default: true
-      optimistic: true
-      restore_value: true
-      options:
-        - "Brushless (3 phase)"
-        - "Brushed (1 phase)"
+              minuet::fan_motor::control.start_mpet();
+  esphome:
+    on_boot:
+      - priority: 550
+        then:
+          - lambda: |-
+              // TODO: allow the motor to be configured
+              minuet::fan_motor::control.init(minuet::fan_motor::MOTORS[0]);
+  interval:
+    - interval: 1s
+      then:
+        lambda: |-
+          if (id(minuet_fan_driver_diagnostics).state) {
+            id(minuet_fan_driver_bus_current).update();
+            id(minuet_fan_driver_motor_phase_peak_current).update();
+            id(minuet_fan_driver_vm_voltage).update();
+          }
 
 
 # Vent cover motor driver
@@ -162,6 +194,7 @@ minuet_cover_motor_driver:
         mode: input
         inverted: true
       trigger_on_initial_state: true
+      use_interrupt: false
   output:
     - id: minuet_cover_motor_sleep
       platform: gpio
@@ -191,6 +224,7 @@ minuet_ambient_temperature_sensor:
             window_size: 20
             send_every: 10
             send_first_at: 10
+        - delta: 0.001
       update_interval: never
     - id: minuet_thermistor_resistance
       platform: resistance
@@ -207,12 +241,13 @@ minuet_ambient_temperature_sensor:
       accuracy_decimals: 1
       filters:
         - round_to_multiple_of: 0.2
+        - delta: 0.1
   output:
     - id: minuet_thermistor_power
       platform: gpio
       pin:
         pca9554: minuet_xio
-        number: 15
+        number: 14
         mode: output
         inverted: false
   interval:
@@ -247,11 +282,12 @@ minuet_battery_monitor:
       attenuation: 12db
       filters:
         - sliding_window_moving_average:
-            window_size: 20
-            send_every: 10
-            send_first_at: 10
+            window_size: 10
+            send_every: 5
+            send_first_at: 5
         - multiply: 11
-        - round_to_multiple_of: 0.2
+        - round_to_multiple_of: 0.1
+        - delta: 0.05
       update_interval: 0.5s
       on_value:
         then:
@@ -304,6 +340,7 @@ minuet_rain_sensor:
         number: 8
         mode: input
         inverted: true
+      use_interrupt: false
       trigger_on_initial_state: true
       filters:
         - delayed_on_off:
@@ -352,6 +389,25 @@ minuet_rain_sensor:
         then:
           - lambda: |-
               id(minuet_rain_sensor_did_stop_fan).publish_initial_state(false);
+
+
+# Safety lock
+minuet_safety_lock:
+  binary_sensor:
+    - id: minuet_safety_lock_off
+      name: "Safety Lock"
+      icon: mdi:lock
+      device_class: lock
+      entity_category: diagnostic
+      platform: gpio
+      pin:
+        pca9554: minuet_xio
+        number: 15
+        mode: input
+      use_interrupt: false
+      trigger_on_initial_state: true
+      filters:
+        - delayed_on_off: 100ms
 
 
 # Provides audible feedback
@@ -460,7 +516,7 @@ minuet_tone:
                 const char* tone = tones[i];
                 char* colon_pos = strchr(tone, ':');
                 if (!colon_pos) {
-                  ESP_LOGD("minuet", "RTTTL tone missing name: '%s'", tone);
+                  ESP_LOGD(minuet::TAG, "RTTTL tone missing name: '%s'", tone);
                   continue;
                 }
                 size_t name_length = colon_pos - tone;
@@ -471,7 +527,7 @@ minuet_tone:
                   return;
                 }
               }
-              ESP_LOGD("minuet", "RTTTL tone not found: '%s'", name.c_str());
+              ESP_LOGD(minuet::TAG, "RTTTL tone not found: '%s'", name.c_str());
               if (name == default_if_unknown) {
                 return;
               }
@@ -937,7 +993,7 @@ minuet_keypad_control:
           constexpr uint32_t MIN_HOLD_SETTING_DURATION = 5000;
           constexpr uint32_t MIN_HOLD_FACTORY_RESET_DURATION = 15000;
           const auto log_press = [](const char* key) {
-            ESP_LOGD("minuet", "Key press: %s", key);
+            ESP_LOGD(minuet::TAG, "Key press: %s", key);
           };
           const auto do_press = [=](uint32_t key_state, uint32_t press_duration) {
             if (press_duration >= MIN_PRESS_DURATION && press_duration <= MAX_PRESS_DURATION) {
@@ -996,7 +1052,7 @@ minuet_keypad_control:
             }
           };
           const auto log_hold = [](const char* key) {
-            ESP_LOGD("minuet", "Key hold: %s", key);
+            ESP_LOGD(minuet::TAG, "Key hold: %s", key);
           };
           const auto do_hold = [=](uint32_t key_state, uint32_t hold_duration) -> bool {
             if (key_state == KEY_UP && hold_duration >= MIN_HOLD_UP_DOWN_DURATION) {
@@ -1145,33 +1201,17 @@ minuet_ir_control:
 # FanDirection::REVERSE is air out / exhaust
 # FanDirection::FORWARD is air in / intake
 minuet_fan_controller:
-  substitutions:
-    minuet_fan_speed_count: '10'
-    minuet_fan_duty_cycle_table: '0.08f, 0.11f, 0.14f, 0.18f, 0.22f, 0.26f, 0.3f, 0.35f, 0.4f, 0.45f'
-    #minuet_fan_duty_cycle_table: '0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.f'
   globals:
-    - id: minuet_fan_last_duty_cycle
-      type: float
-      restore_value: false
-      initial_value: "0.f"
-    - id: minuet_fan_target_duty_cycle
-      type: float
-      restore_value: false
-      initial_value: "0.f"
     - id: minuet_fan_suppress_cover_movement
       type: bool
       restore_value: false
       initial_value: "false"
-    - id: minuet_fan_brushed_motor_last_pulse
-      type: uint32_t
-      restore_value: false
-      initial_value: "false"
   fan:
     - id: minuet_fan
-      name: "Vent Fan"
+      name: "Fan"
       platform: template
       has_direction: true
-      speed_count: ${minuet_fan_speed_count}
+      speed_count: 10
       restore_mode: NO_RESTORE
       on_turn_on:
         then:
@@ -1193,81 +1233,54 @@ minuet_fan_controller:
                 const auto& fan = id(minuet_fan);
                 id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, minuet::fan_direction_is_exhaust(fan->direction));
               }
-          - lambda: |-
-              constexpr size_t SPEED_COUNT = (${minuet_fan_speed_count});
-              constexpr float DUTY_CYCLES[SPEED_COUNT] = { ${minuet_fan_duty_cycle_table} };
-              const int speed = id(minuet_fan).speed;
-              float duty_cycle = 0.f;
-              if (id(minuet_fan).state && speed > 0 && speed <= SPEED_COUNT) {
-                duty_cycle = DUTY_CYCLES[speed - 1];
-                if (id(minuet_fan).direction == FanDirection::REVERSE) {
-                  duty_cycle = -duty_cycle;
-                }
-              }
-              id(minuet_fan_target_duty_cycle) = duty_cycle;
+          - script.execute: minuet_fan_control_update
+  switch:
+    - id: minuet_fan_override
+      name: "Fan Override"
+      icon: mdi:bug-outline
+      platform: template
+      restore_mode: DISABLED
+      optimistic: true
+      entity_category: config
+      disabled_by_default: true
+      on_turn_on:
+        then:
+          - script.execute: minuet_fan_control_update
+      on_turn_off:
+        then:
+          - script.execute: minuet_fan_control_update
   number:
-    - id: minuet_fan_duty_cycle_override_for_testing
-      name: "Fan Duty Cycle Override for Testing"
+    - id: minuet_fan_override_speed
+      name: "Fan Override Speed"
       icon: mdi:square-wave
-      unit_of_measurement: '%'
+      unit_of_measurement: 'rpm'
       entity_category: config
       disabled_by_default: true
       platform: template
       min_value: 0
-      max_value: 1
-      step: 0.01
+      max_value: 2000 # equal to MAX_SPEED_RPM
+      step: 10
       mode: slider
       optimistic: true
       initial_value: 0
       restore_value: false
-  interval:
-    - interval: 50ms
-      then:
-        lambda: |-
-          float& last_duty_cycle = id(minuet_fan_last_duty_cycle);
-          float& target_duty_cycle = id(minuet_fan_target_duty_cycle);
-          if (id(minuet_fan_duty_cycle_override_for_testing).state > 0 && target_duty_cycle != 0.f) {
-            target_duty_cycle = copysign(id(minuet_fan_duty_cycle_override_for_testing).state, target_duty_cycle);
-          }
-          if (id(minuet_fan_motor_fault).state) {
-            if (target_duty_cycle != 0.f || last_duty_cycle != 0.f) {
-              ESP_LOGD("minuet", "Fan stalled, disabling the motor for safety");
-              id(minuet_fan_motor_duty_cycle).turn_off();
-              id(minuet_fan)->turn_off().perform();
-              last_duty_cycle = 0.f;
-              target_duty_cycle = 0.f;
-            }
-          } else if (target_duty_cycle != last_duty_cycle) {
-            // Ramp the duty cycle linearly over time up to the desired target.
-            constexpr float MAX_RAMP_PER_INTERVAL = 0.01f;
-            const float delta = target_duty_cycle - last_duty_cycle;
-            if (fabs(delta) < MAX_RAMP_PER_INTERVAL) {
-              last_duty_cycle = target_duty_cycle;
-            } else {
-              last_duty_cycle += copysign(MAX_RAMP_PER_INTERVAL, delta);
-            }
-            id(minuet_fan_motor_forward).set_state(last_duty_cycle >= 0.f);
-            id(minuet_fan_motor_duty_cycle).set_level(fabs(last_duty_cycle));
-          }
-          if (last_duty_cycle == 0.f && target_duty_cycle == 0.f) {
-            id(minuet_fan_motor_sleep).turn_on();
-          } else {
-            if (id(minuet_fan_motor_type).active_index() == 1) {
-              // When operating a brushed motor, occasionally pulse the sleep pin to reset the
-              // motor lock timeout and prevent the motor driver from stopping the motor because
-              // it doesn't observe any change in the hall sensors.  This is fine for experiments
-              // but each pulse makes the motor generate a slight tick as it skips commutation.
-              // A better solution would be to use the SPI variant of the MCT8316Z and to program
-              // it to disable the motor lock timeout.
-              uint32_t now = millis();
-              auto& last_pulse = id(minuet_fan_brushed_motor_last_pulse);
-              if (now - last_pulse > 500) {
-                id(minuet_fan_motor_sleep).turn_on();
-                last_pulse = now;
-              }
-            }
-            id(minuet_fan_motor_sleep).turn_off();
-          }
+      on_value:
+        then:
+          - script.execute: minuet_fan_control_update
+  select:
+    - id: minuet_fan_override_direction
+      platform: template
+      name: "Fan Override Direction"
+      entity_category: config
+      disabled_by_default: true
+      optimistic: true
+      restore_value: false
+      options:
+        - Exhaust
+        - Intake
+      on_value:
+        then:
+          - script.execute: minuet_fan_control_update
   script:
     - id: minuet_fan_set
       parameters:
@@ -1288,6 +1301,20 @@ minuet_fan_controller:
                   .perform();
               id(minuet_fan_suppress_cover_movement) = false;
             }
+    - id: minuet_fan_control_update
+      then:
+        - lambda: |-
+            const auto& fan = id(minuet_fan);
+            float speed_rpm;
+            bool exhaust;
+            if (id(minuet_fan_override).state) {
+              speed_rpm = id(minuet_fan).state ? id(minuet_fan_override_speed).state : 0;
+              exhaust = id(minuet_fan_override_direction).active_index() == 0;
+            } else {
+              speed_rpm = id(minuet_fan).state ? minuet::fan_motor::control.get_fan_speed_by_index(fan->speed) : 0;
+              exhaust = minuet::fan_direction_is_exhaust(fan->direction);
+            }
+            minuet::fan_motor::control.set_state(speed_rpm, exhaust);
 
 
 # Cover controller
@@ -1299,7 +1326,7 @@ minuet_cover_controller:
       initial_value: "false"
   cover:
     - id: minuet_cover
-      name: "Vent Cover"
+      name: "Cover"
       device_class: damper
       platform: template
       optimistic: false
@@ -1444,7 +1471,7 @@ minuet_thermostat:
               }
     - id: minuet_thermostat_fan_direction
       platform: template
-      name: "Vent Thermostat Fan Direction"
+      name: "Thermostat Fan Direction"
       entity_category: config
       optimistic: true
       restore_value: true
@@ -1457,7 +1484,7 @@ minuet_thermostat:
           - script.execute: minuet_thermostat_update
   climate:
     - id: minuet_thermostat
-      name: "Vent Thermostat"
+      name: "Thermostat"
       icon: mdi:thermostat-auto
       platform: thermostat
       sensor: minuet_ambient_temperature
@@ -1498,15 +1525,15 @@ minuet_thermostat:
         then:
           - script.execute: minuet_thermostat_update
       preset:
-        - name: 'Default'
+        - name: 'NONE'
           mode: 'off'
           fan_mode: 'auto'
           default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
-      default_preset: 'Default'
+      default_preset: 'NONE'
       on_boot_restore_from: memory
   switch:
     - id: minuet_thermostat_override_switch
-      name: "Vent Thermostat Manual Override"
+      name: "Thermostat Manual Override"
       icon: mdi:thermostat
       platform: template
       restore_mode: DISABLED
@@ -1546,7 +1573,7 @@ minuet_thermostat:
             if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override)) {
               if (id(minuet_controls).active_index() == 1 /*Enhanced*/) {
                 // With enhanced controls, activate override mode
-                ESP_LOGD("minuet", "Manual state change while thermostat enabled: engaging override");
+                ESP_LOGD(minuet::TAG, "Manual state change while thermostat enabled: engaging override");
                 id(minuet_snapshot_fan_persistent_state).execute();
                 id(minuet_snapshot_cover_persistent_state).execute();
                 id(minuet_thermostat_override) = true;
@@ -1555,7 +1582,7 @@ minuet_thermostat:
                 // With standard controls, override mode isn't supported so turn off the thermostat
                 // and leave the fan running in whatever state the user just tried to set it to
                 // which is similar to how overriding behaves
-                ESP_LOGD("minuet", "Manual state change while thermostat enabled: disabling thermostat");
+                ESP_LOGD(minuet::TAG, "Manual state change while thermostat enabled: disabling thermostat");
                 minuet::perform_transient_operation([] {
                   id(minuet_thermostat).make_call().set_mode(CLIMATE_MODE_OFF).perform();
                 });
@@ -1674,5 +1701,5 @@ minuet_shutdown:
       - priority: 500
         then:
           - lambda: |-
-              id(minuet_fan_motor_sleep).turn_on();
+              minuet::fan_motor::control.shutdown();
               id(minuet_cover_motor_sleep).turn_on();

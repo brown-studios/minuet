@@ -1,6 +1,6 @@
 # MINUET LIGHT ACCESSORY PACKAGE
 # VARIANT: DIMMABLE LIGHT
-# SUPPORTED HARDWARE: Minuet Light Accessory v2.5
+# SUPPORTED HARDWARE: Minuet Light Accessory v3.0
 #
 # Supports a dimmable light connected to the accessory board.
 # Refer to the accessory documentation for details.
@@ -18,7 +18,7 @@ minuet_light:
     - id: minuet_light_pwm
       platform: ledc
       pin:
-        number: 0
+        number: 6
         mode: output
       channel: 0
       frequency: 1000 Hz

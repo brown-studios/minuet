@@ -1,6 +1,6 @@
 # MINUET LIGHT ACCESSORY PACKAGE
 # VARIANT: ADDRESSABLE LED STRIP
-# SUPPORTED HARDWARE: Minuet Light Accessory v2.5
+# SUPPORTED HARDWARE: Minuet Light Accessory v3.0
 #
 # Supports an addressable LED strip connected to the accessory board.
 # Refer to the accessory documentation for details.
@@ -24,7 +24,7 @@ minuet_light:
   power_supply:
     - id: minuet_light_power
       pin:
-        number: 0
+        number: 6
         mode: output
       enable_time: 10ms
       keep_on_time: 5s
@@ -32,7 +32,7 @@ minuet_light:
     - id: minuet_light
       name: ${name}
       platform: esp32_rmt_led_strip
-      pin: 1
+      pin: 5
       restore_mode: ALWAYS_OFF
       num_leds: ${num_leds}
       chipset: ${chipset}

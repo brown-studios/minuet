@@ -206,3 +206,8 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 ## Errata
 
 None so far.
+
+In v3.0:
+
+- There should be a 1 uF capacitor from FB_BK to GND_BK.
+- Should add motor phase labels to the silkscreen, relabel everything to A/B/C to match the data sheet

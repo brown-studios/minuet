@@ -1,7 +1,11 @@
-// Minuet core declarations
+// MINUET CORE HELPERS
 #include "esphome/components/fan/fan.h"
 
+#include <cstdint>
+
 namespace minuet {
+
+const char *const TAG = "minuet";
 
 uint8_t transient_operation_depth = 0;
 
@@ -26,14 +30,15 @@ struct PersistentState {
   bool fan_exhaust : 1 {true};
   bool cover_open : 1 {false};
 
-  constexpr uint8_t& to_storage() { return reinterpret_cast<uint8_t&>(*this); }
-  static constexpr PersistentState& from_storage(uint8_t& storage) { return reinterpret_cast<PersistentState&>(storage); }
+  // The storage hack is needed because ESPHome global declarations cannot refer to types in user-defined include files.
+  using Storage = typename std::remove_reference<decltype(*minuet_persistent_state_raw)>::type::value_type;
+  constexpr Storage& to_storage() { return reinterpret_cast<Storage&>(*this); }
+  static constexpr PersistentState& from_storage(Storage& storage) { return reinterpret_cast<PersistentState&>(storage); }
 } __attribute__((packed));
 
-// Gets the persistent state
-// This hack is needed because ESPHome global declarations cannot refer to types in user-defined include files.
+static_assert(sizeof(PersistentState) == sizeof(PersistentState::Storage));
+
 PersistentState& persistent_state() {
-  static_assert(sizeof(PersistentState) == sizeof(uint8_t));
   return PersistentState::from_storage(minuet_persistent_state_raw->value());
 }
 
