@@ -205,9 +205,9 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 
 ## Errata
 
-None so far.
+Issues v3.0:
 
-In v3.0:
-
-- There should be a 1 uF capacitor from FB_BK to GND_BK.
-- Should add motor phase labels to the silkscreen, relabel everything to A/B/C to match the data sheet
+- There should be a 1 uF capacitor from FB_BK to GND_BK according to the MCF8316 datasheet, although it works fine without it.
+- Should add motor phase labels to the silkscreen for clarity and relabel all of the documentation to A/B/C to match the data sheet.
+- The rain sensor does not work.  The Minuet v3.0 boards were assembled with LMV331IDCK which has a PNP input stage and only allows a common mode input voltage up to Vcc - 0.7 V = 2.6 V whereas the actual signals are in the range of 3.1 V.  The Minuet v2.* boards used LMV331X which has no such limitation and worked as expected (but this part was not available at JLCPCB).  Suitable rail-to-rail alternatives: TL331LV, TLV7041, TLV7021.
+- Some areas of the PCB reach over 50 C when operating the motor at 4 A peak per phase.  At 4.5 A, we can see over-temperature warnings.  Consider adding a copper pour to the front layer with thermal vias.
