@@ -100,8 +100,8 @@ minuet_fan_motor_driver:
       platform: template
       update_interval: 5s
       filters:
-        - round_to_multiple_of: 10
         - delta: 5
+        - round_to_multiple_of: 10
       lambda: 'return minuet::fan_motor::control.get_tachometer_rpm();'
     - id: minuet_fan_driver_bus_current
       name: "Fan Driver Bus Current"
@@ -114,8 +114,8 @@ minuet_fan_motor_driver:
       platform: template
       update_interval: never
       filters:
-        - round_to_multiple_of: 0.01
         - delta: 0.005
+        - round_to_multiple_of: 0.01
       lambda: 'return minuet::fan_motor::control.get_bus_current();'
     - id: minuet_fan_driver_motor_phase_peak_current
       name: "Fan Driver Motor Phase Peak Current"
@@ -128,8 +128,8 @@ minuet_fan_motor_driver:
       platform: template
       update_interval: never
       filters:
-        - round_to_multiple_of: 0.01
         - delta: 0.005
+        - round_to_multiple_of: 0.01
       lambda: 'return minuet::fan_motor::control.get_motor_phase_peak_current();'
     - id: minuet_fan_driver_vm_voltage
       name: "Fan Driver VM Voltage"
@@ -142,8 +142,8 @@ minuet_fan_motor_driver:
       platform: template
       update_interval: never
       filters:
-        - round_to_multiple_of: 0.01
         - delta: 0.005
+        - round_to_multiple_of: 0.01
       lambda: 'return minuet::fan_motor::control.get_vm_voltage();'
   switch:
     - id: minuet_fan_driver_diagnostics
@@ -224,7 +224,7 @@ minuet_ambient_temperature_sensor:
             window_size: 20
             send_every: 10
             send_first_at: 10
-        - delta: 0.001
+        - delta: 0.005
       update_interval: never
     - id: minuet_thermistor_resistance
       platform: resistance
@@ -240,8 +240,8 @@ minuet_ambient_temperature_sensor:
         reference_resistance: 10kOhm
       accuracy_decimals: 1
       filters:
-        - round_to_multiple_of: 0.2
         - delta: 0.1
+        - round_to_multiple_of: 0.2
   output:
     - id: minuet_thermistor_power
       platform: gpio
@@ -286,8 +286,8 @@ minuet_battery_monitor:
             send_every: 5
             send_first_at: 5
         - multiply: 11
-        - round_to_multiple_of: 0.1
-        - delta: 0.05
+        - delta: 0.1
+        - round_to_multiple_of: 0.2
       update_interval: 0.5s
       on_value:
         then:
