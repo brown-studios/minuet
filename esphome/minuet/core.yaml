@@ -1249,6 +1249,20 @@ minuet_fan_controller:
       on_turn_off:
         then:
           - script.execute: minuet_fan_control_update
+    - id: minuet_fan_override_brake
+      name: "Fan Override Brake"
+      icon: mdi:pause
+      platform: template
+      restore_mode: DISABLED
+      optimistic: true
+      entity_category: config
+      disabled_by_default: true
+      on_turn_on:
+        then:
+          - script.execute: minuet_fan_control_update
+      on_turn_off:
+        then:
+          - script.execute: minuet_fan_control_update
   number:
     - id: minuet_fan_override_speed
       name: "Fan Override Speed"
@@ -1307,14 +1321,17 @@ minuet_fan_controller:
             const auto& fan = id(minuet_fan);
             float speed_rpm;
             bool exhaust;
+            bool brake;
             if (id(minuet_fan_override).state) {
               speed_rpm = id(minuet_fan).state ? id(minuet_fan_override_speed).state : 0;
               exhaust = id(minuet_fan_override_direction).active_index() == 0;
+              brake = id(minuet_fan_override_brake).state;
             } else {
               speed_rpm = id(minuet_fan).state ? minuet::fan_motor::control.get_fan_speed_by_index(fan->speed) : 0;
               exhaust = minuet::fan_direction_is_exhaust(fan->direction);
+              brake = false;
             }
-            minuet::fan_motor::control.set_state(speed_rpm, exhaust);
+            minuet::fan_motor::control.set_state(speed_rpm, exhaust, brake);
 
 
 # Cover controller

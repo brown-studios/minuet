@@ -215,7 +215,7 @@ public:
   void init(const MotorDescriptor& descriptor);
   void shutdown();
 
-  void set_state(float speed_rpm, bool exhaust);
+  void set_state(float speed_rpm, bool exhaust, bool brake);
   void start_mpet();
 
   float get_tachometer_rpm();
@@ -322,11 +322,11 @@ Config MotorControl::make_config_(const MotorProfile& profile) {
   // N/A: ACT_SPIN_THR: only for MTR_STOP active spin-down mode
 
   // Braking
-  config.set(BRK_MODE, uint8_t(1)); // Brake mode: low-side recirculate
+  config.set(BRK_MODE, uint8_t(1)); // Brake mode: low-side brake
   config.set(BRK_CONFIG, uint8_t(1)); // Brake config: exit brake state based on current and time
   config.set(BRK_CURR_THR, uint8_t(0)); // Brake current threshold: 0.1 A
   config.set(BRK_TIME, uint8_t(14)); // Brake stop time: 10s, must allow a long time to stop due to high rotor inertia
-  config.set(BRAKE_SPEED_THRESHOLD, uint8_t(7)); // Brake speed threshold: reduce speed to 40% of MAX_SPEED before entering brake state
+  config.set(BRAKE_SPEED_THRESHOLD, uint8_t(11)); // Brake speed threshold: reduce speed to 20% of MAX_SPEED before entering brake state
   config.set(BRAKE_PIN_MODE, uint8_t(0)); // Brake pin mode: low-side brake
   // N/A: ALIGN_BRAKE_ANGLE_SEL: only used when BRAKE_PIN_MODE is align brake mode
 
@@ -485,8 +485,8 @@ void MotorControl::shutdown() {
     return; \
   }
 
-void MotorControl::set_state(float speed_rpm, bool exhaust) {
-  ESP_LOGI(TAG, "Set fan motor control: speed_rpm=%f, exhaust=%d", speed_rpm, exhaust);
+void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake) {
+  ESP_LOGI(TAG, "Set fan motor control: speed_rpm=%f, exhaust=%d, brake=%d", speed_rpm, exhaust, brake);
   MINUET_MOTOR_CONTROL_RETURN_IF_NOT_READY;
 
   if (driver()->config_shadow().needs_mpet_for_speed_loop()) {
@@ -496,7 +496,7 @@ void MotorControl::set_state(float speed_rpm, bool exhaust) {
 
   // TODO: wake / sleep
   driver()->wake();
-  this->set_inputs_(rpm_to_hz(speed_rpm), exhaust, false);
+  this->set_inputs_(rpm_to_hz(speed_rpm), exhaust, brake);
 
   if (speed_rpm == 0) {
     driver()->clear_fault();
