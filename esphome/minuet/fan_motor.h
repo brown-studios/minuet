@@ -146,7 +146,7 @@ constexpr MotorDescriptor MOTORS[] = {
       .spd_loop_kp = 0x82, //327,
       .spd_loop_ki = 0x136, //583,
       .ipd_clk_freq = IPDClockFrequency::FREQ_1000_HZ,
-      .ipd_curr_thr = IPDCurrentThreshold::THR_1_25_A,
+      .ipd_curr_thr = IPDCurrentThreshold::THR_1_5_A,
       .ol_ilimit = CurrentLimit::LIMIT_2_0_A,
       .ol_acc_a1 = OpenLoopAcceleration::ACCEL_2_5_HZ_S,
       .ilimit = CurrentLimit::LIMIT_4_0_A,
@@ -215,7 +215,7 @@ public:
   void init(const MotorDescriptor& descriptor);
   void shutdown();
 
-  void set_state(float speed_rpm, bool exhaust, bool brake);
+  void set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake);
   void start_mpet();
 
   float get_tachometer_rpm();
@@ -356,7 +356,7 @@ Config MotorControl::make_config_(const MotorProfile& profile) {
   // N/A: FLUX_WEAK_KI
 
   // Automatic lock retry
-  config.set(LCK_RETRY, uint8_t(1)); // Retry interval after lock: 500 ms
+  config.set(LCK_RETRY, uint8_t(2)); // Retry interval after lock: 1 s
   config.set(AUTO_RETRY_TIMES, uint8_t(3)); // Auto-retry number of times: 5
 
   // Software lock to protect PCB from overcurrent
@@ -458,15 +458,18 @@ bool MotorControl::set_inputs_(float speed_in_rotor_hz, bool direction_counter_c
 void MotorControl::init(const MotorDescriptor& descriptor) {
   this->ready_ = false;
 
-  ESP_LOGI(TAG, "Initializing fan motor driver for \"%s\" \"%s\"",
-      descriptor.manufacturer, descriptor.model);
+  ESP_LOGI(TAG, "Initializing fan motor driver for \"%s\" \"%s\"", descriptor.manufacturer, descriptor.model);
+  Config config = this->make_config_(descriptor.profile);
+  log_config(config);
 
-  ErrorCode error = driver()->write_config(this->make_config_(descriptor.profile));
+  ErrorCode error = driver()->write_config(config);
+  if (!error) {
+    error = driver()->save_config_to_eeprom();
+  }
   if (error) {
     ESP_LOGE(TAG, "Failed to initialize the fan motor driver: %s", MCF8316Component::error_name(error));
     return;
   }
-  // TODO: save to eeprom
 
   this->ready_ = true;
   this->profile_ = descriptor.profile;
@@ -485,8 +488,8 @@ void MotorControl::shutdown() {
     return; \
   }
 
-void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake) {
-  ESP_LOGI(TAG, "Set fan motor control: speed_rpm=%f, exhaust=%d, brake=%d", speed_rpm, exhaust, brake);
+void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake) {
+  ESP_LOGI(TAG, "Set fan motor control: speed_rpm=%f, exhaust=%d, brake=%d, keep_awake=%d", speed_rpm, exhaust, brake, keep_awake);
   MINUET_MOTOR_CONTROL_RETURN_IF_NOT_READY;
 
   if (driver()->config_shadow().needs_mpet_for_speed_loop()) {
@@ -494,12 +497,20 @@ void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake) {
     return; // don't poke the speed input
   }
 
-  // TODO: wake / sleep
-  driver()->wake();
+  const bool run = speed_rpm > 0;
+  if (run > 0 || keep_awake) {
+    driver()->wake();
+  }
+
   this->set_inputs_(rpm_to_hz(speed_rpm), exhaust, brake);
 
-  if (speed_rpm == 0) {
-    driver()->clear_fault();
+  if (!run) {
+    if (driver()->is_awake() && driver()->is_faulted()) {
+      driver()->clear_fault();
+    }
+    if (!keep_awake) {
+      driver()->sleep();
+    }
   }
 }
 
