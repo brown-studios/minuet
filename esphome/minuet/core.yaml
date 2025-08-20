@@ -345,7 +345,7 @@ minuet_rain_sensor:
       filters:
         - delayed_on_off:
             time_on: 2s
-            time_off: 60s
+            time_off: 30s
       on_press:
         then:
           - lambda: |-
