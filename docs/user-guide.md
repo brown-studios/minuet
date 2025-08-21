@@ -84,7 +84,17 @@ Press the `rain sensor` button to toggle the rain sensor on or off.
 
 When the rain sensor is disabled, the LED will turn red to warn that water could enter your vehicle if it rains.
 
-When the rain sensor detects moisture, it turns off the fan, closes the cover, and makes the LED flash red.  Press the `rain sensor` button again to reset the flashing LED.
+When the rain sensor detects moisture, it turns off the fan, closes the cover, makes the LED flash red, and activates the safety lock feature.  The fan cannot be operated while the safety lock is activated.  Press the `rain sensor` button again to reset the flashing LED and release the rain sensor safety lock.
+
+### Safety lock
+
+The safety lock feature closes the lid and prevents the fan from being operated under certain conditions:
+
+- The rain sensor has detected moisture.
+- The battery voltage is too high or too low.
+- The LOCK signal has been triggered by an accessory such as an insulating vent cover magnetic reed switch sensor.
+
+The fan cannot be operated while the safety lock is active.  Minuet indicates that the safety lock has blocked an operation with three quick tones.
 
 ### Enable or disable WiFi
 
@@ -105,6 +115,14 @@ When power on restore is disabled, Minuet will leave the fan off and close the c
 ### Factory reset
 
 Hold `on/off` for 15 seconds to turn the fan off and perform a factory reset.  Minuet confirms with four descending tones then erases all of its settings including saved WiFi credentials.  Follow the [Getting started](#getting-started) guide to get started again.
+
+### Failsafe restart
+
+Minuet automatically restarts when it detects a fault that may prevent normal operation the device.
+
+Minuet indicates that a failsafe restart has been triggered with four quick tones and one long tone.  Then, it waits 3 minutes to allow some time for you to collect information from the logs to help debug the issue.  Finally, it plays the same tones again and restarts the device.
+
+If the issue persists, please ask for support.
 
 ## Using the 4 key wall remote
 

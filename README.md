@@ -8,7 +8,7 @@ Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan](https:
 * Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
 * Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
 * Connect lights to your fan with the [Minuet Light Accessory board](hardware/light/design-and-errata.md).
-* Use the safety lock feature to disable operation when a vent fan cover is installed or while driving.
+* Use the safety lock feature to disable operation when an insulating vent cover is installed or while driving.
 * Connect your own environmental sensors and accessories to Minuet's [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion port.
 * The hardware and software is open source: help make it better and share your improvements with others.
 

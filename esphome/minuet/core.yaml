@@ -67,11 +67,10 @@ minuet_components:
       pin_count: 16
 
 
-# Vent fan motor driver
+# Fan motor driver
 # TODO:
-# - Add keep awake setting to help with tuning (never sleep)
 # - Add select entity for motor descriptor
-# - Add service to set custom motor parameters
+# - Add service to set custom motor profile
 minuet_fan_motor_driver:
   mcf8316:
     - id: minuet_fan_motor_driver
@@ -88,7 +87,7 @@ minuet_fan_motor_driver:
         then:
           - lambda: |-
               // TODO: Consider handling OTW (over-temperature warning) fault by reducing the fan speed
-              id(minuet_fan_motor_fault_recovery).execute(x.is_faulted());
+              id(minuet_fan_driver_fault_recovery).execute(x.is_faulted());
 
               std::string fault_text;
               if (x.gate_driver) {
@@ -103,7 +102,7 @@ minuet_fan_motor_driver:
                 id(minuet_fan_driver_fault_text).publish_state(fault_text);
               }
   sensor:
-    - id: minuet_fan_motor_tach
+    - id: minuet_fan_tach
       name: "Fan Tachometer"
       icon: mdi:fan
       state_class: measurement
@@ -176,7 +175,7 @@ minuet_fan_motor_driver:
       entity_category: diagnostic
       disabled_by_default: true
   button:
-    - id: minuet_fan_motor_mpet
+    - id: minuet_fan_driver_mpet
       name: "Start Motor Parameter Extraction Tool"
       icon: mdi:gear
       platform: template
@@ -204,7 +203,7 @@ minuet_fan_motor_driver:
             id(minuet_fan_driver_vm_voltage).update();
           }
   script:
-    - id: minuet_fan_motor_fault_recovery
+    - id: minuet_fan_driver_fault_recovery
       mode: restart
       parameters:
         faulted: bool
@@ -469,6 +468,7 @@ minuet_tone:
       // Generic tones
       "beep:d=16,o=4,b=144:e6",
       "!urgent:d=16,o=4,b=144:32e6,32p,e6",
+      "blocked:d=16,o=4,b=144:32e6,32p,32e6,32p,e6",
       "minuet:d=4,o=4,b=152:d5,8g4,8a4,8b4,8c5,d5,g4,g4,e5,32c5,32b4,16c5,8d5,8e5,8f#5,g5,g4,g4,32c5,32b4,16c5,8d5,8c5,8b4,8a4,b4,8c5,8b4,8a4,8g4,f#4,8g4,8a4,8b4,8g4,32b4,2a4.,d5,8g4,8a4,8b4,8c5,d5,g4,g4,e5,32c5,32b4,16c5,8d5,8e5,8f#5,g5,g4,g4,32c5,32b4,16c5,8d5,8c5,8b4,8a4,b4,8c5,8b4,8a4,8g4,a4,8b4,8a4,8g4,8f#4,2g4.",
       // Specific actions
       "manual_fan_on:",
@@ -500,6 +500,7 @@ minuet_tone:
       "!power_on_restore:d=16,o=4,b=144:32e6,32f6,32e6,32d6,8e6,8a6",
       "!power_on_default:d=16,o=4,b=144:32e6,32f6,32e6,32d6,8e6,8a5",
       "!factory_reset:d=16,o=4,b=144:8e6,8a5,8e5,4a4",
+      "!failsafe_restart:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6,32p,32e6,32p,4e6",
     minuet_tone_default_if_unknown: "beep"
   output:
     - id: minuet_tone_pwm
@@ -1278,10 +1279,7 @@ minuet_fan_controller:
       optimistic: true
       entity_category: config
       disabled_by_default: true
-      on_turn_on:
-        then:
-          - script.execute: minuet_fan_control_update
-      on_turn_off:
+      on_state:
         then:
           - script.execute: minuet_fan_control_update
     - id: minuet_fan_override_brake
@@ -1292,10 +1290,7 @@ minuet_fan_controller:
       optimistic: true
       entity_category: config
       disabled_by_default: true
-      on_turn_on:
-        then:
-          - script.execute: minuet_fan_control_update
-      on_turn_off:
+      on_state:
         then:
           - script.execute: minuet_fan_control_update
     - id: minuet_fan_override_keep_awake
@@ -1306,10 +1301,7 @@ minuet_fan_controller:
       optimistic: true
       entity_category: config
       disabled_by_default: true
-      on_turn_on:
-        then:
-          - script.execute: minuet_fan_control_update
-      on_turn_off:
+      on_state:
         then:
           - script.execute: minuet_fan_control_update
   number:
@@ -1772,3 +1764,40 @@ minuet_shutdown:
           - lambda: |-
               minuet::fan_motor::control.shutdown();
               id(minuet_cover_motor_sleep).turn_on();
+
+
+# Failsafe: Reboot when components have failed
+minuet_failsafe:
+  binary_sensor:
+    - id: minuet_failsafe
+      name: "Failsafe"
+      device_class: problem
+      entity_category: diagnostic
+      platform: template
+      trigger_on_initial_state: true
+      lambda: |-
+        return id(minuet_fan_motor_driver).is_failed();
+      on_press:
+        then:
+          - delay: 100ms # Ensure component initialization has finished
+          - button.press: minuet_failsafe_restart_after_delay
+  button:
+    - id: minuet_failsafe_restart_after_delay
+      platform: template
+      on_press:
+        then:
+          - logger.log:
+              format: "Failsafe restart will be triggered after a delay"
+              level: ERROR
+          - script.execute:
+              id: minuet_tone
+              name: "!failsafe_restart"
+          - delay: 180s
+          - logger.log:
+              format: "Failsafe restart happening now"
+              level: ERROR
+          - script.execute:
+              id: minuet_tone
+              name: "!failsafe_restart"
+          - delay: 2s
+          - button.press: minuet_restart
