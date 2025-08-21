@@ -10,7 +10,7 @@
 #include "esphome/core/log.h"
 
 namespace minuet {
-namespace fan_motor {
+namespace fan_driver {
 
 using namespace esphome::mcf8316;
 using ErrorCode = MCF8316Component::ErrorCode;
@@ -208,9 +208,9 @@ constexpr CurrentLimit BOARD_LOCK_ILIMIT = CurrentLimit::LIMIT_4_5_A;
 constexpr CurrentLimit BOARD_HW_LOCK_ILIMIT = CurrentLimit::LIMIT_5_0_A;
 
 // Controls the MCF8316 motor driver chip.
-class MotorControl {
+class Controller {
 public:
-  static inline MCF8316Component* driver() { return minuet_fan_motor_driver; }
+  static inline MCF8316Component* driver() { return minuet_fan_driver; }
 
   void init(const MotorDescriptor& descriptor);
   void shutdown();
@@ -233,7 +233,7 @@ private:
 };
 
 
-Config MotorControl::make_config_(const MotorProfile& profile) {
+Config Controller::make_config_(const MotorProfile& profile) {
   Config config = driver()->make_default_config();
 
   // Motor parameters
@@ -449,13 +449,13 @@ Config MotorControl::make_config_(const MotorProfile& profile) {
   return config;
 }
 
-bool MotorControl::set_inputs_(float speed_in_rotor_hz, bool direction_counter_clockwise, bool brake_on) {
+bool Controller::set_inputs_(float speed_in_rotor_hz, bool direction_counter_clockwise, bool brake_on) {
   return !driver()->write_speed_input(speed_in_rotor_hz)
       && !driver()->write_direction_input_config(direction_counter_clockwise)
       && !driver()->write_brake_input_config(brake_on);
 }
 
-void MotorControl::init(const MotorDescriptor& descriptor) {
+void Controller::init(const MotorDescriptor& descriptor) {
   this->ready_ = false;
 
   ESP_LOGI(TAG, "Initializing fan motor driver for \"%s\" \"%s\"", descriptor.manufacturer, descriptor.model);
@@ -475,22 +475,22 @@ void MotorControl::init(const MotorDescriptor& descriptor) {
   this->profile_ = descriptor.profile;
 }
 
-void MotorControl::shutdown() {
+void Controller::shutdown() {
   ESP_LOGI(TAG, "Shutdown fan motor driver");
 
   driver()->sleep();
   this->ready_ = false;
 }
 
-#define MINUET_MOTOR_CONTROL_RETURN_IF_NOT_READY \
+#define MINUET_FAN_DRIVER_RETURN_IF_NOT_READY \
   if (!this->ready_) { \
     ESP_LOGW(TAG, "Fan motor not ready"); \
     return; \
   }
 
-void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake) {
-  ESP_LOGI(TAG, "Set fan motor control: speed_rpm=%f, exhaust=%d, brake=%d, keep_awake=%d", speed_rpm, exhaust, brake, keep_awake);
-  MINUET_MOTOR_CONTROL_RETURN_IF_NOT_READY;
+void Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake) {
+  ESP_LOGI(TAG, "Set fan state: speed_rpm=%f, exhaust=%d, brake=%d, keep_awake=%d", speed_rpm, exhaust, brake, keep_awake);
+  MINUET_FAN_DRIVER_RETURN_IF_NOT_READY;
 
   if (driver()->config_shadow().needs_mpet_for_speed_loop()) {
     ESP_LOGW(TAG, "Must run MPET before starting the fan.");
@@ -514,15 +514,15 @@ void MotorControl::set_state(float speed_rpm, bool exhaust, bool brake, bool kee
   }
 }
 
-void MotorControl::start_mpet() {
-  MINUET_MOTOR_CONTROL_RETURN_IF_NOT_READY;
+void Controller::start_mpet() {
+  MINUET_FAN_DRIVER_RETURN_IF_NOT_READY;
 
   driver()->wake();
   driver()->clear_fault();
   driver()->start_mpet(true /*write_shadow*/);
 }
 
-float MotorControl::get_tachometer_rpm() {
+float Controller::get_tachometer_rpm() {
   if (this->ready_) {
     float speed_in_rotor_hz;
     ErrorCode error = driver()->read_speed_feedback(&speed_in_rotor_hz);
@@ -533,7 +533,7 @@ float MotorControl::get_tachometer_rpm() {
   return 0.f;
 }
 
-float MotorControl::get_bus_current() {
+float Controller::get_bus_current() {
   if (this->ready_) {
     float current_in_amps;
     ErrorCode error = driver()->read_bus_current(&current_in_amps);
@@ -544,7 +544,7 @@ float MotorControl::get_bus_current() {
   return NAN;
 }
 
-float MotorControl::get_motor_phase_peak_current() {
+float Controller::get_motor_phase_peak_current() {
   if (this->ready_) {
     float current_in_amps;
     ErrorCode error = driver()->read_motor_phase_peak_current(&current_in_amps);
@@ -555,7 +555,7 @@ float MotorControl::get_motor_phase_peak_current() {
   return NAN;
 }
 
-float MotorControl::get_vm_voltage() {
+float Controller::get_vm_voltage() {
   if (this->ready_) {
     float voltage_in_volts;
     ErrorCode error = driver()->read_vm_voltage(&voltage_in_volts);
@@ -566,11 +566,11 @@ float MotorControl::get_vm_voltage() {
   return NAN;
 }
 
-float MotorControl::get_fan_speed_by_index(int index) const {
+float Controller::get_fan_speed_by_index(int index) const {
   return this->ready_ && index >= 1 && index <= 10 ? this->profile_.fan_speed_rpm_table[index - 1] : 0.f;
 }
 
-MotorControl control;
+Controller controller;
 
-} // namespace fan_motor
+} // namespace fan_driver
 } // namespace minuet
