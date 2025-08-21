@@ -140,11 +140,11 @@ constexpr MotorDescriptor MOTORS[] = {
     "StepperOnline", "57BYA54-12-01", {
       .fg_div = fg_div_from_motor_poles(4),
       .lead_angle = lead_angle_from_degrees(0),
-      .motor_res = 0x46, //82,
-      .motor_ind = 0x56, //98,
-      .motor_bemf_const = 0x77, //94,
-      .spd_loop_kp = 0x82, //327,
-      .spd_loop_ki = 0x136, //583,
+      .motor_res = 74,
+      .motor_ind = 98,
+      .motor_bemf_const = 103,
+      .spd_loop_kp = 115,
+      .spd_loop_ki = 293,
       .ipd_clk_freq = IPDClockFrequency::FREQ_1000_HZ,
       .ipd_curr_thr = IPDCurrentThreshold::THR_1_5_A,
       .ol_ilimit = CurrentLimit::LIMIT_2_0_A,
@@ -153,7 +153,7 @@ constexpr MotorDescriptor MOTORS[] = {
       .cl_slow_acc = ClosedLoopSlowAcceleration::ACCEL_3_0_HZ_S,
       .cl_acc = ClosedLoopAcceleration::ACCEL_20_0_HZ_S,
       .cl_dec = ClosedLoopDeceleration::ACCEL_NO_LIMIT,
-      .fan_speed_rpm_table = { 100, 200, 300, 400, 500, 600, 700, 800, 1000, 1200 },
+      .fan_speed_rpm_table = { 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1200 },
     }
   },
 };
@@ -215,7 +215,7 @@ public:
   void init(const MotorDescriptor& descriptor);
   void shutdown();
 
-  void set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake);
+  bool set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake);
   void start_mpet();
 
   float get_tachometer_rpm();
@@ -306,7 +306,7 @@ Config Controller::make_config_(const MotorProfile& profile) {
   // Open loop to closed loop handoff
   config.set(AUTO_HANDOFF_EN, true); // Auto handoff to closed loop: enabled, ignores OPN_CL_HANDOFF_THR except for MPET
   config.set(AUTO_HANDOFF_MIN_BEMF, uint8_t(2)); // Minimum BEMF for auto handoff: 100 mV
-  config.set(OPN_CL_HANDOFF_THR, uint8_t(27)); // Open to closed loop handoff speed: 40% of MAX_SPEED, used in MPET to get the motor running, ignored in normal operation due to auto handoff
+  config.set(OPN_CL_HANDOFF_THR, uint8_t(21)); // Open to closed loop handoff speed: 25% of MAX_SPEED, used in MPET to get the motor running, ignored in normal operation due to auto handoff
   config.set(IQ_RAMP_EN, false); // IQ ramp down in transition from open to closed loop: disabled, otherwise the transition takes too long
   config.set(LOW_SPEED_RECIRC_BRAKE_EN, true); // Open loop low speed braking: enabled, ensures the open loop can stop the motor quickly (otherwise inertia keeps the rotor spinning a long time)
   config.set(THETA_ERROR_RAMP_RATE, uint8_t(2)); // Theta error ramp: 0.1 deg/ms
@@ -450,9 +450,14 @@ Config Controller::make_config_(const MotorProfile& profile) {
 }
 
 bool Controller::set_inputs_(float speed_in_rotor_hz, bool direction_counter_clockwise, bool brake_on) {
-  return !driver()->write_speed_input(speed_in_rotor_hz)
-      && !driver()->write_direction_input_config(direction_counter_clockwise)
-      && !driver()->write_brake_input_config(brake_on);
+  const bool run = speed_in_rotor_hz > 0;
+  bool error = false;
+  error |= brake_on && driver()->write_brake_input_config(true);
+  error |= !run && driver()->write_speed_input(0);
+  error |= driver()->write_direction_input_config(direction_counter_clockwise);
+  error |= run && driver()->write_speed_input(speed_in_rotor_hz);
+  error |= !brake_on && driver()->write_brake_input_config(false);
+  return !error;
 }
 
 void Controller::init(const MotorDescriptor& descriptor) {
@@ -478,7 +483,10 @@ void Controller::init(const MotorDescriptor& descriptor) {
 void Controller::shutdown() {
   ESP_LOGI(TAG, "Shutdown fan motor driver");
 
-  driver()->sleep();
+  if (driver()->is_awake()) {
+    driver()->write_speed_input(0);
+    driver()->sleep();
+  }
   this->ready_ = false;
 }
 
@@ -488,13 +496,19 @@ void Controller::shutdown() {
     return; \
   }
 
-void Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake) {
+#define MINUET_FAN_DRIVER_RETURN_RESULT_IF_NOT_READY(result) \
+  if (!this->ready_) { \
+    ESP_LOGW(TAG, "Fan motor not ready"); \
+    return (result); \
+  }
+
+bool Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_awake) {
   ESP_LOGI(TAG, "Set fan state: speed_rpm=%f, exhaust=%d, brake=%d, keep_awake=%d", speed_rpm, exhaust, brake, keep_awake);
-  MINUET_FAN_DRIVER_RETURN_IF_NOT_READY;
+  MINUET_FAN_DRIVER_RETURN_RESULT_IF_NOT_READY(false);
 
   if (driver()->config_shadow().needs_mpet_for_speed_loop()) {
     ESP_LOGW(TAG, "Must run MPET before starting the fan.");
-    return; // don't poke the speed input
+    return false; // don't poke the speed input
   }
 
   const bool run = speed_rpm > 0;
@@ -502,7 +516,12 @@ void Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_
     driver()->wake();
   }
 
-  this->set_inputs_(rpm_to_hz(speed_rpm), exhaust, brake);
+  if (!this->set_inputs_(rpm_to_hz(speed_rpm), !exhaust, brake)) {
+    if (!keep_awake) {
+      driver()->sleep();
+    }
+    return false;
+  }
 
   if (!run) {
     if (driver()->is_awake() && driver()->is_faulted()) {
@@ -512,6 +531,7 @@ void Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_
       driver()->sleep();
     }
   }
+  return true;
 }
 
 void Controller::start_mpet() {

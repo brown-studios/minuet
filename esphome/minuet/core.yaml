@@ -1355,6 +1355,7 @@ minuet_fan_controller:
               id(minuet_fan_suppress_cover_movement) = false;
             }
     - id: minuet_fan_control_update
+      mode: queued
       then:
         - lambda: |-
             const auto& fan = id(minuet_fan);
@@ -1363,17 +1364,22 @@ minuet_fan_controller:
             bool brake;
             bool keep_awake;
             if (id(minuet_fan_override).state) {
-              speed_rpm = id(minuet_fan).state ? id(minuet_fan_override_speed).state : 0;
+              speed_rpm = fan->state ? id(minuet_fan_override_speed).state : 0;
               exhaust = id(minuet_fan_override_direction).active_index() == 0;
               brake = id(minuet_fan_override_brake).state;
               keep_awake = id(minuet_fan_override_keep_awake).state;
             } else {
-              speed_rpm = id(minuet_fan).state ? minuet::fan_driver::controller.get_fan_speed_by_index(fan->speed) : 0;
+              speed_rpm = fan->state ? minuet::fan_driver::controller.get_fan_speed_by_index(fan->speed) : 0;
               exhaust = minuet::fan_direction_is_exhaust(fan->direction);
               brake = false;
               keep_awake = false;
             }
-            minuet::fan_driver::controller.set_state(speed_rpm, exhaust, brake, keep_awake);
+            if (!minuet::fan_driver::controller.set_state(speed_rpm, exhaust, brake, keep_awake)) {
+              ESP_LOGE(minuet::TAG, "Failed to set the fan driver state");
+              if (fan->state) {
+                fan->turn_off().perform();
+              }
+            }
 
 
 # Cover controller
