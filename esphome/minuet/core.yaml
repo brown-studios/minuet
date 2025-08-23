@@ -998,7 +998,10 @@ minuet_keypad_control:
             const auto menu = which_menu();
             if (menu == Menu::ENHANCED || menu == Menu::STANDARD_AUTO) {
               auto& therm = id(minuet_thermostat);
-              therm->make_call().set_target_temperature(fahrenheit_to_celsius(${minuet_thermostat_default_temperature})).perform();
+              therm->make_call()
+                  .set_target_temperature(fahrenheit_to_celsius(${minuet_thermostat_default_temperature}))
+                  .set_fan_mode(ClimateFanMode::CLIMATE_FAN_AUTO)
+                  .perform();
               id(minuet_tone)->execute("auto_temp_default");
               return true;
             }
@@ -1658,6 +1661,7 @@ minuet_cover_controller:
 minuet_thermostat:
   substitutions:
     minuet_thermostat_default_temperature: "78"
+    minuet_thermostat_default_temperature_unoccupied: "95"
   globals:
     - id: minuet_thermostat_override
       type: bool
@@ -1730,10 +1734,16 @@ minuet_thermostat:
       cool_action:
         then:
           - script.execute: minuet_thermostat_update
-      fan_mode_auto_action:
+      fan_mode_off_action:
         then:
           - script.execute: minuet_thermostat_update
-      fan_mode_off_action:
+      fan_mode_low_action:
+        then:
+          - script.execute: minuet_thermostat_update
+      fan_mode_quiet_action:
+        then:
+          - script.execute: minuet_thermostat_update
+      fan_mode_auto_action:
         then:
           - script.execute: minuet_thermostat_update
       off_mode:
@@ -1751,11 +1761,23 @@ minuet_thermostat:
         then:
           - script.execute: minuet_thermostat_update
       preset:
-        - name: 'Default'
+        - name: 'Off'
           mode: 'off'
           fan_mode: 'auto'
           default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
-      default_preset: 'Default'
+        - name: 'Home'
+          mode: 'cool'
+          fan_mode: 'auto'
+          default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
+        - name: 'Sleep'
+          mode: 'cool'
+          fan_mode: 'quiet'
+          default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
+        - name: 'Away'
+          mode: 'cool'
+          fan_mode: 'low'
+          default_target_temperature_high: ${minuet_thermostat_default_temperature_unoccupied} °F
+      default_preset: 'Off'
       on_boot_restore_from: memory
   switch:
     - id: minuet_thermostat_override_switch
@@ -1829,10 +1851,33 @@ minuet_thermostat:
               auto& auto_fan_exhaust = id(minuet_thermostat_auto_fan_exhaust);
               auto& auto_cover_open = id(minuet_thermostat_auto_cover_open);
               if (id(minuet_thermostat).action == CLIMATE_ACTION_COOLING) {
-                //const float ambient_temperature = therm->current_temperature;
-                //const float target_temperature = therm->target_temperature_high;
-                const auto& fan_mode = therm->fan_mode;
-                auto_fan_speed = fan_mode == CLIMATE_FAN_AUTO ? 3 : 0; // TODO: choose a speed automatically
+                // Determine an appropriate fan speed to enhance the thermal comfort of the occupants based on the
+                // difference between the ambient temperature and target temperature and the user's specified fan mode.
+                // We don't have a lot of information for this calculation and the target temperature may not be
+                // achievable when it's too hot outdoors so a PID controller may not be of much use here as it would
+                // likely always saturate.  So the goal is simply to provide enough airflow efficiently.
+                //
+                // TODO: Choose a less arbitrary transfer function.
+                // TODO: Control the fan speed over a continuous range of values instead of in discrete steps?
+                const float ambient_temperature = therm->current_temperature;
+                const float target_temperature = therm->target_temperature;
+                const float delta = ambient_temperature - target_temperature;
+                auto_fan_speed = delta > 0.f ? int(std::ceil(delta / 2.f)) : 0;
+                switch (therm->fan_mode.value_or(CLIMATE_FAN_AUTO)) {
+                  case CLIMATE_FAN_OFF:
+                    auto_fan_speed = 0;
+                    break;
+                  case CLIMATE_FAN_LOW:
+                    auto_fan_speed = 1;
+                    break;
+                  case CLIMATE_FAN_QUIET:
+                    auto_fan_speed = std::clamp(auto_fan_speed, 0, 3);
+                    break;
+                  case CLIMATE_FAN_AUTO:
+                  default:
+                    auto_fan_speed = std::clamp(auto_fan_speed, 0, 6);
+                    break;
+                }
                 auto_cover_open = true;
               } else {
                 auto_fan_speed = 0;
