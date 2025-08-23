@@ -294,12 +294,15 @@ minuet_ambient_temperature_sensor:
 # Battery monitor
 minuet_battery_monitor:
   binary_sensor:
-    - id: minuet_battery_problem
-      name: "Battery Problem"
-      device_class: problem
+    - id: minuet_battery_safety_lock
+      name: "Battery Safety Lock"
+      icon: mdi:lock
       entity_category: diagnostic
       platform: template
       trigger_on_initial_state: true
+      on_state:
+        then:
+          - script.execute: minuet_safety_lock_update
   sensor:
     - id: minuet_battery_voltage
       name: "Battery Voltage"
@@ -324,11 +327,11 @@ minuet_battery_monitor:
       on_value:
         then:
           - lambda: |-
-              auto& problem = id(minuet_battery_problem);
-              const float hysteresis = problem->state ? 0.4f : 0.f;
+              auto& lock = id(minuet_battery_safety_lock);
+              const float hysteresis = lock->state ? 0.4f : 0.f;
               const bool low = x < id(minuet_battery_voltage_low).state + hysteresis;
               const bool high = x > id(minuet_battery_voltage_high).state - hysteresis;
-              problem->publish_state(low || high);
+              lock->publish_state(low || high);
   number:
     - id: minuet_battery_voltage_low
       name: "Low Battery Voltage Threshold"
@@ -378,32 +381,38 @@ minuet_rain_sensor:
         - delayed_on_off:
             time_on: 2s
             time_off: 30s
-      on_press:
+      on_state:
         then:
-          - lambda: |-
-              if (id(minuet_fan).state && id(minuet_rain_sensor_should_stop_fan).state) {
-                id(minuet_rain_sensor_did_stop_fan).publish_state(true);
-                // TODO: Use safety lock function here instead of modifying the fan state
-                id(minuet_fan).make_call().set_state(false).perform();
-              }
-    - id: minuet_rain_sensor_did_stop_fan
+          - script.execute: minuet_rain_sensor_update
+    - id: minuet_rain_stopped_fan
       name: "Rain Stopped Fan"
       device_class: problem
       entity_category: diagnostic
       platform: template
       trigger_on_initial_state: true
+    - id: minuet_rain_safety_lock
+      name: "Rain Safety Lock"
+      icon: mdi:lock
+      entity_category: diagnostic
+      platform: template
+      trigger_on_initial_state: true
+      on_state:
+        then:
+          - script.execute: minuet_safety_lock_update
   switch:
-    - id: minuet_rain_sensor_should_stop_fan
-      name: "Stop Fan When Rain Detected"
+    - id: minuet_rain_sensor_enabled
+      name: "Rain Sensor Enabled"
       icon: mdi:weather-rainy
       platform: template
       optimistic: true
       restore_mode: RESTORE_DEFAULT_ON
-      on_turn_off:
+      on_state:
         then:
-          - binary_sensor.template.publish:
-              id: minuet_rain_sensor_did_stop_fan
-              state: OFF
+          - lambda: |-
+              if (!id(minuet_rain_sensor_enabled).state) {
+                id(minuet_rain_stopped_fan).publish_state(false);
+              }
+              id(minuet_rain_sensor_update).execute();
   button:
     - id: minuet_rain_sensor_reset
       name: "Reset Rain Sensor"
@@ -411,35 +420,152 @@ minuet_rain_sensor:
       platform: template
       on_press:
         then:
-          - binary_sensor.template.publish:
-              id: minuet_rain_sensor_did_stop_fan
-              state: OFF
-          - switch.turn_on: minuet_rain_sensor_should_stop_fan
-  esphome:
-    on_boot:
-      - priority: 800
-        then:
           - lambda: |-
-              id(minuet_rain_sensor_did_stop_fan).publish_initial_state(false);
+              id(minuet_rain_stopped_fan).publish_state(false);
+              if (!id(minuet_rain_sensor_enabled).state) {
+                id(minuet_rain_sensor_enabled).turn_on();
+              } else {
+                id(minuet_rain_sensor_update).execute();
+              }
+  script:
+    - id: minuet_rain_sensor_update
+      mode: queued
+      then:
+        - lambda: |-
+            const bool rain = id(minuet_rain).state;
+            const bool rain_stopped_fan = id(minuet_rain_stopped_fan).state;
+            const bool rain_sensor_enabled = id(minuet_rain_sensor_enabled).state;
+            const auto& fan = id(minuet_fan);
+            const auto& cover = id(minuet_cover);
+            if (!rain_stopped_fan && rain_sensor_enabled && rain && (fan->state || minuet::cover_is_open_or_opening(cover))) {
+              ESP_LOGI(minuet::TAG, "Rain sensor detected rain and activated the safety lock to stop the fan");
+              id(minuet_rain_stopped_fan).publish_state(true);
+            }
+            id(minuet_rain_safety_lock).publish_state(rain_sensor_enabled && (rain || rain_stopped_fan));
+    - id: minuet_rain_safety_lock_maybe_triggered
+      mode: queued
+      then:
+        - lambda: |-
+            // A fan or cover operation was aborted due to a safety lock, check whether the rain safety lock
+            // contributed to the situation and set rain stopped fan to make the rain indicator flash.
+            if (id(minuet_rain_safety_lock).state) {
+              id(minuet_rain_stopped_fan).publish_state(true);
+            }
 
 
 # Safety lock
+# Encompasses all of the reasons why the fan might be inhibited from operating.
 minuet_safety_lock:
   binary_sensor:
-    - id: minuet_safety_lock_off
-      name: "Safety Lock"
+    - id: minuet_accessory_safety_lock
+      name: "Accessory Safety Lock"
       icon: mdi:lock
-      device_class: lock
       entity_category: diagnostic
       platform: gpio
       pin:
         pca9554: minuet_xio
         number: 15
         mode: input
+        inverted: true
       use_interrupt: false
       trigger_on_initial_state: true
       filters:
-        - delayed_on_off: 100ms
+        - delayed_on_off: 250ms
+      on_state:
+        then:
+          - script.execute: minuet_safety_lock_update
+    - id: minuet_safety_lock
+      name: "Safety Lock"
+      icon: mdi:lock
+      entity_category: diagnostic
+      platform: template
+  text_sensor:
+    - id: minuet_safety_lock_reason
+      name: "Safety Lock Reason"
+      icon: mdi:lock
+      entity_category: diagnostic
+      platform: template
+      update_interval: never
+  switch:
+    - id: minuet_manual_safety_lock
+      name: "Manual Safety Lock"
+      icon: mdi:lock
+      platform: template
+      optimistic: true
+      restore_mode: RESTORE_DEFAULT_OFF
+      on_state:
+        then:
+          - script.execute: minuet_safety_lock_update
+    - id: minuet_automation_safety_lock
+      name: "Automation Safety Lock"
+      icon: mdi:lock
+      platform: template
+      optimistic: true
+      restore_mode: RESTORE_DEFAULT_OFF
+      on_state:
+        then:
+          - script.execute: minuet_safety_lock_update
+  script:
+    - id: minuet_safety_lock_update
+      mode: queued
+      then:
+        - lambda: |-
+            bool locked;
+            const char* reason;
+            if (id(minuet_battery_safety_lock).state) {
+              locked = true;
+              reason = "Battery";
+            } else if (id(minuet_rain_safety_lock).state) {
+              locked = true;
+              reason = "Rain";
+            } else if (id(minuet_accessory_safety_lock).state) {
+              locked = true;
+              reason = "Accessory";
+            } else if (id(minuet_manual_safety_lock).state) {
+              locked = true;
+              reason = "Manual";
+            } else if (id(minuet_automation_safety_lock).state) {
+              locked = true;
+              reason = "Automation";
+            } else {
+              locked = false;
+              reason = "None";
+            }
+            id(minuet_safety_lock).publish_state(locked);
+            if (id(minuet_safety_lock_reason).state != reason) {
+              id(minuet_safety_lock_reason).publish_state(reason);
+            }
+
+            // Turn the fan off and close the cover when the safety lock is engaged.
+            const auto& fan = id(minuet_fan);
+            const auto& cover = id(minuet_cover);
+            if (locked && (fan->state || minuet::cover_is_open_or_opening(cover))) {
+              ESP_LOGI(minuet::TAG, "Safety lock stopped the fan and closed the cover: %s safety lock active", reason);
+              minuet::perform_transient_operation([=] {
+                if (fan->state) {
+                  fan->make_call().set_state(false).perform();
+                }
+                if (minuet::cover_is_open_or_opening(cover)) {
+                  cover->make_call().set_command_close().perform();
+                }
+              });
+            }
+
+            // How much of the fan's state should be preserved when entering a safety lock state and restored when
+            // exiting that state afterwards?  The fan could certainly return to the same state it had been in just
+            // prior to the safety lock being engaged but that state may no longer be appropriate as circumstances
+            // may have changed in the meantime.  The user might be surprised when the fan turns itself on again
+            // spontanelously many hours later and many miles down the road.
+            //
+            // This routine keeps the fan off upon exiting the locked state unless the user has left the automatic
+            // themostat enabled, in which case it restores control to the thermostat.  The safety lock also
+            // resets and suppresses the thermostat override.
+            if (locked) {
+              minuet::persistent_state().fan_on = false;
+              id(minuet_thermostat_reset_override).execute();
+            } else {
+              id(minuet_thermostat_update).execute();
+            }
 
 
 # Provides audible feedback
@@ -466,7 +592,7 @@ minuet_tone:
       // Generic tones
       "beep:d=16,o=4,b=144:e6",
       "!urgent:d=16,o=4,b=144:32e6,32p,e6",
-      "blocked:d=16,o=4,b=144:32e6,32p,32e6,32p,e6",
+      "forbidden:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6",
       "minuet:d=4,o=4,b=152:d5,8g4,8a4,8b4,8c5,d5,g4,g4,e5,32c5,32b4,16c5,8d5,8e5,8f#5,g5,g4,g4,32c5,32b4,16c5,8d5,8c5,8b4,8a4,b4,8c5,8b4,8a4,8g4,f#4,8g4,8a4,8b4,8g4,32b4,2a4.,d5,8g4,8a4,8b4,8c5,d5,g4,g4,e5,32c5,32b4,16c5,8d5,8e5,8f#5,g5,g4,g4,32c5,32b4,16c5,8d5,8c5,8b4,8a4,b4,8c5,8b4,8a4,8g4,a4,8b4,8a4,8g4,8f#4,2g4.",
       // Specific actions
       "manual_fan_on:",
@@ -491,10 +617,12 @@ minuet_tone:
       "rain_off:",
       "ir_confirm:",
       "ir_warn:d=16,o=4,b=144:32e6,32p,e6",
+      "!lock_on:d=16,o=4,b=144:32e6,32p,32e6,32p,8a6",
+      "!lock_off:d=16,o=4,b=144:32e6,32p,32e6,32p,8a5",
       "!controls_enhanced:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6,32p,8a6",
       "!controls_standard:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6,32p,8a5",
-      "!wifi_on:d=16,o=4,b=144:32e6,32p,32e6,32p,8a6",
-      "!wifi_off:d=16,o=4,b=144:32e6,32p,32e6,32p,8a5",
+      "!wifi_on:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6,32p,32e6,32p,8a6",
+      "!wifi_off:d=16,o=4,b=144:32e6,32p,32e6,32p,32e6,32p,32e6,32p,8a5",
       "!power_on_restore:d=16,o=4,b=144:32e6,32f6,32e6,32d6,8e6,8a6",
       "!power_on_default:d=16,o=4,b=144:32e6,32f6,32e6,32d6,8e6,8a5",
       "!factory_reset:d=16,o=4,b=144:8e6,8a5,8e5,4a4",
@@ -877,11 +1005,11 @@ minuet_keypad_control:
             return false;
           };
           const auto do_press_rain = [which_menu]() {
-            if (id(minuet_rain_sensor_did_stop_fan).state || !id(minuet_rain_sensor_should_stop_fan).state) {
+            if (id(minuet_rain_stopped_fan).state || !id(minuet_rain_sensor_enabled).state) {
               id(minuet_rain_sensor_reset).press();
               id(minuet_tone)->execute("rain_on");
             } else {
-              id(minuet_rain_sensor_should_stop_fan).turn_off();
+              id(minuet_rain_sensor_enabled).turn_off();
               id(minuet_tone)->execute("rain_off");
             }
           };
@@ -908,6 +1036,12 @@ minuet_keypad_control:
             auto& behavior = id(minuet_power_on_behavior);
             behavior->make_call().select_next(true).perform();
             id(minuet_tone)->execute(behavior->active_index() == 1 ? "!power_on_restore" : "!power_on_default");
+            return true;
+          };
+          const auto do_hold_manual_safety_lock_toggle = [which_menu]() -> bool {
+            auto& lock_switch = id(minuet_manual_safety_lock);
+            lock_switch->toggle();
+            id(minuet_tone)->execute(lock_switch->state ? "!lock_on" : "!lock_off");
             return true;
           };
           const auto do_hold_factory_reset = [which_menu]() -> bool {
@@ -1006,6 +1140,7 @@ minuet_keypad_control:
           constexpr uint32_t KEY_COMBO_AUTO_POWER = KEY_AUTO | KEY_POWER;
           constexpr uint32_t KEY_COMBO_POWER_UP = KEY_POWER | KEY_UP;
           constexpr uint32_t KEY_COMBO_POWER_DOWN = KEY_POWER | KEY_DOWN;
+          constexpr uint32_t KEY_COMBO_POWER_DIRECTION = KEY_POWER | KEY_DIRECTION;
           constexpr uint32_t KEY_COMBO_DIRECTION_UP = KEY_DIRECTION | KEY_UP;
           constexpr uint32_t KEY_COMBO_DIRECTION_DOWN = KEY_DIRECTION | KEY_DOWN;
           const auto VALID_KEY_COMBOS = {
@@ -1013,7 +1148,7 @@ minuet_keypad_control:
               KEY_4_CLOSE, KEY_4_OPEN, KEY_4_OFF, KEY_4_ON,
               KEY_COMBO_OPEN_CLOSE,
               KEY_COMBO_AUTO_UP, KEY_COMBO_AUTO_DOWN, KEY_COMBO_AUTO_DIRECTION, KEY_COMBO_AUTO_POWER,
-              KEY_COMBO_POWER_UP, KEY_COMBO_POWER_DOWN,
+              KEY_COMBO_POWER_UP, KEY_COMBO_POWER_DOWN, KEY_COMBO_POWER_DIRECTION,
               KEY_COMBO_DIRECTION_UP, KEY_COMBO_DIRECTION_DOWN,
           };
           bool key_valid = std::find(VALID_KEY_COMBOS.begin(), VALID_KEY_COMBOS.end(), key_state) != VALID_KEY_COMBOS.end();
@@ -1113,6 +1248,9 @@ minuet_keypad_control:
             } else if (key_state == KEY_COMBO_POWER_UP && hold_duration >= MIN_HOLD_SETTING_DURATION) {
               log_hold("KEY_COMBO_POWER_UP");
               return do_hold_power_on_behavior_toggle();
+            } else if (key_state == KEY_COMBO_POWER_DIRECTION && hold_duration >= MIN_HOLD_SETTING_DURATION) {
+              log_hold("KEY_COMBO_POWER_DIRECTION");
+              return do_hold_manual_safety_lock_toggle();
             } else if (key_state == KEY_POWER && hold_duration >= MIN_HOLD_FACTORY_RESET_DURATION) {
               log_hold("KEY_POWER");
               return do_hold_factory_reset();
@@ -1170,9 +1308,9 @@ minuet_keypad_control:
             id(minuet_keypad_auto_indicator).set_state(state);
         - lambda: |-
             bool& state = id(minuet_keypad_rain_indicator_state);
-            if (!id(minuet_rain_sensor_should_stop_fan).state) {
+            if (!id(minuet_rain_sensor_enabled).state) {
               state = true;
-            } else if (id(minuet_rain_sensor_did_stop_fan).state) {
+            } else if (id(minuet_rain_stopped_fan).state) {
               state = !state;
             } else {
               state = false;
@@ -1250,7 +1388,8 @@ minuet_fan_controller:
       on_turn_on:
         then:
           - lambda: |-
-              if (!id(minuet_fan_suppress_cover_movement)) {
+              // Safety lock check: Cover must not open while the lock is on
+              if (!id(minuet_fan_suppress_cover_movement) && !id(minuet_safety_lock).state) {
                 id(minuet_cover).make_call().set_command_open().perform();
               }
       on_turn_off:
@@ -1262,12 +1401,23 @@ minuet_fan_controller:
       on_state:
         then:
           - lambda: |-
-              if (!minuet::is_transient_operation()) {
-                id(minuet_snapshot_fan_persistent_state).execute();
-                const auto& fan = id(minuet_fan);
-                id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, minuet::fan_direction_is_exhaust(fan->direction));
+              // Safety lock check: Fan must not run while the lock is on
+              const auto& fan = id(minuet_fan);
+              if (fan->state && id(minuet_safety_lock).state) {
+                if (!minuet::is_transient_operation()) {
+                  ESP_LOGI(minuet::TAG, "Safety lock prevented fan from being turned on: %s safety lock active",
+                      id(minuet_safety_lock_reason).state.c_str());
+                  id(minuet_tone)->execute("forbidden");
+                  id(minuet_rain_safety_lock_maybe_triggered)->execute();
+                }
+                fan->make_call().set_state(false).perform();
+              } else {
+                if (!minuet::is_transient_operation()) {
+                  id(minuet_snapshot_fan_persistent_state).execute();
+                  id(minuet_thermostat_reconcile_fan_manual_state_change)->execute(fan->state, fan->speed, minuet::fan_direction_is_exhaust(fan->direction));
+                }
+                id(minuet_fan_control_update).execute();
               }
-          - script.execute: minuet_fan_control_update
   switch:
     - id: minuet_fan_override
       name: "Fan Override"
@@ -1358,18 +1508,20 @@ minuet_fan_controller:
       mode: queued
       then:
         - lambda: |-
+            // Safety lock check: Fan must not run while the safety lock is on
             const auto& fan = id(minuet_fan);
+            const bool fan_on = fan->state && !id(minuet_safety_lock).state;
             float speed_rpm;
             bool exhaust;
             bool brake;
             bool keep_awake;
             if (id(minuet_fan_override).state) {
-              speed_rpm = fan->state ? id(minuet_fan_override_speed).state : 0;
+              speed_rpm = fan_on ? id(minuet_fan_override_speed).state : 0;
               exhaust = id(minuet_fan_override_direction).active_index() == 0;
               brake = id(minuet_fan_override_brake).state;
               keep_awake = id(minuet_fan_override_keep_awake).state;
             } else {
-              speed_rpm = fan->state ? minuet::fan_driver::controller.get_fan_speed_by_index(fan->speed) : 0;
+              speed_rpm = fan_on ? minuet::fan_driver::controller.get_fan_speed_by_index(fan->speed) : 0;
               exhaust = minuet::fan_direction_is_exhaust(fan->direction);
               brake = false;
               keep_awake = false;
@@ -1400,12 +1552,21 @@ minuet_cover_controller:
       open_action:
         then:
           - lambda: |-
-              if (id(minuet_cover).current_operation != COVER_OPERATION_OPENING) {
+              // Safety lock check: Cover must not open while the lock is on
+              if (id(minuet_safety_lock).state) {
+                if (!minuet::is_transient_operation()) {
+                  ESP_LOGI(minuet::TAG, "Safety lock prevented cover from being opened: %s safety lock active",
+                      id(minuet_safety_lock_reason).state.c_str());
+                  id(minuet_tone)->execute("forbidden");
+                  id(minuet_rain_safety_lock_maybe_triggered)->execute();
+                }
+              } else if (id(minuet_cover).current_operation != COVER_OPERATION_OPENING) {
                 id(minuet_cover_perform_operation).execute(true);
               }
       close_action:
         then:
           - lambda: |-
+              // Safety lock check: Cover can close regardless of the state of the lock
               if (id(minuet_cover).current_operation != COVER_OPERATION_CLOSING) {
                 id(minuet_cover_perform_operation).execute(false);
               }
@@ -1590,11 +1751,11 @@ minuet_thermostat:
         then:
           - script.execute: minuet_thermostat_update
       preset:
-        - name: 'NONE'
+        - name: 'Default'
           mode: 'off'
           fan_mode: 'auto'
           default_target_temperature_high: ${minuet_thermostat_default_temperature} °F
-      default_preset: 'NONE'
+      default_preset: 'Default'
       on_boot_restore_from: memory
   switch:
     - id: minuet_thermostat_override_switch
@@ -1635,7 +1796,8 @@ minuet_thermostat:
     - id: minuet_thermostat_maybe_set_override
       then:
         - lambda: |-
-            if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override)) {
+            // Safety lock check: Do not set thermostat override during safety lock
+            if (id(minuet_thermostat).mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override) && !id(minuet_safety_lock).state) {
               if (id(minuet_controls).active_index() == 1 /*Enhanced*/) {
                 // With enhanced controls, activate override mode
                 ESP_LOGD(minuet::TAG, "Manual state change while thermostat enabled: engaging override");
@@ -1662,7 +1824,7 @@ minuet_thermostat:
       then:
         - lambda: |-
             const auto& therm = id(minuet_thermostat);
-            if (therm->mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override)) {
+            if (therm->mode != CLIMATE_MODE_OFF && !id(minuet_thermostat_override) && !id(minuet_safety_lock).state) {
               auto& auto_fan_speed = id(minuet_thermostat_auto_fan_speed);
               auto& auto_fan_exhaust = id(minuet_thermostat_auto_fan_exhaust);
               auto& auto_cover_open = id(minuet_thermostat_auto_cover_open);

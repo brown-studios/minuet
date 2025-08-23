@@ -516,7 +516,8 @@ bool Controller::set_state(float speed_rpm, bool exhaust, bool brake, bool keep_
     driver()->wake();
   }
 
-  if (!this->set_inputs_(rpm_to_hz(speed_rpm), !exhaust, brake)) {
+  if (driver()->is_awake() && !this->set_inputs_(rpm_to_hz(speed_rpm), !exhaust, brake)) {
+    ESP_LOGW(TAG, "Failed to set the fan driver inputs");
     if (!keep_awake) {
       driver()->sleep();
     }

@@ -88,21 +88,41 @@ When the rain sensor detects moisture, it turns off the fan, closes the cover, m
 
 ### Safety lock
 
-The safety lock feature closes the lid and prevents the fan from being operated under certain conditions:
+The safety lock feature closes the lid and prevents the fan from being operated whenever one or more of the following conditions occur:
 
-- The rain sensor has detected moisture.
-- The battery voltage is too high or too low.
-- The LOCK signal has been triggered by an accessory such as an insulating vent cover magnetic reed switch sensor.
+| Reason | Condition | How to release |
+| ------ | --------- | -------------- |
+| Battery safety lock | The battery voltage is too low to too high. | Wait for the battery voltage to return to the normal operating range or adjust the low or high battery voltage thresholds. |
+| Rain safety lock | The rain sensor is enabled and detected moisture. | Press the `rain sensor` button to reset or turn off the rain sensor. |
+| Accessory safety lock | An accessory triggered the `LOCK` signal. | Consult the documentation of your accessories for details. For example, if you have a sensor to detect the presence of an insulating vent cover, remove the cover. |
+| Manual safety lock | The [manual safety lock](#manual-safety-lock) is enabled. | Disable the [manual safety lock](#manual-safety-lock). |
+| Automation safety lock | The [automation safety lock](#automation-safety-lock) is enabled. | Disable the [automation safety lock](#automation-safety-lock). |
 
-The fan cannot be operated while the safety lock is active.  Minuet indicates that the safety lock has blocked an operation with three quick tones.
+You cannot turn the fan on or open the cover while the safety lock is active.  If you try, Minuet plays three quick tones as a warning and rejects the request.
+
+#### Manual safety lock
+
+Use the manual safety lock to keep the fan off and the lid closed to prevent the fan from operating accidentally or under control of the thermostat.  For example, it can be helpful to keep out dust and wildfire smoke in extreme conditions.
+
+Hold `on/off` and `in/out` together for 5 seconds to toggle the manual safety lock.  By default, the manual safety lock is disabled.
+
+When the manual safety lock is enabled, Minuet confirms with two quick tones followed by a long high tone.
+
+When the manual safety lock is disabled, Minuet confirms with two quick tones followed by a long low tone.
+
+#### Automation safety lock
+
+Use the automation safety lock to develop automations that keep the fan off and the lid closed under software defined conditions.  Unlike [manual safety lock](#manual-safety-lock), the automation safety lock cannot be toggled using the keypad; it can only be toggled by automations running on Minuet, the API, or the web app.
+
+For example, you could write an automation to enable the automation safety lock while driving (to reduce road noise and fumes) and disable it when parked.
 
 ### Enable or disable WiFi
 
 Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is enabled.
 
-When WiFi is enabled, Minuet confirms with two quick tones followed by a long high tone.
+When WiFi is enabled, Minuet confirms with four quick tones followed by a long high tone.
 
-When WiFi is disabled, Minuet confirms with two quick tones followed by a long low tone.
+When WiFi is disabled, Minuet confirms with four quick tones followed by a long low tone.
 
 ### Power on restore
 
