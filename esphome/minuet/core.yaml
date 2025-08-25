@@ -21,16 +21,7 @@
 #
 # We recommend defining the components for your modifications in your main ESPHome configuration
 # YAML file instead of changing this file whenever possible to facilitate core upgrades.
-minuet_components:
-  # Include external ESPHome components
-  external_components:
-    - source: github://j9brown/esphome-maxxfan-protocol@main
-      components: [ maxxfan_protocol ]
-      refresh: 1min
-    # - source: github://j9brown/esphome-mcf8316@main
-    #   components: [ mcf8316 ]
-    - source: ../../esphome-mcf8316/components
-
+minuet_core:
   # Configure build options
   esphome:
     includes:
@@ -40,12 +31,25 @@ minuet_components:
       build_flags: >
         -Wno-packed-bitfield-compat
         -DCONFIG_ADC_SUPPRESS_DEPRECATE_WARN=1
+    project:
+      name: "brown-studios.minuet"
+      version: "3.0.0"
 
   # Configure the board
   esp32:
     board: esp32-c3-devkitm-1
     framework:
       type: esp-idf
+
+  # Include external ESPHome components
+  external_components:
+    - source: github://brown-studios/esphome-maxxfan-protocol@main
+      components: [ maxxfan_protocol ]
+      refresh: 1min
+    - source: github://brown-studios/esphome-mcf8316@main
+      components: [ mcf8316 ]
+      refresh: 1min
+    #- source: ../../esphome-mcf8316/components
 
   # Version-dependent hardware configuration
   substitutions:

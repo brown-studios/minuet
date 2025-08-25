@@ -2,7 +2,7 @@
 
 This guide explains how to choose a brushless DC fan motor and adapt it for use with Minuet.
 
-**Compatibility: The information in this guide is valid for Minuet v2.1.  See [here](https://github.com/j9brown/minuet/blob/v1/docs/fan-motor-guide.md) for v1.**
+**Compatibility: The information in this guide is valid for Minuet v2.1.  See [here](https://github.com/brown-studios/minuet/blob/v1/docs/fan-motor-guide.md) for v1.**
 
 ## Steps
 
