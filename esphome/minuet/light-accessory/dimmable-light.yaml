@@ -6,31 +6,37 @@
 # Refer to the accessory documentation for details.
 #
 # Include the contents of this file into your device configuration YAML
-# file as a package like this (recommended):
+# file as a package like this:
 #
 # packages:
 #   <<: !include
 #     file: minuet/light-accessory/dimmable-light.yaml
 #     vars:
-#       name: 'Light'
+#       minuet_light_accessory_board_version: 'v3_0'
+#
+# Set `minuet_board_version` according to the silkscreen label printed on your Minuet board.
 minuet_light:
-  output:
-    - id: minuet_light_pwm
-      platform: ledc
-      pin:
-        number: 6
-        mode: output
-      channel: 0
-      frequency: 1000 Hz
+  # Dimmable light.
   light:
     - id: minuet_light
-      name: ${name}
+      name: Light
       platform: monochromatic
       output: minuet_light_pwm
       restore_mode: ALWAYS_OFF
       default_transition_length: 0.5s
       effects:
         - pulse:
+
+  # PWM output for drives the PWR pin.
+  output:
+    - id: minuet_light_pwm
+      platform: ledc
+      pin:
+        number: ${minuet_light_pin_power}
+        mode: output
+      channel: 0
+      frequency: 1000 Hz
+
   # Shutdown behavior: Turn off the light before ESPHome restarts.
   esphome:
     on_shutdown:

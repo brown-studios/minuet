@@ -2,6 +2,12 @@
 #
 # Do not include this file directly.
 minuet_light_common:
+  # Pin definitions
+  substitutions:
+    minuet_light_pin_data: ${minuet_pin_acc2}
+    minuet_light_pin_power: ${minuet_pin_acc3}
+
+  # Inject event handlers for keypad usage
   esphome:
     includes:
       - minuet/light-accessory/light-accessory.h

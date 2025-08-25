@@ -6,45 +6,63 @@
 # Refer to the accessory documentation for details.
 #
 # Include the contents of this file into your device configuration YAML
-# file as a package like this (recommended):
+# file as a package like this:
 #
 # packages:
 #   <<: !include
 #     file: minuet/light-accessory/addressable-led-strip.yaml
 #     vars:
-#       name: 'Light'
-#       num_leds: 19
-#       chipset: WS2811
-#       rgb_order: RGB
-#       is_wrgb: true
-#       is_rgbw: false
+#       minuet_light_accessory_board_version: 'v3_0'
+#       minuet_led_strip: 'btf_sk6812_rgbw_60'
+#
+# Set `minuet_board_version` according to the silkscreen label printed on your Minuet board.
+#
+# Set `minuet_led_strip` to one of the keys in the `minuet_light_config` table.
 minuet_light:
-  # Shutdown behavior: The power_supply component automatically turns the light off
-  # before ESPHome restarts.
-  power_supply:
-    - id: minuet_light_power
-      pin:
-        number: 6
-        mode: output
-      enable_time: 10ms
-      keep_on_time: 5s
+  # LED strip configuration.
+  # You can add your own configuration here if your strip is different.
+  substitutions:
+    minuet_light_config:
+      # BTF Lighting, 12 V, WS2814, RGBW, 60 LEDs per meter, 3 LEDs per pixel
+      # Remarks: Bright
+      btf_ws2814_rgbw_60:
+        num_leds: 19
+        chipset: WS2811
+        rgb_order: RGB
+        is_rgbw: false
+        is_wrgb: true
+        gamma_correct: 1.4
+        color_correct: [1, 0.9, 0.9, 1]
+      # BTF Lighting, 12 V, SK6812, RGBW, 60 LEDs per meter, 1 LED per pixel
+      # Remarks: Ultra bright, unsafe to run all channels at full power (draws 1.7 A and gets too hot)
+      btf_sk6812_rgbw_60:
+        num_leds: 58
+        chipset: SK6812
+        rgb_order: GRB
+        is_rgbw: true
+        is_wrgb: false
+        gamma_correct: 1.4
+        color_correct: [0.6, 0.54, 0.54, 0.6]
+
+  # Light component.
   light:
     - id: minuet_light
-      name: ${name}
+      name: 'Light'
       platform: esp32_rmt_led_strip
-      pin: 5
+      pin: ${minuet_light_pin_data}
       restore_mode: ALWAYS_OFF
-      num_leds: ${num_leds}
-      chipset: ${chipset}
-      rgb_order: ${rgb_order}
-      is_wrgb: ${is_wrgb}
-      is_rgbw: ${is_rgbw}
+      num_leds: ${minuet_light_config[minuet_led_strip].num_leds}
+      chipset: ${minuet_light_config[minuet_led_strip].chipset}
+      rgb_order: ${minuet_light_config[minuet_led_strip].rgb_order}
+      is_rgbw: ${minuet_light_config[minuet_led_strip].is_rgbw}
+      is_wrgb: ${minuet_light_config[minuet_led_strip].is_wrgb}
+      gamma_correct: ${minuet_light_config[minuet_led_strip].gamma_correct}
+      color_correct: ${minuet_light_config[minuet_led_strip].color_correct}
       power_supply: minuet_light_power
       default_transition_length: 0.5s
-      gamma_correct: 1.4
-      color_correct: [1, 0.9, 0.9, 1]
       effects:
         - addressable_rainbow:
+            width: ${minuet_light_config[minuet_led_strip].num_leds}
         - addressable_twinkle:
         - pulse:
         - lambda:
@@ -82,13 +100,19 @@ minuet_light:
               std::string effect = light->get_effect_name();
               if (effect == "Rainbow") {
                 ESP_LOGD("minuet", "Clear white channel for RGBW unaware light effect: %s", effect.c_str());
-                //light->make_call()
-                //    .set_transition_length(0.f)
-                //    .set_color_mode(esphome::light::ColorMode::RGB_WHITE)
-                //    .set_color_brightness(1.f)
-                //    .set_rgbw(1.f, 0.f, 0.f, 0.f).perform();
                 static_cast<AddressableLight*>(light->get_output())->all().set_white(0.f);
               }
             }
+
+  # Power supply component turns on the PWR pin when the light is on.
+  # Shutdown behavior: The power_supply component automatically turns the light off
+  # before ESPHome restarts.
+  power_supply:
+    - id: minuet_light_power
+      pin:
+        number: ${minuet_light_pin_power}
+        mode: output
+      enable_time: 10ms
+      keep_on_time: 5s
 
 <<: !include common.yaml

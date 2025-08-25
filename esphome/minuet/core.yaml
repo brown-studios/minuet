@@ -1,22 +1,26 @@
 # MINUET CORE PACKAGE
-# SUPPORTED HARDWARE: Minuet v3.0
+# SUPPORTED HARDWARE: Minuet v3.0 and v3.1.
 #
 # ESPHome package for the Minuet fan controller built-in components.
 #
 # Include the contents of this file into your device configuration YAML
-# file as a package like this (recommended):
+# file as a package like this:
 #
 # packages:
-#   <<: !include minuet/core.yaml
+#   <<:
+#     file: !include minuet/core.yaml
+#     vars:
+#       minuet_board_version: 'v3_0'
 #
-# The fan controller makes use of most of the GPIO pins for controlling the
-# motors and the keypad. Please take care when making modifications to this
-# file to prevent malfunction.
+# Set `minuet_board_version` according to the silkscreen label printed on your Minuet board.
 #
+# Minuet uses most of the available GPIO pins for built-in functions.
 # To expand the capabilities of your Minuet fan controller, you may attach
-# additional components to the I2C bus using the QWIIC connection and
-# use GPIO0, GPIO1, GPIO5, GPIO6, GPIO20 (RXD), GPIO21 (TXD) which are presented
-# at the GPIO expansion port for accessories.
+# additional components using the GPIOs reserved for the EXPANSION port
+# or to the I2C bus with a QWIIC connector.
+#
+# We recommend defining the components for your modifications in your main ESPHome configuration
+# YAML file instead of changing this file whenever possible to facilitate core upgrades.
 minuet_components:
   # Include external ESPHome components
   external_components:
@@ -43,15 +47,32 @@ minuet_components:
     framework:
       type: esp-idf
 
+  # Version-dependent hardware configuration
+  substitutions:
+    # I2C pins
+    minuet_pin_scl: 8
+    minuet_pin_sda_:
+      v3_0: 7
+      v3_1: 6
+    minuet_pin_sda: ${minuet_pin_sda_[minuet_board_version]}
+    # Accessory pins: acc0 and acc1 have ADC function, acc2 and acc3 are digital only
+    minuet_pin_acc0: 0
+    minuet_pin_acc1: 1
+    minuet_pin_acc2: 5
+    minuet_pin_acc3_:
+      v3_0: 6
+      v3_1: 7
+    minuet_pin_acc3: ${minuet_pin_acc3_[minuet_board_version]}
+
   # The I2C bus is used by built-in components and is presented via a
   # QWIIC connector on the board edge for accessories
   i2c:
     - id: minuet_i2c
       scl:
-        number: 8
+        number: ${minuet_pin_scl}
         ignore_strapping_warning: true
       sda:
-        number: 7
+        number: ${minuet_pin_sda}
       scan: true
       frequency: 100kHz
 
