@@ -1,4 +1,0 @@
-(fp_lib_table
-  (version 7)
-  (lib (name "Generic")(type "KiCad")(uri "${KIPRJMOD}/library/Generic/Generic.pretty")(options "")(descr ""))
-)
