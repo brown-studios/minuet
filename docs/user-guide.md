@@ -100,6 +100,8 @@ The safety lock feature closes the lid and prevents the fan from being operated 
 
 You cannot turn the fan on or open the cover while the safety lock is active.  If you try, Minuet plays three quick tones as a warning and rejects the request.
 
+The safety lock also turns off and inhibits the light accessory.
+
 #### Manual safety lock
 
 Use the manual safety lock to keep the fan off and the lid closed to prevent the fan from operating accidentally or under control of the thermostat.  For example, it can be helpful to keep out dust and wildfire smoke in extreme conditions.
@@ -118,11 +120,13 @@ For example, you could write an automation to enable the automation safety lock 
 
 ### Enable or disable WiFi
 
-Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is enabled.
+Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is disabled (the radio is turned off).
 
 When WiFi is enabled, Minuet confirms with four quick tones followed by a long high tone.
 
 When WiFi is disabled, Minuet confirms with four quick tones followed by a long low tone.
+
+Follow the setup guide instructions for configuring the WiFi network.
 
 ### Power on restore
 
