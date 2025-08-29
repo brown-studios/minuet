@@ -214,3 +214,5 @@ Issues in v3.0:
 - The bootloader enables the GPIO6 pull-up on reset which interferes with its use for the Minuet light accessory board and causes the LED strip to be powered on prematurely.  Should swap GPIO6 and GPIO7 (SDA) because we need the pull-up on SDA anyhow.  Workaround by setting EFUSE_DIS_PAD_JTAG = 1.
 
     `espefuse.py --chip esp32c3 --port /dev/tty.usbmodem11201 burn_efuse DIS_PAD_JTAG`
+
+- The 3D model for the IR receiver should include a 16 mm standoff, currently 17 mm
