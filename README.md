@@ -1,42 +1,63 @@
 # Minuet fan controller
 
-Minuet is a smart brushless DC motor controller for the [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/).
+Minuet upgrades your [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/) with a brushless DC motor, home automation features, and accessories.
 
-* No more squeaking motor! Replace your fan's original brushed motor with a quieter low maintenance brushless motor.
-* Install Minuet with simple hand tools: it is a complete drop-in replacement that does not require making any irreversible modifications so you can easily revert back to the original equipment later if you want.
-* Control your fan using your phone, Home Assistant, the built-in keypad, a wired Maxxfan wall controller, and/or the Maxxfan IR remote.
-* Set the thermostat to automatically run the fan at your chosen temperature setpoint, fan speed, and direction.
-* Customize the [ESPHome](https://esphome.io/) configuration to add new features that better meet your needs.
-* Connect lights to your fan with the [Minuet Light Accessory board](hardware/light/design-and-errata.md).
-* Use the safety lock feature to disable operation when an insulating vent cover is installed or while driving.
-* Connect your own environmental sensors and accessories to Minuet's [QWIIC](https://www.sparkfun.com/qwiic) I2C port and GPIO expansion port.
-* The hardware and software is open source: help make it better and share your improvements with others.
+Improve your quality of life in your campervan, RV, trailer, or truck!
 
-## Author's note and project status
+* Replace your fan's original motor with a quieter brushless motor. No more cleaning squeaky motor brushes!
+* Install Minuet with simple hand tools. You can revert back to the original equipment later if you want.
+* Connect your fan to your home automation system if you have one. Works with your original infrared remote control and wired wall controls too.
+* Install the light accessory to add a ring of lights to your fan for illumination and ambiance.
+* Install the cover sensor accessory to stop the fan and turn off the lights automatically when you attach an insulated vent cover.
+* Enjoy a more polished user experience with enhanced thermostat controls and less beeping.
+* Customize your fan as you like because the firmware and hardware are open source!
+  * Expand the [ESPHome](https://esphome.io/)-based [firmware](https://github.com/brown-studios/minuet-firmware).
+  * Connect off-the-shelf I2C environmental sensors and devices to the [QWIIC](https://www.sparkfun.com/qwiic) port.
+  * Make your own hardware accessories for the EXPANSION port.
+  * Share your work with the community!
 
-As the author of Minuet, I want to give you a sense of what to expect from this project now and in the near future.
+## Get to know Minuet
 
-Minuet is currently in active development. After further testing and refinement of the prototypes, I plan to make a hardware kit available for sale in low volume including the circuit board, cables, and BLDC fan motor. Because the hardware and software is open source, you can also assemble your own kit from scratch and customize the design to your liking (although I suggest reviewing the published errata in detail and waiting for a production-ready revision to be proven out).
+Watch Minuet in action and follow along with how it was made with these videos:
 
-Here's a brief history of the project's development.
+* [Minuet showcase](https://vimeo.com/showcase/11857354)
+* [Minuet build log](https://vimeo.com/showcase/11858950)
 
-- [v1](hardware/minuet/v1/design-and-errata.md) proved out the basic operation of the BLDC fan motor, lid motor, built-in keypad, and integration with Home Assistant, while omitting non-essential functions for simplicity. I used an off-the-shelf BLDC fan motor, made adapters to mount it in the fan housing, hand-assembled the PCB, and installed the components in my van. It worked! This revision encouraged me to polish the design further and share it with others.
+## Project status
 
-- [v2](hardware/minuet/v2/design-and-errata.md) achieved feature parity with the original Maxxfan control board. It added support for the an IR remote control, wire wall controls, rain sensor, thermistor, piezo buzzer for (polite and configurable) audible feedback, and had a more powerful BLDC fan motor driver. I implemented thermostat controls, designed an optional lighting accessory, and the fan really came to life!
+Minuet is in active development.
 
-- [v3](hardware/minuet/v3/design-and-errata.md) is the current revision, now in testing. It adds a safety lock feature and uses a different BLDC fan motor driver with field-oriented control with the goal of improving the acoustic performance of the fan. This revision takes a big step towards production readiness and can be fabricated by JLCPCB's PCBA service.
+The latest prototype is feature complete, works well, and is being tested by a few volunteers.
 
-As a former software engineer, I have no prior experience designing open source hardware and delivering it to end-users so I'm figuring this out as I go along. If you have experience in these areas and would like to help develop the Minuet project, please consider joining the project as a contributor.
+Our next tasks are finalizing the design, working with manufacturers to fabricate kits with everything you will need to upgrade your Maxxfan, and planning for order fulfillment.  We are also investigating the possibility of manufacturing custom brushless fan motors that will fit into the fan housing with fewer adapters.  Please contact us if you would like to contribute your manufacturing experience to this project.
 
-## Prototype in action
+Watch this space for updates on our progress.  We're thrilled by your interest in Minuet and we look forward to offering you a great upgrade for your Maxxfan!
 
-Here are some early videos of Minuet in action.
+See [project history](./docs/project-history.md) for the story of how we got here.
 
-[Link to Minuet playlist on YouTube](https://www.youtube-nocookie.com/embed/videoseries?si=fa14cJ42dhqO0x0U&amp;list=PL8ZnNA3SFfE8v-qSholF0Ovc9Exv59-uN)
+## Author's note
+
+Hey folks, I'm Jeff!
+
+I started building my campervan in 2023 after some delightful adventures in New Zealand.  Like many of you, I installed a Maxxfan in my campervan because it was the most popular fan for van builders.  It worked well for a while but less than a year after I installed it, the fan started making some awful squeaking noises.  I tried the usual advice: clean the motor brushes, replace the bearings, run the motor on high for a day, and nothing helped for long.  I tried to ignore the problem.
+
+When the winter rainy season arrived and interrupted my van build, I started the squeaking fan again.  I had already started designing a circuit board to synchronize the Maxxfan with my home automation system and I found it tedious to work around the existing logic of the Maxxfan circuit board.  It occurred to me that it might be easier to design my own controller from scratch... and then I could use a brushless fan motor and solve my fan squeaking problem too!
+
+So here we are.  I've made several prototypes, enjoyed the quiet, added quality of life features, made some friends, and learned a lot along the way.  I'm satisfied with how Minuet has improved my comfort and I hope you'll like it too.
+
+## Getting started
+
+Read these guides to learn how to build, install, and use Minuet and its accessories.
+
+1. [Hardware guide](docs/hardware-guide.md): How to build Minuet hardware.
+1. [Installation guide](docs/installation-guide.md): How to install Minuet into your Maxxfan.
+1. [User guide](docs/user-guide.md): How to use Minuet.
+
+Good luck and enjoy your fan!
 
 ## Compatibility
 
-Minuet v3 is anticipated to be compatible with the following Maxxfan models.
+Minuet is anticipated to be compatible with the following Maxxfan models.
 
 - Maxxfan Deluxe 7500K (verified)
 - Maxxfan Deluxe 7000K (not yet tested)
@@ -44,19 +65,7 @@ Minuet v3 is anticipated to be compatible with the following Maxxfan models.
 - Maxxfan Deluxe 5100K (not yet tested)
 - Maxxfan Plus 4500K (not yet tested)
 
-Minuet might also work with other Maxxfan models that have similar electronics. Please contact the author if you would like to volunteer to help test Minuet with models that have yet to be tested.
-
-## Getting started
-
-Read these guides to learn how to build, install, and use Minuet.
-
-1. [Hardware guide](docs/hardware-guide.md): All about Minuet's circuit board
-1. [Fan motor guide](docs/fan-motor-guide.md): How to choose a brushless DC fan motor for Minuet, wire it up, and make adapters for installing it
-1. [Setup guide](docs/setup-guide.md): How to configure Minuet for your motor, network, automation, and accessories
-1. [Installation guide](docs/installation-guide.md): How to install Minuet into your Maxxfan
-1. [User guide](docs/user-guide.md): How to use Minuet once it has been installed
-
-Good luck and enjoy your fan!
+Minuet may work with other Maxxfan models that have similar electronics.
 
 ## Acknowledgements
 

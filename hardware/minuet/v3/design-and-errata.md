@@ -2,7 +2,9 @@
 
 **Status: UNDER DEVELOPMENT**
 
-Minuet v3 is a feature complete replacement for the Maxxfan circuit board.  Minuet integrates a brushless DC fan motor driver with field-oriented control optimized for quiet operation and it has a microcontroller with built-in WiFi for home automation.
+Minuet v3 upgrades the Maxxfan by replacing the circuit board.
+
+Minuet integrates a brushless DC fan motor driver with field-oriented control optimized for quiet operation and it has a microcontroller with built-in WiFi for home automation.
 
 ## Design synopsis
 
@@ -22,13 +24,13 @@ The `EXPANSION` port enables accessories and factory programming.  It exposes fo
 
 The `QWIIC` port allows readily available I2C accessories (such as environmental sensors) to be connected with ease.
 
-The `THERMISTOR` port connects to the Maxxfan's built-in thermistor for use by the automatic thermostat.
+The `TEMP` port connects to the Maxxfan's built-in thermistor for use by the automatic thermostat.
 
 The `RAIN` port connects to the Maxxfan's rain sensor (only certain models).  It has a high impedance input and uses a comparator to detect a small current flowing through water on the sensor.
 
 The `LOCK` port triggers a safety lock function that stops the fan, closes the lid, and inhibits operation.
 
-The USB C port and the `BOOT` and `RESET` tactile switches are used for accessing the bootloader and programming the firmware.
+The USB-C port and the `BOOT` and `RESET` tactile switches are used for accessing the bootloader and programming the firmware.
 
 A simple voltage divider measures the supply voltage and triggers a software-controlled low battery protection function.
 
@@ -67,7 +69,7 @@ All of the SMT components are on the front side of the board.  They should be so
 
 There are through hole components on both sides of the board.  Follow the silkscreen courtyard markings to determine the correct orientation.  Be aware that labels for connectors appear on both sides of the board.
 
-The 1x8 pin header labeled PANEL must have a sufficient mating contact length to securely attach the keypad's flex connector.  The BOM specifies a part with an 8.1 mm mating contact length that works well.  Shorter contacts may be fine but the connector could come loose under vibration so be sure to check the fit.
+The 1x8 pin header labeled `PANEL` must have a sufficient mating contact length to securely attach the keypad's flex connector.  The BOM specifies a part with an 8.1 mm mating contact length that works well.  Shorter contacts may be fine but the connector could come loose under vibration so be sure to check the fit.
 
 The IR receiver must be raised above the board as far as the leads can be extended (about 16 mm) to be visible through the clear window in the keypad.  Thus the IR receiver will need mechanical support to keep it propped up and to insulate the leads.  You can 3D print a suitable standoff from [this model](https://cad.onshape.com/documents/11f07c0bb608e7010778ac35/w/a82f75dceda39e564795dbd4/e/5949b73994c9747af7d1d4c9) or make your own using other materials such as cardboard.
 
@@ -81,7 +83,7 @@ To improve the circuit board's moisture resistance, you can spray it with an ins
 
 ### Temperature sensor
 
-Connect the Maxxfan's temperature sensor to the `THERMISTOR` port.  You can make your own temperature sensor connecting any 10 Kohm NTC thermistor to a JST XH-2 plug in any orientation.  Update the thermistor beta constant in the firmware to ensure accurate readings.
+Connect the Maxxfan's temperature sensor to the `TEMP` port.  You can make your own temperature sensor connecting any 10 Kohm NTC thermistor to a JST XH-2 plug in any orientation.  Update the thermistor beta constant in the firmware to ensure accurate readings.
 
 The temperature sensor is driven by an IO pin to minimize resistive self-heating and power usage between samples.  The Maxxfan's built-in thermistor appears to have a beta constant of 3950.
 
@@ -101,9 +103,8 @@ Connect a switch to the `LOCK` port with a JST XH-2 plug to trigger a safety loc
 
 Here are some suggested applications:
 
-- Attach a magnet to your vent fan insulating cover and a normally-open reed switch connected to the `LOCK` port somewhere in the fan trim ring or ceiling to inhibit operation while the insulating cover is installed.
+- Attach a magnet to your insulated vent cover and a normally-open reed switch connected to the `LOCK` port somewhere in the fan trim ring or ceiling to inhibit operation while the insulated vent cover is installed.
 - Connect a relay or optocoupler to inhibit operation of the fan while the engine is running.
-- Refer to the [user guide](../../../docs/setup-guide.md) for details.
 
 Pin 1 is ground.  Pin 2 is a digital input with a pull-up to 3.3 V.  The safety lock engages when pin 2 is low (tied to ground) and disengages when pin 2 is floating.
 
@@ -111,7 +112,7 @@ Pin 1 is ground.  Pin 2 is a digital input with a pull-up to 3.3 V.  The safety 
 
 The piezo buzzer is designed with politeness in mind which may be a matter of personal preference.
 
-You can customize or disable the sounds it makes in software.  Refer to the [setup guide](../../../docs/setup-guide.md) for details.
+You can customize or disable the sounds it makes in software.
 
 You can disable the buzzer altogether in hardware by cutting the `SOUND` jumper trace on the board.  Alternatively, if you want to make the buzzer louder, then you can cut the jumper and solder a wire from the buzzer side of the `SOUND` jumper to the 12 V bus.
 
@@ -121,13 +122,13 @@ And if you want to make the fan play a cheerful jingle any time it turns on then
 
 Connect a suitably rated brushless motor to the `FAN MOTOR` port with a JST VH-3 plug.  Pin 1 is phase A, pin 2 is phase B, pin 3 is phase C.  If the motor operates in the reverse direction than you expect, simply swap any two phases.
 
-Configure the motor parameters in the software.  Refer to the [setup guide](../../../docs/setup-guide.md) for details.
+Configure the motor parameters in the software.
 
 The [MCF8316D](https://www.ti.com/lit/ds/symlink/mcf8316d.pdf)] is configured to mostly be controlled and monitored over I2C instead of spending precious GPIOs on control signals.  The buck converter is disabled because it isn't needed.  This board is not compatible with any other versions of the MCF8316.
 
 ### Lid motor
 
-Connect the Maxxfan's lid motor to the `LID MOTOR` port with a JST XH-2 plug.  Refer to the [setup guide](../../../docs/setup-guide.md) for details on how to construct a suitable adapter.
+Connect the Maxxfan's lid motor to the `LID MOTOR` port with a JST XH-2 plug.
 
 Minuet detects when the lid motor has reached the end of its travel when opening or closing the lid when the lid motor driver reports an overcurrent fault or after a fixed duration of time has elapsed.
 
@@ -149,13 +150,13 @@ The [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf) data sheet recommen
 
 ### Expansion port
 
-Connect Minuet accessories to the `EXPANSION` header.  Refer to the [setup guide](../../../docs/setup-guide.md) for details.
+Connect Minuet accessories to the `EXPANSION` header.
 
 And you can make your own accessories too!
 
 The `EXPANSION` header includes the following signals.  Refer to the Minuet schematics or the board silkscreen for the complete pinout.
 
-- `GPIO0`, `GPIO1`, `GPIO5`, `GPIO6` can be used for any purpose
+- `GPIO0`, `GPIO1`, `GPIO5`, `GPIO7` (was `GPIO6` in v3.0) can be used for any purpose
 - `UART_RXD` and `UART_TXD` provide the serial port
 - `SCL` and `SDA` provide the I2C bus (QWIIC)
 - `RESET` and `BOOT` are wired in parallel with their corresponding buttons (active low)
@@ -170,7 +171,7 @@ One pin on the expansion port is not connected to anything and it is labeled *(N
 
 ### QWIIC port
 
-Connect [QWIIC](https://www.sparkfun.com/qwiic) peripherals to the `QWIIC` port, such as environmental sensors, to this port.  Refer to the [setup guide](../../../docs/setup-guide.md) for details.
+Connect [QWIIC](https://www.sparkfun.com/qwiic) peripherals to the `QWIIC` port, such as environmental sensors, to this port.
 
 ## IO pins
 
@@ -180,8 +181,9 @@ The ESP32-C3 microcontroller has relatively few GPIOs so they are assigned to co
 - `GPIO2`: IR receiver (RMT function), strapping pin
 - `GPIO3`: Voltage sensor (ADC function)
 - `GPIO4`: Thermistor (ADC function)
-- `GPIO5` & `GPIO6`: Reserved for the GPIO expansion port (IO, LEDC PWM, and more functions)
-- `GPIO7`: I2C SDA
+- `GPIO5`: Reserved for the GPIO expansion port (IO, LEDC PWM, and more functions)
+- `GPIO6` (was `GPIO7` in v3.0): I2C SDA
+- `GPIO7` (was `GPIO6` in v3.0): Reserved for the GPIO expansion port (IO, LEDC PWM, and more functions)
 - `GPIO8`: I2C SCL, strapping pin
 - `GPIO9`: BOOT button, strapping pin
 - `GPIO10`: Buzzer (LEDC PWM function)
@@ -197,7 +199,7 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
   - Works with sensorless BLDC motors
   - Directly governs the fan rotor speed (instead of the motor duty cycle as before)
 - Added a safely lock signal to stop the fan, close the lid, and inhibit operation
-  - When paired with a normally-open reed switch, Minuet can detect when an insulating cover is installed and engage the safety lock until it is removed
+  - When paired with a normally-open reed switch, Minuet can detect when an insulated vent cover is installed and engage the safety lock until it is removed
 - Optimized the bill of materials for fabrication by JLCPCB PCBA
 - Marked the schematic with the voltage ratings of the actual parts instead of the minimum necessary
 - Improved the left-to-right reading order of the schematic
@@ -207,7 +209,7 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 
 Issues in v3.0:
 
-- There should be a 1 uF capacitor from FB_BK to GND_BK according to the MCF8316 datasheet (although it works fine without it).
+- There should be a 1 uF capacitor from FB_BK to GND_BK according to the MCF8316D datasheet (although it works fine without it).
 - Should add motor phase labels to the silkscreen for clarity and relabel all of the documentation to A/B/C to match the data sheet.
 - The rain sensor does not work.  The Minuet v3.0 boards were assembled with LMV331IDCK which has a PNP input stage and only allows a common mode input voltage up to Vcc - 0.7 V = 2.6 V whereas the actual signals are in the range of 3.1 V.  The Minuet v2.* boards used LMV331X which has no such limitation and worked as expected (but this part was not available at JLCPCB).  Suitable rail-to-rail alternatives: TL331LV, TLV7041, TLV7021.
 - Some areas of the PCB reach over 50 C when operating the motor at 4 A peak per phase.  At 4.5 A, we can see over-temperature warnings.  Consider adding a copper pour to the front layer with thermal vias.
@@ -216,3 +218,7 @@ Issues in v3.0:
     `espefuse.py --chip esp32c3 --port /dev/tty.usbmodem11201 burn_efuse DIS_PAD_JTAG`
 
 - The 3D model for the IR receiver should include a 16 mm standoff, currently 17 mm
+
+Issues with the MCF8316D motor driver chip:
+
+- Activating the brake function while the I2C watchdog timer is enabled causes a spurious watchdog timeout and does not brake.  Texas Instruments has [acknowledged the issue](https://e2e.ti.com/support/motor-drivers-group/motor-drivers/f/motor-drivers-forum/1555307/mcf8316d-brake-triggers-watchdog_fault-when-watchdog-is-enabled/5991916) and there is no workaround available except to disable the I2C watchdog.  Fortunately, Minuet doesn't absolutely need the brake function although it would help to stop the fan faster.
