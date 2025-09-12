@@ -1,4 +1,4 @@
-# Minuet hardware v3.0 (UNDER DEVELOPMENT)
+# Minuet v3.0 (UNDER DEVELOPMENT)
 
 **Status: UNDER DEVELOPMENT**
 

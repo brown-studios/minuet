@@ -24,9 +24,12 @@ The [hardware](../hardware/) folder contains all of the Minuet circuit board des
 
 Each circuit board major revision resides in its own subfolder and includes a KiCad project, design document with errata, PDF plot of the schematics, and 3D renderings.  Refer to the `design-and-errata.md` for each circuit board to learn how it's supposed work, how the design has evolved through each minor revision, what was learned from that revision, and workarounds for known issues.
 
+- [Minuet v3 design and errata](../hardware/minuet/v3/design-and-errata.md)
+- [Light accessory v3 design and errata](../hardware/light/v3/design-and-errata.md)
+
 ## Fabricating circuit boards
 
-Refer to the each circuit board's design document for specific fabrication notes.
+Refer to each circuit board's design document for specific fabrication notes.
 
 This repository does not contain fabrication files; you can generate them from the KiCad project in whatever format you need.
 
