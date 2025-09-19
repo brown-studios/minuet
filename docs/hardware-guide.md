@@ -191,7 +191,7 @@ TODO: Add a photo
 - Rigid coupler.  The inner diameter of one end of the coupler must match the diameter of your motor shaft and the other end must be 8 mm to match the dowel pin.
   - [5 mm to 8 mm inner diameter, 22 mm long stainless steel coupler](https://www.amazon.com/gp/product/B07P82D36N/)
   - [8 mm to 8 mm inner diameter, 22 mm long stainless steel coupler](https://www.amazon.com/gp/product/B07P5YZKY5/)
-- Dowel pin.  The length of the dowel pin must be at least 26 mm for the fan blade plus enough to insert into the shaft coupler.  40 mm works well with the couplers linked above.
+- Dowel pin.  The exposed length of the dowel pin must be at least 26 mm for the fan blade plus enough to insert into the shaft coupler.  A dowel pin with 40 mm overall length works well with the couplers linked above.
   - [8 mm x 40 mm stainless steel dowel pin](https://www.amazon.com/gp/product/B07Z6GC2TR/)
 
 ##### Instructions
@@ -340,7 +340,7 @@ TODO: Add a photo
 
 ##### Instructions
 
-- Cut a section of ribbon cable approximately 24" or 60 cm long.  It needs to be long enough to reach from the fan controller to the fan ceiling flange where it can sense the magnet on the cover.
+- Cut a section of ribbon cable approximately 24-30" or 60-75 cm long.  It needs to be long enough to reach from the fan controller to the fan ceiling flange where it can sense the magnet on the cover.
 - Bend one lead of the reed switch over so that both leads point the same direction.
 - Solder one end of each wire to each lead of the reed switch.  To keep things tidy, it helps to trim the wire and the leads so they lay flat before soldering.
 - Install a section of heat shrink tubing over the reed switch and its leads.
