@@ -145,11 +145,29 @@ When power on restore is disabled, Minuet will leave the fan off and close the l
 
 Hold `on/off` for 15 seconds to turn the fan off and perform a factory reset.  Minuet confirms with four descending tones then erases all of its settings including saved WiFi credentials.  Follow the [Getting started](#getting-started) guide to get started again.
 
+### Fan motor health monitoring
+
+Minuet monitors the state of the fan motor and automatically stops the fan when it detects a problem.  These problems should be rare and they can often be resolved by waiting for the device to cool, starting the fan again, or by performing maintenance.
+
+Minuet indicates a fan motor fault with three quick tones and it writes the cause to the internal logs.
+
+| Possible cause | Resolution |
+| -------------- | ---------- |
+| Fan motor disconnected | Ensure that the fan motor is plugged in and that its wires are intact. |
+| Fan motor stalled | Ensure that the fan blade spins freely and is not obstructed. |
+| Overcurrent | Ensure that the fan motor wires are intact. |
+| Overtemperature | Allow the device to cool.  Resume operation at a lower speed. |
+| Undervoltage or overvoltage | Ensure that the power supply can provide at least 5 amps at 9 to 16 volts. |
+
+If the issue persists, please ask for support.
+
 ### Failsafe restart
 
-Minuet automatically restarts when it detects a fault that may prevent normal operation the device.
+Minuet monitors the state of its software components and automatically restarts when it detects a problem.  These problems should be rare and they are often resolved automatically by the failsafe restart.
 
-Minuet indicates that a failsafe restart has been triggered with four quick tones and one long tone.  Then, it waits 3 minutes to allow some time for you to collect information from the logs to help debug the issue.  Finally, it plays the same tones again and restarts the device.
+Minuet indicates that a failsafe restart has been triggered with four quick tones and one long tone.  Then, it waits 3 minutes to allow you some time to collect information to help debug the issue.  Finally, it plays the same tones again and restarts the device.
+
+If you have customized the Minuet firmware, please examine the internal logs and review your changes.
 
 If the issue persists, please ask for support.
 
