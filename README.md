@@ -57,15 +57,29 @@ Good luck and enjoy your fan!
 
 ## Compatibility
 
-Minuet is anticipated to be compatible with the following Maxxfan models.
+Minuet is anticipated to be *compatible* with the following Maxxfan models.  Some models have yet to be specifically tested and are shown as unverified in the table.
 
-- Maxxfan Deluxe 7500K (verified)
-- Maxxfan Deluxe 7000K (not yet tested)
-- Maxxfan Deluxe 6200K (not yet tested)
-- Maxxfan Deluxe 5100K (not yet tested)
-- Maxxfan Plus 4500K (not yet tested)
+| Compatible model | Lid type | Lid color | Temperature sensor | Rain sensor | Infrared receiver | Verified |
+| ---------------- | -------- | --------- | ------------------ | ----------- | ----------------- | -------- |
+| Maxxfan Deluxe 7500K | rain cover | smoke | yes | no | yes | yes |
+| Maxxfan Deluxe 7000K | rain cover | white | yes | no | yes | no |
+| Maxxfan Deluxe 6200K | rain cover | smoke | yes | no | no † | no |
+| Maxxfan Deluxe 5100K | rain cover | white | yes | no | no † | no |
+| Maxxfan Plus 4500K‡ | low profile | smoke | yes | yes | yes | yes |
 
-Minuet may work with other Maxxfan models that have similar electronics.
+†: When you install Minuet in a Maxxfan whose keypad does not have a window for an infrared receiver, you will be unable to use Minuet's infrared remote control features. (It may be possible to replace or punch a hole through the keypad to make a window for the infrared receiver and use its features.)
+
+‡: The Maxxfan Plus 4500K lid takes longer to open and close so the firmware must be modified to account for the extra duration as of Minuet v3.0.  This difference will be resolved by improving end-of-travel detection.
+
+Minuet is *not compatible* with the following Maxxfan models.
+
+| Incompatible models | Reason |
+| ------------------- | ------ |
+| Maxxfan Deluxe 5101K, 6201K, 7001K, 7501K, 8001K, 8501K | exhaust only keypad (no in/out button) |
+| Maxxfan Deluxe 5301K, 6401K | 4 speed keypad (different buttons) |
+| Maxxfan Plus 4000K, 4002K, 4050K | manual lift |
+| Maxxfan 4301K, 4401K, 4501K | manual lift |
+| Maxxfan Low Profile, Mini, Dome | different electronics |
 
 ## Acknowledgements
 
