@@ -155,7 +155,7 @@ Here's how to attach a connector to your fan motor if it doesn't already have on
 ##### Supplies
 
 - [JST VH series wire-to-board connectors](https://www.jst.com/products/crimp-style-connectors-wire-to-board-type/vh-connector/)
-  - 1x JST VH series VHR-2M housing
+  - 1x JST VH series VHR-3M housing
   - 3x JST VH series SVH-41T-P1.1 contacts plus a few spares just in case
   - If your wires are too short (see instructions)
     - 18 AWG wire, heat shrink tubing, and soldering supplies
