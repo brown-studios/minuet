@@ -202,7 +202,7 @@ TODO: Add a photo
 
 #### 3D printed shaft adapter
 
-Here's a [model for a 3D printed shaft adapter](https://cad.onshape.com/documents/11f07c0bb608e7010778ac35/w/a82f75dceda39e564795dbd4/e/27885f49708c85d9a551c0f1).  You can configure the model for whatever motor shaft diameter you need.  Attach the adapter to the motor shaft with a pair of M4 grub screws.
+Here's a [model for a 3D printed shaft adapter](https://cad.onshape.com/documents/c87749ce3cf87a164617aa11/w/1134a70d634f5c16dbb7ae0d/e/bb8abe1ffa8084825e8f7efa).  You can configure the model for whatever motor shaft diameter you need.  Attach the adapter to the motor shaft with a pair of M4 grub screws.
 
 **Safety notice**: The shaft adapter experiences significant torque while running the fan so there's a risk it might break or slip off the shaft and hurt someone.  Consider making a shaft adapter from more robust materials.  Please be careful!
 
@@ -240,6 +240,20 @@ TODO: Add a photo
 1. Tap the M5 screw holes into the plate.
 1. Screw the M5 screws through the mount from the side on which the motor is installed.  Tighten only until snug to avoid stripping the plastic threads.  Do not use threadlocker.
 1. Screw the motor to the plate.  Add a washer on each screw between the screw head and the plate.
+
+### Wire passage cover
+
+The notch in the original wire passage cover is too small to fit over the motor wires.
+
+You can modify the original wire passage cover to fit, make a new cover, or omit the cover (increasing the risk of water intrusion).
+
+#### 3D printed cover
+
+Here's a [configurable model](https://cad.onshape.com/documents/c87749ce3cf87a164617aa11/w/1134a70d634f5c16dbb7ae0d/e/c150dd1f03cfafd0dbefc852) that you can use as a starting point.
+
+Use a strong plastic with good heat and UV resistance such as PETG.
+
+TODO: Add a photo
 
 ## Power cable
 

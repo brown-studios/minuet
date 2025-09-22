@@ -80,8 +80,8 @@ Choose a place to set things down.  Keep the removed parts and fasteners organiz
 1. Remove the fan blade from the motor shaft using a 7/64" allen key to loosen the grub screw until the fan blade slides off the shaft.
 1. Fully open the lid by turning the lid knob counter-clockwise.
 1. Reach up and trace the fan motor wires from the back of the fan motor down to where they are secured to the housing with zip ties.  Cut the zip ties.
-1. Continue feeling along the fan motor wires to where they pass under a narrow plastic weatherguard.  The weatherguard obstructs the opening through which the wires enter the fan housing.
-1. Feel around the weatherguard to locate two screw heads on opposite sides.  Removing the weatherguard is awkward because of the limited clearance for tools under the lid (even when fully opened).  Use a short length ("stubby") #2 Philips screwdriver to remove both screws from the weatherguard.  Remove the weatherguard.
+1. Continue feeling along the fan motor wires to where they pass under a narrow plastic wire passage cover.  The cover obstructs the wire passage through which the wires enter the fan housing.
+1. Feel around the wire passage cover to locate two screw heads on opposite sides.  Removing the cover is awkward because of the limited clearance for tools under the lid (even when fully opened).  Use a short length ("stubby") #2 Philips screwdriver to remove both screws from the cover.  Remove the cover.
 1. Remove the lid knob using a #2 Philips screwdriver.
 1. Remove the 4 screws that hold the control panel in place using a #2 Philips screwdriver.  These screws were previously hidden under the insect screen.
 1. Assess whether you have enough clearance to access the wiring within the fan housing.  If your electrical supply wires or wall control cables are very tight then you may need to remove the trim rim to provide some slack.  Proceed with the next step once you're able to move the control panel a handspan away from the body of the fan.
@@ -103,18 +103,20 @@ Assemble the fan motor, shaft adapter, and mount before proceeding.
 1. Raise the fan motor into position in the center of the fan housing.  Align the mount's two protruding M5 screws with the mount holes in the housing and seat the mount into place.
 1. Secure the mount with the original washers and M5 nuts using an 8 mm socket driver.  Do not overtighten.
 1. Drape the fan motor wires along the upper side of the plastic spoke that supports the motor and guide them towards the corner of the housing above the electronics.
-1. Pass the fan motor connector through the opening that was under the weatherguard.
+1. Pass the fan motor connector through the wire passage.
 1. Use two zip ties to secure the fan motor wires to the spoke.
 
-If you are installing a light accessory, proceed to those instructions and install the LED light strip into the housing now.  The light's wires will pass through the same opening as the fan motor wires.
+If you are installing a light accessory, proceed to those instructions and install the LED light strip into the housing now.  The light's wires will pass through the same wire passage as the fan motor wires.
 
-Now you have the option of reinstalling the weatherguard over the opening in the housing (the one that was so tricky to disassemble).  The weatherguard might help shed water in some circumstances but it doesn't seem necessary so you can omit reinstalling it to ease future maintenance.
+Now that all of the wires have been installed through the wire passage in the housing, it's time to reinstall the wire passage cover to protect the electronics from water intrusion.  (Because it is so awkward to remove, you may choose to postpone reinstalling the cover if you anticipate needing to access the wires again soon.)
 
-To reinstall the weatherguard (optional):
+To reinstall the wire passage cover:
 
-1. The weatherguard has a notch that fits over the wires where they pass through it.  This notch originally only needed to be big enough for 2 wires but now there are more so the opening needs to be expanded to fit.  Carefully carve away excess plastic around the notch until it fits over all of the wires without crimping them.
+1. The wire passage cover has a notch that fits over the wires where they pass through it.  The notch in the original cover was only big enough for the original 2 motor wires.
+    - If your kit includes a new wire passage cover with a bigger notch, use it instead of the original cover.  Or consult the [hardware guide](hardware-guide.md) for instructions on how to make one.
+    - Otherwise, you can expand your original wire passage cover to fit over the additional wires.  Carefully carve away excess plastic around the notch until it fits over all of the wires without crimping them.
 1. Fully open the lid by turning the lid knob counter-clockwise.
-1. Preinstall the screws into the weatherguard then seat it into place over the wire harness.
+1. Preinstall the screws into the wire passage cover then seat it into place over the wire harness.
 1. Tighten down the screws a little bit at a time while checking to ensure that the wires pass through the notch and don't get crimped by the plastic.
 
 Now you can close the lid by turning the lid knob clockwise.
@@ -208,11 +210,11 @@ Please follow these additional instructions for installing the light accessory.
 
 ### Installing the light
 
-After removing the fan blade, the weatherguard, and the control panel...
+After removing the fan blade, the wire passage cover, and the control panel...
 
 - Thoroughly clean the rim of the fan housing all the way around its circumference.
 - Wipe the rim with alcohol to remove any remaining oils and ensure proper adhesion of the LED strip.  Allow to dry.
-- Pass the LED strip connector and wire down through the opening above the electronics.
+- Pass the LED strip connector and wire down through the wire passage above the electronics.
 - Hold the head of the LED strip (the end with the wires attached) up to the rim of the fan housing in the corner nearest the electronics.  Align it with the underside of the plastic spokes that support the fan motor.  Confirm that you can wrap the LED strip all the way around the rim of the fan housing in a counter-clockwise loop as you look up into the fan.
 - Peel back part of the adhesive release liner and press the LED strip where you held it.  Incrementally peel and apply the LED strip in a counter-clockwise loop as you look up into the fan.  Don't peel the whole release liner all at once!
 - Press the LED strip firmly into place all the way around to activate the adhesive.
