@@ -281,7 +281,7 @@ TODO: Add a photo
 
 ##### Instructions
 
-- Cut a section of ribbon cable approximately 8" or 20 cm long.
+- Cut a section of ribbon cable approximately 12" or 30 cm long.
 - Strip 1.5 mm off from each end of each wire.
 - Crimp a Molex 1625 series pin to one of each wire and a JST XH series pin to the other end.
 - Insert the pins into their respective housings such that pin 1 of the Molex 1625 series connector connects to pin 1 of the JST XH series connector.  Likewise, pin 2 connects to pin 2.
