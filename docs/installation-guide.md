@@ -42,6 +42,7 @@ Gather the supplies you will need.
 - Parts
   - Minuet fan controller circuit board (already programmed with the Minuet firmware)
   - Fan motor and adapters
+  - Wire passage cover
   - Power cable
   - Lid motor cable
   - Zip ties
@@ -212,6 +213,7 @@ Please follow these additional instructions for installing the light accessory.
 
 After removing the fan blade, the wire passage cover, and the control panel...
 
+- Watch this [video explanation](https://vimeo.com/1115025239/6b51f73794) for how to position the LED strip.
 - Thoroughly clean the rim of the fan housing all the way around its circumference.
 - Wipe the rim with alcohol to remove any remaining oils and ensure proper adhesion of the LED strip.  Allow to dry.
 - Pass the LED strip connector and wire down through the wire passage above the electronics.
