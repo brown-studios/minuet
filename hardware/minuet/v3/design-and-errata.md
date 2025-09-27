@@ -219,6 +219,7 @@ Issues in v3.0:
 
 - The 3D model for the IR receiver should have a 16 mm standoff, currently it's set to 17 mm
 - The lid motor end of travel detection does not work reliably because the current limit is too sensitive.  There needs to be a delay to allow for the inrush current to settle before determining that the motor has stalled.  This problem could be solved by enabling fixed off-time current chopping and checking whether V(propi) has been above a certain threshold for a certain amount of time using an ADC or comparator.  Or by providing a PWM signal to the control inputs, the cycle-by-cycle current chopping could be allowed to proceed as intended and the motor stall can be detected when NFAULT remains asserted for a long enough duration.  Or perhaps a different motor driver chip with integrated stall detection such as the DRV8235 could be used.
+- The microcontroller spontaneously resets with no logs or crash data when a devices connects to the WiFi in access point mode.  The debug component reports the reset reason as a "power-on event".  The 3.3 V supply does not show any transients during the event so the problem appears to be internal to the ESP32-C3 module.  Reducing the WiFi output power to 19 dB resolves the issue: recommend using 18 dB for a safety margin with this version of the board.
 
 Issues with the MCF8316D motor driver chip:
 
