@@ -96,7 +96,7 @@ Here's how to choose a fan motor and make adapters to fit the motor to the fan h
 - Sensor type: 3 digital hall sensors with 30° placement
 - Shaft diameter: 8 mm
 - Shaft length: 21 mm
-- Mount screws: 4x M4
+- Fastener: 4x M4 screws
 - Dimensions: 57 mm diameter x 53.5 mm length
 
 ##### Wiring chart
@@ -230,10 +230,9 @@ TODO: Add a photo
 
 ##### Supplies
 
-- 2x M5 x 14 mm cap screws (a little longer is ok)
+- 2x M5 x 14 mm cap screws (a little longer is ok) and washers
 - Screws for your motor and shaft adapter combination
-  - For 57BYA54 with a rigid coupler and dowel pin shaft adapter, use 4x M4 x 22 mm cap screws
-- Washers for the M5 screws and the motor screws
+  - For 57BYA54 with a rigid coupler and dowel pin shaft adapter, use 4x M4 x 22 mm socket head cap screws and washers
 
 ##### Instructions
 
