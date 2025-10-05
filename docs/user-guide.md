@@ -46,9 +46,9 @@ In manual mode, the up/down buttons control the fan speed and the on/off button 
 In auto mode, the up/down buttons control the thermostat temperature setpoint, the on/off button exits auto mode, and the thermostat controls the fan speed based on the ambient temperature.  The thermostat will turn the fan on in the direction it last operated in.
 
 - Press `auto`: return to manual mode, turn fan off, close lid
-- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
-- Press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick rising tone
-- Press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick falling tone
+- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (approx. 25.5 °C), Minuet confirms with a quick turn
+- Press `up`: increase thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick rising tone
+- Press `down`: decrease thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick falling tone
 - Press `open/close` (`up` and `down` together): *inoperable in this mode*
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: return to manual mode, turn fan off, close lid
@@ -77,9 +77,9 @@ Hold the `auto` button and press other buttons as described below to configure t
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: toggle the fan off or turn it on at its last configured manual fan speed
 - Press `auto`: enable the thermostat if it is disabled, re-engage the thermostat if it is overridden, otherwise disable the thermostat
-- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (~ 25.5 °C), Minuet confirms with a quick turn
-- Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick rising tone
-- Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (~ 0.5 °C), Minuet confirms with a quick falling tone
+- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (approx. 25.5 °C), Minuet confirms with a quick turn
+- Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick rising tone
+- Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick falling tone
 - Hold `auto` and press `in/out`: toggle thermostat controlled fan direction between same as manual, air in, and air out, Minuet confirms air in with a quick descending scale, air out with a quick rising scale, and same with two quick tones
 - Hold `auto` and press `on/off`: toggle thermostat controlled fan state to be on or off (with the lid open in either case), Minuet confirms with a long rising tone for on or a long falling tone for off
 
@@ -227,7 +227,7 @@ Your light accessory kit should include one of these remotes. If you'd like to b
 
 You can customize the table of colors and effects by modifying the firmware according to your preferences. Refer to [minuet/accessory/light](https://github.com/brown-studios/minuet-firmware/tree/main/minuet/accessory/light).
 
-![](./24%20key%20rgbw%20led%20remote.jpg)
+![24-key RGBW LED remote](./24%20key%20rgbw%20led%20remote.jpg)
 
 # WiFi network
 
@@ -305,6 +305,604 @@ When you integrate Minuet with Home Assistant, you can add the Minuet fan, cover
 
 > [!TIP]
 > We recommend installing the [ESPHome Builder Add-on](https://esphome.io/guides/getting_started_hassio/) for Home Assistant if you plan to customize the Minuet firmware so that you can control everything in one place.
+
+### Home Assistant dashboard cards
+
+Here is a collection of cards that you can add to your Home Assistant dashboard to control Minuet and customize as you like.
+
+- Fan: Set the fan speed and direction.
+- Lid: Open and close the lid.
+- Thermostat: Select the active preset, fan mode, lid mode, and manual override behavior.
+- Preset: Customize the thermostat presets.
+
+This example requires [custom card features](https://github.com/Nerwyn/custom-card-features).
+
+![Home assistant dashboard cards](./home%20assistant%20dashboard%20cards.png)
+
+<details>
+<summary>Example dashboard YAML</summary>
+
+```yaml
+type: sections
+max_columns: 4
+title: Minuet
+path: minuet
+sections:
+  - type: grid
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Controls
+      - features:
+          - type: fan-speed
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: fan.minuet_fan
+        name: Fan
+        hide_state: false
+      - features:
+          - type: cover-open-close
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: cover.minuet_lid
+        name: Lid
+      - type: thermostat
+        entity: climate.minuet_thermostat
+        features:
+          - type: climate-hvac-modes
+            style: icons
+          - type: climate-preset-modes
+            style: icons
+            preset_modes:
+              - home
+              - sleep
+              - away
+              - eco
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: climate.minuet_thermostat
+                value_attribute: fan_mode
+                options:
+                  - entity_id: climate.minuet_thermostat
+                    value_attribute: fan_mode
+                    option: auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: climate.set_fan_mode
+                      target:
+                        entity_id:
+                          - climate.minuet_thermostat
+                      data:
+                        fan_mode: auto
+                    label: Fan auto
+                    icon: mdi:fan-auto
+                  - entity_id: climate.minuet_thermostat
+                    value_attribute: fan_mode
+                    option: quiet
+                    tap_action:
+                      action: perform-action
+                      perform_action: climate.set_fan_mode
+                      target:
+                        entity_id:
+                          - climate.minuet_thermostat
+                      data:
+                        fan_mode: quiet
+                    label: Fan quiet
+                    icon: mdi:fan-chevron-down
+                  - entity_id: climate.minuet_thermostat
+                    value_attribute: fan_mode
+                    option: low
+                    tap_action:
+                      action: perform-action
+                      perform_action: climate.set_fan_mode
+                      target:
+                        entity_id:
+                          - climate.minuet_thermostat
+                      data:
+                        fan_mode: low
+                    label: Fan low
+                    icon: mdi:fan-speed-1
+                  - entity_id: climate.minuet_thermostat
+                    value_attribute: fan_mode
+                    option: "off"
+                    tap_action:
+                      action: perform-action
+                      perform_action: climate.set_fan_mode
+                      target:
+                        entity_id:
+                          - climate.minuet_thermostat
+                      data:
+                        fan_mode: "off"
+                    label: Fan off
+                    icon: mdi:fan-off
+              - type: dropdown
+                entity_id: select.minuet_thermostat_lid_mode
+                options:
+                  - entity_id: select.minuet_thermostat_lid_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_lid_mode
+                    icon: mdi:arrow-up-down-bold
+                    label: Lid auto
+                  - entity_id: select.minuet_thermostat_lid_mode
+                    option: Open
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Open
+                      target:
+                        entity_id: select.minuet_thermostat_lid_mode
+                    label: Lid open
+                    icon: mdi:arrow-up-bold
+                  - entity_id: select.minuet_thermostat_lid_mode
+                    option: Closed
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Closed
+                      target:
+                        entity_id: select.minuet_thermostat_lid_mode
+                    label: Lid closed
+                    icon: mdi:arrow-down-bold
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: select.minuet_thermostat_fan_direction
+                options:
+                  - entity_id: select.minuet_thermostat_fan_direction
+                    option: Default
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Default
+                      target:
+                        entity_id: select.minuet_thermostat_fan_direction
+                    label: Air default direction
+                    icon: mdi:equal
+                  - entity_id: select.minuet_thermostat_fan_direction
+                    option: Out
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Out
+                      target:
+                        entity_id: select.minuet_thermostat_fan_direction
+                    label: Air out
+                    icon: mdi:arrow-up-right-bold
+                  - entity_id: select.minuet_thermostat_fan_direction
+                    option: In
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: In
+                      target:
+                        entity_id: select.minuet_thermostat_fan_direction
+                    icon: mdi:arrow-down-right-bold
+                    label: Air in
+              - type: toggle
+                entity_id: switch.minuet_thermostat_manual_override
+                tap_action:
+                  action: toggle
+                  target:
+                    entity_id: switch.minuet_thermostat_manual_override
+                  data: {}
+                unchecked_icon: mdi:fan-auto
+                checked_icon: mdi:fan-alert
+                styles: |-
+                  :host {
+                    flex-basis: 120px;
+                    --feature-color: var(--red-color);
+                  }
+        name: Thermostat
+  - type: grid
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Settings
+      - features:
+          - style: buttons
+            type: numeric-input
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_home_fan_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    label: Fan auto
+                    icon: mdi:fan-auto
+                  - entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    option: Quiet
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Quiet
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    label: Fan quiet
+                    icon: mdi:fan-chevron-down
+                  - entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    option: Low
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Low
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    label: Fan low
+                    icon: mdi:fan-speed-1
+                  - entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    option: "Off"
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: "Off"
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_fan_mode
+                    label: Fan off
+                    icon: mdi:fan-off
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_home_lid_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    icon: mdi:arrow-up-down-bold
+                    label: Lid auto
+                  - entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    option: Open
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Open
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    label: Lid open
+                    icon: mdi:arrow-up-bold
+                  - entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    option: Closed
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Closed
+                      target:
+                        entity_id: select.minuet_thermostat_preset_home_lid_mode
+                    label: Lid closed
+                    icon: mdi:arrow-down-bold
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: number.minuet_thermostat_preset_home_temperature
+        name: Home preset
+        hide_state: true
+        icon: mdi:home
+        grid_options:
+          columns: full
+      - features:
+          - style: buttons
+            type: numeric-input
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    label: Fan auto
+                    icon: mdi:fan-auto
+                  - entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    option: Quiet
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Quiet
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    label: Fan quiet
+                    icon: mdi:fan-chevron-down
+                  - entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    option: Low
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Low
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    label: Fan low
+                    icon: mdi:fan-speed-1
+                  - entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    option: "Off"
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: "Off"
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_fan_mode
+                    label: Fan off
+                    icon: mdi:fan-off
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    icon: mdi:arrow-up-down-bold
+                    label: Lid auto
+                  - entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    option: Open
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Open
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    label: Lid open
+                    icon: mdi:arrow-up-bold
+                  - entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    option: Closed
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Closed
+                      target:
+                        entity_id: select.minuet_thermostat_preset_sleep_lid_mode
+                    label: Lid closed
+                    icon: mdi:arrow-down-bold
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: number.minuet_thermostat_preset_sleep_temperature
+        name: Sleep preset
+        hide_state: true
+        icon: mdi:bed
+        grid_options:
+          columns: full
+      - features:
+          - style: buttons
+            type: numeric-input
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_away_fan_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    label: Fan auto
+                    icon: mdi:fan-auto
+                  - entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    option: Quiet
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Quiet
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    label: Fan quiet
+                    icon: mdi:fan-chevron-down
+                  - entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    option: Low
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Low
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    label: Fan low
+                    icon: mdi:fan-speed-1
+                  - entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    option: "Off"
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: "Off"
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_fan_mode
+                    label: Fan off
+                    icon: mdi:fan-off
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_away_lid_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    icon: mdi:arrow-up-down-bold
+                    label: Lid auto
+                  - entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    option: Open
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Open
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    label: Lid open
+                    icon: mdi:arrow-up-bold
+                  - entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    option: Closed
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Closed
+                      target:
+                        entity_id: select.minuet_thermostat_preset_away_lid_mode
+                    label: Lid closed
+                    icon: mdi:arrow-down-bold
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: number.minuet_thermostat_preset_away_temperature
+        name: Away preset
+        hide_state: true
+        icon: mdi:account-arrow-right
+        grid_options:
+          columns: full
+      - features:
+          - style: buttons
+            type: numeric-input
+          - type: custom:service-call
+            entries:
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    label: Fan auto
+                    icon: mdi:fan-auto
+                  - entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    option: Quiet
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Quiet
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    label: Fan quiet
+                    icon: mdi:fan-chevron-down
+                  - entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    option: Low
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Low
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    label: Fan low
+                    icon: mdi:fan-speed-1
+                  - entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    option: "Off"
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: "Off"
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_fan_mode
+                    label: Fan off
+                    icon: mdi:fan-off
+              - type: dropdown
+                entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                options:
+                  - entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    option: Auto
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Auto
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    icon: mdi:arrow-up-down-bold
+                    label: Lid auto
+                  - entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    option: Open
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Open
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    label: Lid open
+                    icon: mdi:arrow-up-bold
+                  - entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    option: Closed
+                    tap_action:
+                      action: perform-action
+                      perform_action: select.select_option
+                      data:
+                        option: Closed
+                      target:
+                        entity_id: select.minuet_thermostat_preset_eco_lid_mode
+                    label: Lid closed
+                    icon: mdi:arrow-down-bold
+        type: tile
+        features_position: bottom
+        vertical: false
+        entity: number.minuet_thermostat_preset_eco_temperature
+        name: Eco preset
+        hide_state: true
+        icon: mdi:leaf
+        grid_options:
+          columns: full
+cards: []
+```
+</details>
 
 ## How to remotely control Minuet with the ESPHome API
 
