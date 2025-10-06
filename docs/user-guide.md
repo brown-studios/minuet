@@ -16,13 +16,100 @@ You can control most of the fan's functions using the built-in keypad.  Some fun
 
 Minuet supports two different control schemes for the built-in keypad and the 6 key wall remote.  After all, why not improve on the fan controls when you're already replacing its brains!
 
-Choose whichever scheme you prefer and follow the instructions to activate them.
+The [enhanced controls](#enhanced-controls) are enabled by default and make the automatic thermostat easier to use and more capable.
+
+If you prefer, you can enable the [standard controls](#standard-controls) instead to mimic the original Maxxfan controls with some loss of functionality.
+
+### Quick reference
+
+These button combinations vary by control mode.
+
+| Button combination | Enhanced controls | Standard controls (manual mode) | Standard controls (auto mode) |
+| ------------------ | ----------------- | ------------------------------- | ----------------------------- |
+| press `up` | speed up | speed up | thermostat temperature up |
+| hold `up` for 1 second | speed maximum | speed maximum | |
+| press `down` | speed down | speed down | thermostat temperature down |
+| hold `down` for 1 second | speed minimum | speed mimimum | |
+| press `in/out` | direction in/out | direction in/out | direction in/out |
+| press `on/off` | fan on/off | fan on/off | thermostat disable (return to manual mode) |
+| press `open/close` | lid open/close | lid open/close | |
+| press `auto` | thermostat enable/disable | thermostat enable (enter auto mode) | thermostat disable (return to manual mode) |
+| hold `auto` for 3 seconds | thermostat reset | | thermostat reset |
+| hold `auto` and press `up` | thermostat temperature up | | |
+| hold `auto` and press `down` | thermostat temperature down | | |
+| hold `auto` and press `in/out` | thermostat direction toggle | | |
+| hold `auto` and press `on/off` | thermostat function toggle | | |
+
+These button combinations are common to all modes.
+
+| Button combination | Behavior |
+| ------------------ | -------- |
+| press `rain` | rain sensor toggle (only for models with rain sensors) |
+| hold `auto` and `up` for 5 seconds | use enhanced controls |
+| hold `auto` and `down` for 5 seconds | use standard controls |
+| hold `auto` and `open/close` for 5 seconds | keypad indicator toggle |
+| hold `on/off` and `in/out` for 5 seconds | manual safety lock toggle |
+| hold `on/off` and `down` for 5 seconds | WiFi toggle |
+| hold `on/off` and `up` for 5 seconds | power on restore toggle |
+| hold `on/off` for 15 seconds | factory reset |
+
+These button combinations are available when you have the corresponding accessory installed.
+
+| Button combination | Light accessory |
+| ------------------ | --------------- |
+| hold `in/out` for 1 second | light on/off |
+| hold `in/out` for press `up` | brightness up |
+| hold `in/out` for press `down` | brightness down |
+
+### Enhanced controls
+
+The enhanced controls let you keep the automatic thermostat enabled while you manually override its behavior for particular situations like when you need extra ventilation for cooking indoors.  The buttons always behave the same way regardless of whether the thermostat is enabled.
+
+While the thermostat is disabled, the `auto` indicator is unlit and the buttons control the fan state similar to the standard controls.
+
+While the thermostat is enabled, the `auto` indicator is lit and the thermostat controls the fan state automatically based on the ambient temperature.  However, if you press a button or send an automation request to change the state of the fan with enhanced controls then your manual settings *override* the behavior of the thermostat.  This behavior differs from the [standard controls](#standard-controls) where such changes are disallowed unless the thermostat is disabled.
+
+While the thermostat is overridden, the `auto` indicator blinks and the buttons control the fan state similar to the standard controls.  The thermostat will remain overridden state by your manual settings until you press `auto` to re-engage the thermostat.
+
+Hold `auto` and press other buttons to modify the thermostat temperature set point, direction, and function with the keypad.  Use the [automation](#automation) interfaces to configure more advanced features of the thermostat.
+
+*To enable the enhanced controls, press and hold `auto` and `up` simultaneously for 5 seconds.  Minuet confirms with three quick tones followed by a long high tone.*
+
+#### Buttons
+
+- Press `up`: increase the fan speed by one
+- Hold `up` for 1 second: increase the fan speed to maximum *(bonus)*
+- Press `down`: decrease the fan speed by one
+- Hold `down` for 1 second: decrease the fan speed to minimum *(bonus)*
+- Press `in/out`: toggle the fan direction between air in and air out
+- Press `on/off`: toggle the fan off or turn it on at its last selected manual fan speed
+- Press `open/close` (`up` and `down` together): toggle the lid open or closed
+- Press `auto`: enable the thermostat if it is disabled, re-engage the thermostat if it is overridden, otherwise disable the thermostat
+- Hold `auto` for 3 seconds: reset thermostat to default temperature setpoint of 78 °F (approx. 25.5 °C), default direction, and default function, Minuet confirms with a quick turn
+- Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick rising tone
+- Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick falling tone
+- Hold `auto` and press `in/out` one or more times: set the thermostat direction according to the number of presses of `in/out` as indicated in the *thermostat direction* table
+
+  | Thermostat direction | Key presses | Behavior | Confirmation |
+  | -------------------- | ----------- | -------- | ------------ |
+  | *default* | 1 | use the last selected manual fan direction | two quick tones |
+  | *air out* | 2 | exhaust air from the vehicle | quick rising scale |
+  | *air in* | 3 | draw air into the vehicle | quick descending scale |
+
+- Hold `auto` and press `on/off` one or more times: set the thermostat function according to the number of presses of `on/off` as indicated in the *thermostat function* table
+
+  | Thermostat function | Key presses | Fan mode | Lid mode | Behavior | Confirmation |
+  | ------------------- | ----------- | -------- | -------- | -------- | ------------ |
+  | *default* | 1 | fan auto | lid auto | **best for cooling**: automatic fan speed control | long tone, quick tone |
+  | *quiet* | 2 | fan quiet | lid open | **best for sleeping**: quieter automatic fan speed control, lid stays open even below the temperature setpoint to provide fresh air and eliminate actuator noises (unless overridden by a safety lock) | long tone, two quick tones |
+  | *low* | 3 | fan low | lid auto | **best for energy efficiency**: fan speed at minimum | long tone, three quick tones |
+  | *passive* | 4 | fan off | lid auto | **best for passive ventilation**: fan stays off | long tone, four quick tones |
 
 ### Standard controls
 
 The standard controls mimic the original Maxxfan controls with a few *bonus* convenience features.
 
-The buttons behave differently depending on whether the fan is in manual or in auto mode.  Check the state of the `auto` indicator light before pressing buttons to avoid surprises.  For example, in manual mode the `up` and `down` buttons control the fan speed whereas in auto mode the `up` and `down` buttons control the thermostat temperature setpoint so you must turn off auto mode if you want to change the fan speed.
+The buttons behave differently depending on whether the fan is in manual or in auto mode.  Check the state of the `auto` indicator light before pressing buttons to avoid surprises.  For example, in manual mode the `up` and `down` buttons control the fan speed whereas in auto mode the `up` and `down` buttons control the thermostat temperature setpoint.
 
 If Minuet receives an automation request to change the fan speed or open/close the lid while auto mode is active with standard controls, it returns to manual mode before performing the requested action.  This behavior differs from the [enhanced controls](#enhanced-controls) where such changes are allowed and override the behavior of the thermostat.
 
@@ -36,54 +123,24 @@ In manual mode, the up/down buttons control the fan speed and the on/off button 
 - Hold `up` for 1 second: increase the fan speed to maximum *(bonus)*
 - Press `down`: decrease the fan speed by one
 - Hold `down` for 1 second: decrease the fan speed to minimum *(bonus)*
-- Press `open/close` (`up` and `down` together): toggle the lid open or closed
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: toggle the fan off or turn it on at its last configured manual fan speed
-- Press `auto`: enter auto mode
+- Press `open/close` (`up` and `down` together): toggle the lid open or closed
+- Press `auto`: enable the thermostat, enter auto mode
 
 #### Buttons in auto mode (`auto` indicator is lit)
 
 In auto mode, the up/down buttons control the thermostat temperature setpoint, the on/off button exits auto mode, and the thermostat controls the fan speed based on the ambient temperature.  The thermostat will turn the fan on in the direction it last operated in.
 
-- Press `auto`: return to manual mode, turn fan off, close lid
-- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (approx. 25.5 °C), Minuet confirms with a quick turn
 - Press `up`: increase thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick rising tone
 - Press `down`: decrease thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick falling tone
+- Press `in/out`: toggle the fan direction between air in and air out
+- Press `on/off`: disable the thermostat, return to manual mode
 - Press `open/close` (`up` and `down` together): *inoperable in this mode*
-- Press `in/out`: toggle the fan direction between air in and air out
-- Press `on/off`: return to manual mode, turn fan off, close lid
+- Press `auto`: disable the thermostat, return to manual mode
+- Hold `auto` for 3 seconds: reset thermostat to default temperature setpoint of 78 °F (approx. 25.5 °C), Minuet confirms with a quick turn
 
-### Enhanced controls
-
-The enhanced controls let you keep the automatic thermostat enabled while you manually override its behavior for particular situations like when you need extra ventilation for cooking indoors.  The buttons always behave the same way regardless of whether the thermostat is enabled.
-
-While the thermostat is disabled, the `auto` indicator is unlit and the buttons control the fan state similar to the standard controls.
-
-While the thermostat is enabled, the `auto` indicator is lit and the thermostat controls the fan state automatically based on the ambient temperature.  However, if you press a button or send an automation request to change the state of the fan with enhanced controls then your manual settings **override* the behavior of the thermostat.  This behavior differs from the [standard controls](#standard-controls) where such changes are disallowed unless the thermostat is disabled.
-
-While the thermostat is overridden, the `auto` indicator blinks and the buttons control the fan state similar to the standard controls.  The thermostat will remain overridden state by your manual settings until you press `auto` to re-engage the thermostat.
-
-Hold the `auto` button and press other buttons as described below to configure the thermostat's temperature setpoint, fan direction, and fan state.  By setting the thermostat controlled fan state to off you can make the thermostat open the lid for passive ventilation instead of running the fan.
-
-*To enable the enhanced controls, press and hold `auto` and `up` simultaneously for 5 seconds.  Minuet confirms with three quick tones followed by a long high tone.*
-
-#### Buttons
-
-- Press `up`: increase the fan speed by one
-- Hold `up` for 1 second: increase the fan speed to maximum *(bonus)*
-- Press `down`: decrease the fan speed by one
-- Hold `down` for 1 second: decrease the fan speed to minimum *(bonus)*
-- Press `open/close` (`up` and `down` together): toggle the lid open or closed
-- Press `in/out`: toggle the fan direction between air in and air out
-- Press `on/off`: toggle the fan off or turn it on at its last configured manual fan speed
-- Press `auto`: enable the thermostat if it is disabled, re-engage the thermostat if it is overridden, otherwise disable the thermostat
-- Hold `auto` for 3 seconds: reset thermostat temperature setpoint to 78 °F (approx. 25.5 °C), Minuet confirms with a quick turn
-- Hold `auto` and press `up`: increase thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick rising tone
-- Hold `auto` and press `down`: decrease thermostat temperature setpoint by 1 °F (approx. 0.5 °C), Minuet confirms with a quick falling tone
-- Hold `auto` and press `in/out`: toggle thermostat controlled fan direction between same as manual, air in, and air out, Minuet confirms air in with a quick descending scale, air out with a quick rising scale, and same with two quick tones
-- Hold `auto` and press `on/off`: toggle thermostat controlled fan state to be on or off (with the lid open in either case), Minuet confirms with a long rising tone for on or a long falling tone for off
-
-### Rain sensor (only some models)
+### Rain sensor (only for models with rain sensors)
 
 Press the `rain sensor` button to toggle the rain sensor on or off.
 
@@ -109,13 +166,13 @@ The safety lock also turns off and inhibits the light accessory.
 
 #### Manual safety lock
 
-Use the manual safety lock to keep the fan off and the lid closed to prevent the fan from operating accidentally or under control of the thermostat.  For example, it can be helpful to keep out dust and wildfire smoke in extreme conditions.
+Use the manual safety lock to keep the fan off and the lid closed to prevent the fan from operating accidentally or under control of the thermostat.  For example, it can be helpful to keep out dust and wildfire smoke in extreme conditions or perhaps to discourage an inappropriately inquisitive child from turning on the fan.
 
 Hold `on/off` and `in/out` together for 5 seconds to toggle the manual safety lock.  By default, the manual safety lock is disabled.
 
 When the manual safety lock is enabled, Minuet confirms with two quick tones followed by a long high tone.
 
-When the manual safety lock is disabled, Minuet confirms with two quick tones followed by a long low tone.
+When the manual safety lock is disabled (default), Minuet confirms with two quick tones followed by a long low tone.
 
 #### Automation safety lock
 
@@ -123,13 +180,13 @@ Use the automation safety lock to develop automations that keep the fan off and 
 
 For example, you could write an automation to enable the automation safety lock while driving (to reduce road noise and fumes) and disable it when parked.
 
-### WiFi on/off
+### WiFi mode
 
-Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is disabled (the radio is turned off).
+Hold `on/off` and `down` together for 5 seconds to toggle WiFi on or off.  By default, WiFi is turned off.
 
-When WiFi is enabled, Minuet confirms with four quick tones followed by a long high tone.
+When WiFi is turned on, Minuet confirms with four quick tones followed by a long high tone.
 
-When WiFi is disabled, Minuet confirms with four quick tones followed by a long low tone.
+When WiFi is turned off (default), Minuet confirms with four quick tones followed by a long low tone.
 
 Refer to [these instructions for configuring the WiFi network](#wifi-network).
 
@@ -139,7 +196,22 @@ Hold `on/off` and `up` together for 5 seconds to toggle power on restore behavio
 
 When power on restore is enabled, Minuet will restore the fan operating state, speed, direction, and lid open/close state when it is connected to power.  It confirms this setting with a quick turn followed by a long high tone.
 
-When power on restore is disabled, Minuet will leave the fan off and close the lid when it is connected to power.  It confirms this setting with a quick turn followed by a long low tone.
+When power on restore is disabled (default), Minuet will leave the fan off and close the lid when it is connected to power.  It confirms this setting with a quick turn followed by a long low tone.
+
+### Keypad indicators
+
+Hold `auto` and `open/close` (`up` and `down` together) for 5 seconds to toggle the behavior of the keypad indicators.  By default, the indicators stay lit or blinking as long as the underlying condition they are indicating remains active.  You can suppress the indicators if you find them distracting.
+
+| Indicator | State | Condition |
+| --------- | ----- | --------- |
+| `auto` | solid green | the thermostat is enabled |
+| `auto` | blinking green | the thermostat has been manually overridden |
+| `rain` | solid red | the rain sensor is disabled (only for models with rain sensors) |
+| `rain` | blinking red | the rain sensor detected rain and stopped the fan (only for models with rain sensors)
+
+When keypad indicators are suppressed, they will illuminate for just a few seconds when their condition becomes active and will illuminate again after pressing any key on the keypad while their condition remains active.  Minuet confirms by slow blinking all indicators twice.
+
+When keypad indicators are not suppressed (default), they will illuminate indefinitely while their condition is active.  Minuet confirms by slow blinking all indicators three times.
 
 ### Factory reset
 
@@ -243,7 +315,7 @@ There are a few ways to configure the WiFi network.  Choose the appropriate meth
 
 Use this method to connect to a WiFi network if you just installed Minuet out-of-the-box and haven't modified the firmware.
 
-1. [Turn WiFi on using the keypad](#wifi-onoff).  Listen for the tones to confirm that WiFi is on.
+1. [Turn WiFi on using the keypad](#wifi-mode).  Listen for the tones to confirm that WiFi is on.
 
 1. Connect your smartphone or computer to the `minuet-setup` access point.  Use the password `IAmAFan!`.  If the `minuet-setup` access point does not appear, then perform a [factory reset](#factory-reset) to erase the previous network credentials, and try again.
 
