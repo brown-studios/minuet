@@ -1,6 +1,6 @@
 # Minuet light accessory v3.0
 
-**Status: UNDER DEVELOPMENT**
+**Status: SUPERSEDED BY v4**
 
 The Minuet light accessory lets you attach a light to your fan.
 
@@ -80,4 +80,5 @@ Recommendation: Use RGBW addressable LED strips with a warm white or cold white 
 
 ## Errata
 
-Nothing yet...
+When the `5V EN` jumper is cut, the LDO's `ON/OFF' pin is left floating and the LDO turns on.  So a pull-down resistor is needed to turn it off properly although it may be best to simply remove the jumper altogether.
+

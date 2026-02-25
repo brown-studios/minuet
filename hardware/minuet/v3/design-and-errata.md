@@ -1,6 +1,6 @@
 # Minuet v3.0 (UNDER DEVELOPMENT)
 
-**Status: UNDER DEVELOPMENT**
+**Status: SUPERSEDED BY v4**
 
 Minuet v3 upgrades the Maxxfan by replacing the circuit board.
 

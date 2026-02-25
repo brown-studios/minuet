@@ -55,6 +55,15 @@ Here are a few guidelines to consider when contributing to the Minuet circuit bo
 - Assign net classes to nets that carry high current.
 - Record errata in the design document.
 
+## KiCad resources
+
+To edit the hardware projects, you will need the following:
+
+- KiCad version 9.0 or newer
+- KiCad add-ons installed using the Plugin and content manager
+  - [Espressif Library](https://github.com/espressif/kicad-libraries): symbols and footprints
+  - [JLCPCB Fabrication Toolkit](https://github.com/bennymeg/Fabrication-Toolkit): exports files for manufacturing
+
 # Main parts
 
 ## Fan controller
