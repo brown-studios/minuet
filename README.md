@@ -13,8 +13,12 @@ Improve your quality of life in your campervan, RV, trailer, or truck!
 * Customize your fan as you like because the firmware and hardware are open source!
   * Expand the [ESPHome](https://esphome.io/)-based [firmware](https://github.com/brown-studios/minuet-firmware).
   * Connect off-the-shelf I2C environmental sensors and devices to the [QWIIC](https://www.sparkfun.com/qwiic) port.
-  * Make your own hardware accessories for the EXPANSION port.
+  * Make your own hardware accessories for the expansion port.
   * Share your work with the community!
+
+This repository contains the Minuet documentation and hardware design files.  You are welcome to modify the Minuet firmware and hardware subject to the [license terms](#notice) and we encourage you to make your own accessories.  We welcome thoughtful contributions.
+
+*Refer to the [Minuet firmware repository](https://github.com/brown-studios/minuet-firmware) for source code.*
 
 ## Get to know Minuet
 
@@ -80,10 +84,6 @@ Minuet is *not compatible* with the following Maxxfan models.
 | Maxxfan Plus 4000K, 4002K, 4050K | manual lift |
 | Maxxfan 4301K, 4401K, 4501K | manual lift |
 | Maxxfan Low Profile, Mini, Dome | different electronics |
-
-## Acknowledgements
-
-Thanks to [skypeachblue](https://github.com/skypeachblue) and [wingspinner](https://github.com/wingspinner) for publishing information about their [reverse engineering](https://github.com/skypeachblue/maxxfan-reversing) of the Maxxfan IR remote control protocol.  It helped me create the [esphome-maxxfan-protocol](https://github.com/brown-studios/esphome-maxxfan-protocol) component for this project.
 
 ## Notice
 
