@@ -9,4 +9,5 @@
   (lib (name "3362P-1-502LF")(type "KiCad")(uri "${KIPRJMOD}/library/3362P-1-502LF")(options "")(descr ""))
   (lib (name "TPS561201")(type "KiCad")(uri "${KIPRJMOD}/library/TPS561201")(options "")(descr ""))
   (lib (name "MCF8316D")(type "KiCad")(uri "${KIPRJMOD}/library/MCF8316D")(options "")(descr ""))
+  (lib (name "MTJ-662BX2")(type "KiCad")(uri "${KIPRJMOD}/library/MTJ-662BX2")(options "")(descr ""))
 )

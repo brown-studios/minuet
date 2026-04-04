@@ -1,7 +1,7 @@
-(footprint "CONN_MTJ-889X1_ADM"
-	(version 20240108)
+(footprint "MTJ-889X1"
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(tags "MTJ-889X1 ")
 	(property "Reference" "REF**"
@@ -16,7 +16,7 @@
 			)
 		)
 	)
-	(property "Value" "CONN_MTJ-889X1_ADM"
+	(property "Value" "MTJ-889X1"
 		(at 4.445 0 0)
 		(unlocked yes)
 		(layer "F.Fab")
@@ -24,18 +24,6 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.15)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "2dca2139-0506-41e4-8e5e-fea20703b831")
-		(effects
-			(font
-				(size 1.27 1.27)
 				(thickness 0.15)
 			)
 		)
@@ -212,7 +200,7 @@
 			(width 0.508)
 			(type solid)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.Fab")
 		(uuid "c90d6f7b-9d64-4041-86de-5de4bd19368d")
 	)
@@ -232,14 +220,14 @@
 		(at -1.27 6.35)
 		(size 3.2004 3.2004)
 		(drill 3.2004)
-		(layers "F&B.Cu" "*.Mask")
+		(layers "*.Cu" "*.Mask")
 		(uuid "27a4db12-9750-455a-9f21-6ae4185a76ab")
 	)
 	(pad "" np_thru_hole circle
 		(at 10.16 6.35)
 		(size 3.2004 3.2004)
 		(drill 3.2004)
-		(layers "F&B.Cu" "*.Mask")
+		(layers "*.Cu" "*.Mask")
 		(uuid "395a777c-62f8-44f8-ae61-fe95774b8c09")
 	)
 	(pad "1" thru_hole circle
@@ -306,6 +294,7 @@
 		(remove_unused_layers no)
 		(uuid "9a015f7e-8ee5-4995-a814-c4ae4d03d026")
 	)
+	(embedded_fonts no)
 	(model "${KIPRJMOD}/library/MTJ-889X1/MTJ-880X1.stp"
 		(offset
 			(xyz 0 0 0)

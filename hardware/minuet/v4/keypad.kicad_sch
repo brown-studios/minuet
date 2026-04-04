@@ -6,6 +6,10 @@
 	(paper "A4")
 	(title_block
 		(title "Minuet Keypad Interface")
+		(date "2026-04")
+		(rev "v4.0")
+		(company "Brown Studios LLC")
+		(comment 1 "github.com/brown-studios/minuet")
 	)
 	(lib_symbols
 		(symbol "Connector:6P6C"
@@ -1267,8 +1271,8 @@
 		)
 	)
 	(rectangle
-		(start 93.98 54.61)
-		(end 220.98 140.97)
+		(start 90.17 30.48)
+		(end 217.17 116.84)
 		(stroke
 			(width 0)
 			(type default)
@@ -1278,9 +1282,20 @@
 		)
 		(uuid 9772b961-c9f0-41bd-98fc-aebd39f681ff)
 	)
+	(text "A note on 8P8C (RJ45) and 6P6C (RJ12/RJ11) jacks:\n\nThese jacks are available in numerous footprints and form factors.  For this application,\nwe prefer a jack that is sealed on the top to keep out condensation and a tab on the\nbottom for ease of access such as MTJ-889X1 and MTJ-669X1.  However, while these specific\nparts are readily available at Digikey, they are are not normally stocked and relatively expensive\nat JLCPCB so we must also consider alternatives for manufacturing.\n\nSelected equivalent parts:\n\n8P8C (tab down, 17.3 mm OAL)\n  - Adam Tech MTJ-889X1\n  - Amphenol 54602-908LF\n  - HCTL HC-RJ45-058-1-6\n  - XunPu RJ45-306-005-18\n  - XKB X31ADIWA3DY1027\n\n6P6C (tab up, 13 mm OAL):\n  - Adam Tech MTJ-662BX1/MTJ-662BX2\n  - CONNFLY Elec DS1133-S60BPX\n  - Ckmtw R-RJ11R06P-A800"
+		(exclude_from_sim no)
+		(at 91.44 120.65 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left top)
+		)
+		(uuid "527034bc-6ec3-478e-98bc-453f8b75ffc2")
+	)
 	(text "Compatible with original equipment\n\nKey matrix\n- R1+GND: Close lid\n- R2+GND: Open lid\n- R1+C1: Fan off\n- R1+C2: Fan speed up\n- R1+C3: Fan speed down\n- R1+C2+C3: Open / close lid\n- R1+C4: Toggle rain sensor (only certain models)\n- R2+C1: Fan on and cycle speeds\n- R2+C2: Fan on / off\n- R2+C3: Fan intake / exhaust direction\n- R2+C4: Toggle auto thermostat\n\nLEDs\n- LED_AUTO: Auto LED cathode, green with 2.4 V voltage drop\n- LED_RAIN: Rain LED cathode, red with 2 V voltage drop (only certain models)\n\nKEY_Rx and KEY_Cx inputs need pull-ups\nDetect key press when KEY_Rx goes low when undriven (tristate)\nDetect key press when KEY_Cx goes low during high-to-low strobe of KEY_Rx\nFan originally provided +5V supply the interface but +3.3V works fine"
 		(exclude_from_sim no)
-		(at 95.25 59.69 0)
+		(at 91.44 35.56 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1291,7 +1306,7 @@
 	)
 	(text "KEYPAD AND WIRED WALL CONTROL INTERFACE"
 		(exclude_from_sim no)
-		(at 95.25 57.15 0)
+		(at 91.44 33.02 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1303,12 +1318,12 @@
 		(uuid "e348856c-9334-4543-ab1c-2f71c01329d8")
 	)
 	(no_connect
-		(at 194.31 132.08)
+		(at 190.5 107.95)
 		(uuid "4317befd-cfb5-4266-a371-1a7afbd4fd3c")
 	)
 	(wire
 		(pts
-			(xy 113.03 116.84) (xy 115.57 116.84)
+			(xy 109.22 92.71) (xy 111.76 92.71)
 		)
 		(stroke
 			(width 0)
@@ -1318,7 +1333,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 121.92) (xy 115.57 121.92)
+			(xy 109.22 97.79) (xy 111.76 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1328,7 +1343,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 132.08) (xy 115.57 132.08)
+			(xy 109.22 107.95) (xy 111.76 107.95)
 		)
 		(stroke
 			(width 0)
@@ -1338,7 +1353,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 119.38) (xy 115.57 119.38)
+			(xy 109.22 95.25) (xy 111.76 95.25)
 		)
 		(stroke
 			(width 0)
@@ -1348,7 +1363,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 119.38) (xy 146.05 119.38)
+			(xy 146.05 95.25) (xy 142.24 95.25)
 		)
 		(stroke
 			(width 0)
@@ -1358,7 +1373,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 127) (xy 191.77 127)
+			(xy 190.5 102.87) (xy 187.96 102.87)
 		)
 		(stroke
 			(width 0)
@@ -1368,7 +1383,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 121.92) (xy 147.32 121.92)
+			(xy 146.05 97.79) (xy 143.51 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1378,7 +1393,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 124.46) (xy 115.57 124.46)
+			(xy 109.22 100.33) (xy 111.76 100.33)
 		)
 		(stroke
 			(width 0)
@@ -1388,7 +1403,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 116.84) (xy 146.05 116.84)
+			(xy 146.05 92.71) (xy 142.24 92.71)
 		)
 		(stroke
 			(width 0)
@@ -1398,7 +1413,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 129.54) (xy 115.57 129.54)
+			(xy 109.22 105.41) (xy 111.76 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1408,7 +1423,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 121.92) (xy 190.5 121.92)
+			(xy 190.5 97.79) (xy 186.69 97.79)
 		)
 		(stroke
 			(width 0)
@@ -1418,7 +1433,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 127) (xy 115.57 127)
+			(xy 109.22 102.87) (xy 111.76 102.87)
 		)
 		(stroke
 			(width 0)
@@ -1428,7 +1443,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 119.38) (xy 191.77 119.38)
+			(xy 190.5 95.25) (xy 187.96 95.25)
 		)
 		(stroke
 			(width 0)
@@ -1438,7 +1453,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 124.46) (xy 146.05 124.46)
+			(xy 146.05 100.33) (xy 142.24 100.33)
 		)
 		(stroke
 			(width 0)
@@ -1448,7 +1463,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 127) (xy 146.05 127)
+			(xy 146.05 102.87) (xy 142.24 102.87)
 		)
 		(stroke
 			(width 0)
@@ -1458,7 +1473,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 124.46) (xy 190.5 124.46)
+			(xy 190.5 100.33) (xy 186.69 100.33)
 		)
 		(stroke
 			(width 0)
@@ -1468,7 +1483,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 129.54) (xy 146.05 129.54)
+			(xy 146.05 105.41) (xy 142.24 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1478,7 +1493,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 129.54) (xy 190.5 129.54)
+			(xy 190.5 105.41) (xy 186.69 105.41)
 		)
 		(stroke
 			(width 0)
@@ -1488,7 +1503,7 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 134.62) (xy 115.57 134.62)
+			(xy 109.22 110.49) (xy 111.76 110.49)
 		)
 		(stroke
 			(width 0)
@@ -1498,7 +1513,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 134.62) (xy 146.05 134.62)
+			(xy 146.05 110.49) (xy 142.24 110.49)
 		)
 		(stroke
 			(width 0)
@@ -1508,7 +1523,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 132.08) (xy 146.05 132.08)
+			(xy 146.05 107.95) (xy 142.24 107.95)
 		)
 		(stroke
 			(width 0)
@@ -1518,7 +1533,7 @@
 	)
 	(hierarchical_label "KEY_C3"
 		(shape output)
-		(at 146.05 127 180)
+		(at 142.24 102.87 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1529,7 +1544,7 @@
 	)
 	(hierarchical_label "KEY_R1"
 		(shape input)
-		(at 113.03 134.62 180)
+		(at 109.22 110.49 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1540,7 +1555,7 @@
 	)
 	(hierarchical_label "KEY_R2"
 		(shape input)
-		(at 113.03 132.08 180)
+		(at 109.22 107.95 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1551,7 +1566,7 @@
 	)
 	(hierarchical_label "LED_RAIN"
 		(shape input)
-		(at 146.05 119.38 180)
+		(at 142.24 95.25 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1562,7 +1577,7 @@
 	)
 	(hierarchical_label "KEY_C2"
 		(shape output)
-		(at 113.03 129.54 180)
+		(at 109.22 105.41 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1573,7 +1588,7 @@
 	)
 	(hierarchical_label "KEY_C4"
 		(shape output)
-		(at 146.05 124.46 180)
+		(at 142.24 100.33 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1584,7 +1599,7 @@
 	)
 	(hierarchical_label "KEY_C2"
 		(shape output)
-		(at 146.05 129.54 180)
+		(at 142.24 105.41 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1595,7 +1610,7 @@
 	)
 	(hierarchical_label "KEY_R2"
 		(shape input)
-		(at 146.05 132.08 180)
+		(at 142.24 107.95 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1606,7 +1621,7 @@
 	)
 	(hierarchical_label "KEY_R1"
 		(shape input)
-		(at 146.05 134.62 180)
+		(at 142.24 110.49 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1617,7 +1632,7 @@
 	)
 	(hierarchical_label "LED_RAIN"
 		(shape input)
-		(at 113.03 119.38 180)
+		(at 109.22 95.25 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1628,7 +1643,7 @@
 	)
 	(hierarchical_label "KEY_R2"
 		(shape input)
-		(at 190.5 124.46 180)
+		(at 186.69 100.33 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1639,7 +1654,7 @@
 	)
 	(hierarchical_label "KEY_C1"
 		(shape output)
-		(at 190.5 129.54 180)
+		(at 186.69 105.41 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1650,7 +1665,7 @@
 	)
 	(hierarchical_label "KEY_C3"
 		(shape output)
-		(at 113.03 127 180)
+		(at 109.22 102.87 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1661,7 +1676,7 @@
 	)
 	(hierarchical_label "KEY_C4"
 		(shape output)
-		(at 113.03 124.46 180)
+		(at 109.22 100.33 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1672,7 +1687,7 @@
 	)
 	(hierarchical_label "LED_AUTO"
 		(shape input)
-		(at 113.03 116.84 180)
+		(at 109.22 92.71 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1683,7 +1698,7 @@
 	)
 	(hierarchical_label "KEY_R1"
 		(shape input)
-		(at 190.5 121.92 180)
+		(at 186.69 97.79 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1694,7 +1709,7 @@
 	)
 	(hierarchical_label "LED_AUTO"
 		(shape input)
-		(at 146.05 116.84 180)
+		(at 142.24 92.71 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1705,7 +1720,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 113.03 121.92 90)
+		(at 109.22 97.79 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1713,8 +1728,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "28bff695-09e8-4546-8a24-1416dae0fdda")
-		(property "Reference" "#PWR069"
-			(at 116.84 121.92 0)
+		(property "Reference" "#PWR062"
+			(at 113.03 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1723,7 +1738,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 109.855 121.92 90)
+			(at 106.045 97.79 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1732,7 +1747,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 113.03 121.92 0)
+			(at 109.22 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1741,7 +1756,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 113.03 121.92 0)
+			(at 109.22 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1750,7 +1765,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 113.03 121.92 0)
+			(at 109.22 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1764,7 +1779,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR069")
+					(reference "#PWR062")
 					(unit 1)
 				)
 			)
@@ -1772,31 +1787,32 @@
 	)
 	(symbol
 		(lib_id "Connector:6P6C")
-		(at 204.47 124.46 180)
+		(at 200.66 100.33 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
+		(fields_autoplaced yes)
 		(uuid "466c2d08-d713-4d33-a31b-194aa9358eef")
 		(property "Reference" "J12"
-			(at 204.724 111.252 0)
+			(at 200.914 87.122 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "MTJ-669X1"
-			(at 204.47 113.538 0)
+		(property "Value" "MTJ-662BX2"
+			(at 200.66 89.408 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "MTJ-669X1:CONN_MTJ-669X1_ADM"
-			(at 204.47 125.095 90)
+		(property "Footprint" "MTJ-662BX2:MTJ-662BX2"
+			(at 200.66 100.965 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1804,8 +1820,8 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://app.adam-tech.com/products/download/data_sheet/203813/mtj-669x1-data-sheet.pdf"
-			(at 204.47 125.095 90)
+		(property "Datasheet" "https://app.adam-tech.com/products/download/data_sheet/215278/mtj-662bx1-data-sheet.pdf"
+			(at 200.66 100.965 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1814,7 +1830,7 @@
 			)
 		)
 		(property "Description" "RJ connector, 6P6C (6 positions 6 connected), RJ12/RJ18/RJ25"
-			(at 204.47 124.46 0)
+			(at 200.66 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1822,8 +1838,35 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C5785037"
-			(at 204.47 124.46 0)
+		(property "LCSC" "C77859"
+			(at 200.66 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC_Preferred" "C6105887"
+			(at 200.66 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC_Alternate" "C77859"
+			(at 200.66 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alternate" "DS1133-S60BPX"
+			(at 200.66 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1860,7 +1903,7 @@
 	)
 	(symbol
 		(lib_id "Connector:8P8C")
-		(at 160.02 124.46 180)
+		(at 156.21 100.33 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1868,7 +1911,7 @@
 		(dnp no)
 		(uuid "5a4250fd-81fe-4e62-a6c3-a78135ce7917")
 		(property "Reference" "J11"
-			(at 160.02 110.236 0)
+			(at 156.21 86.106 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1876,15 +1919,15 @@
 			)
 		)
 		(property "Value" "MTJ-889X1"
-			(at 160.02 112.522 0)
+			(at 156.21 88.392 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Footprint" "MTJ-889X1:CONN_MTJ-889X1_ADM"
-			(at 160.02 125.095 90)
+		(property "Footprint" "MTJ-889X1:MTJ-889X1"
+			(at 156.21 100.965 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1893,7 +1936,7 @@
 			)
 		)
 		(property "Datasheet" "https://app.adam-tech.com/products/download/data_sheet/203814/mtj-889x1-data-sheet.pdf"
-			(at 160.02 125.095 90)
+			(at 156.21 100.965 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1902,7 +1945,7 @@
 			)
 		)
 		(property "Description" "RJ connector, 8P8C (8 positions 8 connected), RJ31/RJ32/RJ33/RJ34/RJ35/RJ41/RJ45/RJ49/RJ61"
-			(at 160.02 124.46 0)
+			(at 156.21 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1910,8 +1953,35 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C6105889"
-			(at 160.02 124.46 0)
+		(property "LCSC" "C3000197"
+			(at 156.21 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC_Preferred" "C6105889"
+			(at 156.21 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC_Alternative" "C3000197"
+			(at 156.21 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Alternative" "HC-RJ45-058-1-6 (PBT)"
+			(at 156.21 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1954,7 +2024,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 147.32 121.92 90)
+		(at 143.51 97.79 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -1962,8 +2032,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f7d92af-f2cb-4b70-92f1-b0a52a24a1a9")
-		(property "Reference" "#PWR070"
-			(at 151.13 121.92 0)
+		(property "Reference" "#PWR063"
+			(at 147.32 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1972,7 +2042,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 144.145 121.92 90)
+			(at 140.335 97.79 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1981,7 +2051,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 147.32 121.92 0)
+			(at 143.51 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1990,7 +2060,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 147.32 121.92 0)
+			(at 143.51 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1999,7 +2069,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 147.32 121.92 0)
+			(at 143.51 97.79 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2013,7 +2083,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR070")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -2021,7 +2091,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 191.77 127 270)
+		(at 187.96 102.87 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2030,8 +2100,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "969a0f0d-d51e-4be5-a832-f4b00329bb34")
-		(property "Reference" "#PWR071"
-			(at 185.42 127 0)
+		(property "Reference" "#PWR064"
+			(at 181.61 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2040,7 +2110,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 188.595 127 90)
+			(at 184.785 102.87 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2049,7 +2119,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 191.77 127 0)
+			(at 187.96 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2058,7 +2128,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 127 0)
+			(at 187.96 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2067,7 +2137,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 191.77 127 0)
+			(at 187.96 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2081,7 +2151,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR071")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -2089,7 +2159,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 191.77 119.38 90)
+		(at 187.96 95.25 90)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2098,8 +2168,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "afd497da-0844-4621-9d6c-11cac217b9c2")
-		(property "Reference" "#PWR068"
-			(at 195.58 119.38 0)
+		(property "Reference" "#PWR061"
+			(at 191.77 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2108,7 +2178,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 188.595 119.38 90)
+			(at 184.785 95.25 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2117,7 +2187,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 191.77 119.38 0)
+			(at 187.96 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2126,7 +2196,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 191.77 119.38 0)
+			(at 187.96 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2135,7 +2205,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 191.77 119.38 0)
+			(at 187.96 95.25 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2149,7 +2219,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR068")
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -2157,7 +2227,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_01x08_Pin")
-		(at 120.65 124.46 0)
+		(at 116.84 100.33 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -2166,7 +2236,7 @@
 		(dnp no)
 		(uuid "bc47ec0e-332b-4338-98e9-31eeab015788")
 		(property "Reference" "J10"
-			(at 110.998 110.236 0)
+			(at 107.188 86.106 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2174,7 +2244,7 @@
 			)
 		)
 		(property "Value" "G800LE300018YEU"
-			(at 109.982 112.522 0)
+			(at 106.172 88.392 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2182,7 +2252,7 @@
 			)
 		)
 		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical"
-			(at 120.65 124.46 0)
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2191,7 +2261,7 @@
 			)
 		)
 		(property "Datasheet" "https://cdn.amphenol-cs.com/media/wysiwyg/files/drawing/g800lexxxxxxyeu.pdf"
-			(at 120.65 124.46 0)
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2200,7 +2270,7 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x08, script generated"
-			(at 120.65 124.46 0)
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2208,8 +2278,8 @@
 				(hide yes)
 			)
 		)
-		(property "Alternative" "0022284081"
-			(at 120.65 124.46 0)
+		(property "Alternative" "22284081"
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2217,8 +2287,8 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C3345591"
-			(at 120.65 124.46 0)
+		(property "LCSC_Preferred" "C3345591"
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -2227,7 +2297,16 @@
 			)
 		)
 		(property "LCSC_Alternative" "C3339252"
-			(at 120.65 124.46 0)
+			(at 116.84 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C3345591"
+			(at 116.84 100.33 0)
 			(effects
 				(font
 					(size 1.27 1.27)

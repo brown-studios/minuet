@@ -1,7 +1,7 @@
 (kicad_symbol_lib
-	(version 20231120)
+	(version 20241209)
 	(generator "kicad_symbol_editor")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(symbol "DRV8876PWPR"
 		(pin_names
 			(offset 1.016)
@@ -10,7 +10,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(property "Reference" "U"
-			(at -15.24 26.4 0)
+			(at -14.986 34.29 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -107,7 +107,7 @@
 		)
 		(symbol "DRV8876PWPR_0_0"
 			(rectangle
-				(start -15.24 25.4)
+				(start -15.24 33.02)
 				(end 15.24 -25.4)
 				(stroke
 					(width 0.41)
@@ -117,26 +117,8 @@
 					(type background)
 				)
 			)
-			(pin input line
-				(at -20.32 -7.62 0)
-				(length 5.08)
-				(name "EN/IN1"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
 			(pin power_in line
-				(at -20.32 22.86 0)
+				(at -20.32 30.48 0)
 				(length 5.08)
 				(name "VM"
 					(effects
@@ -154,7 +136,7 @@
 				)
 			)
 			(pin power_out line
-				(at -20.32 12.7 0)
+				(at -20.32 20.32 0)
 				(length 5.08)
 				(name "VCP"
 					(effects
@@ -171,125 +153,17 @@
 					)
 				)
 			)
-			(pin power_out line
-				(at 20.32 22.86 180)
-				(length 5.08)
-				(name "CPH"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "13"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_out line
-				(at 20.32 12.7 180)
-				(length 5.08)
-				(name "CPL"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "14"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 20.32 -20.32 180)
-				(length 5.08)
-				(name "GND"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "15"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
 			(pin input line
-				(at -20.32 -22.86 0)
+				(at -20.32 10.16 0)
 				(length 5.08)
-				(name "PMODE"
+				(name "VREF"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "16"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin passive line
-				(at 20.32 -17.78 180)
-				(length 5.08)
-				(name "EXP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "17"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -20.32 -10.16 0)
-				(length 5.08)
-				(name "PH/IN2"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "2"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -20.32 -2.54 0)
-				(length 5.08)
-				(name "NSLEEP"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "3"
+				(number "5"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -316,16 +190,52 @@
 				)
 			)
 			(pin input line
-				(at -20.32 7.62 0)
+				(at -20.32 -2.54 0)
 				(length 5.08)
-				(name "VREF"
+				(name "NSLEEP"
 					(effects
 						(font
 							(size 1.016 1.016)
 						)
 					)
 				)
-				(number "5"
+				(number "3"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -20.32 -7.62 0)
+				(length 5.08)
+				(name "EN/IN1"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "1"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin input line
+				(at -20.32 -10.16 0)
+				(length 5.08)
+				(name "PH/IN2"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "2"
 					(effects
 						(font
 							(size 1.016 1.016)
@@ -369,6 +279,96 @@
 					)
 				)
 			)
+			(pin input line
+				(at -20.32 -22.86 0)
+				(length 5.08)
+				(name "PMODE"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "16"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 20.32 30.48 180)
+				(length 5.08)
+				(name "CPH"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "13"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_out line
+				(at 20.32 20.32 180)
+				(length 5.08)
+				(name "CPL"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "14"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin passive line
+				(at 20.32 -17.78 180)
+				(length 5.08)
+				(name "EXP"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "17"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
+			(pin power_in line
+				(at 20.32 -20.32 180)
+				(length 5.08)
+				(name "GND"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "15"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
 			(pin power_in line
 				(at 20.32 -22.86 180)
 				(length 5.08)
@@ -390,24 +390,6 @@
 		)
 		(symbol "DRV8876PWPR_1_0"
 			(pin power_out line
-				(at 20.32 -5.08 180)
-				(length 5.08)
-				(name "OUT2"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-				(number "10"
-					(effects
-						(font
-							(size 1.016 1.016)
-						)
-					)
-				)
-			)
-			(pin power_out line
 				(at 20.32 -2.54 180)
 				(length 5.08)
 				(name "OUT1"
@@ -425,6 +407,25 @@
 					)
 				)
 			)
+			(pin power_out line
+				(at 20.32 -5.08 180)
+				(length 5.08)
+				(name "OUT2"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+				(number "10"
+					(effects
+						(font
+							(size 1.016 1.016)
+						)
+					)
+				)
+			)
 		)
+		(embedded_fonts no)
 	)
 )

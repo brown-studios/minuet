@@ -1,4 +1,4 @@
-# Minuet v3.0 (UNDER DEVELOPMENT)
+# Minuet v3.0
 
 **Status: SUPERSEDED BY v4**
 

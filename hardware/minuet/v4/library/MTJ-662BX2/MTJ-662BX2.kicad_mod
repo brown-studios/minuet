@@ -1,0 +1,224 @@
+(footprint "MTJ-662BX2"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(tags "MTJ-662BX2")
+	(property "Reference" "REF**"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "1de3e795-4486-42aa-aca7-0bbda267b0b6")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "MTJ-662BX2"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "e866d137-fa97-4457-a780-d489af195e50")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4f35c0fa-93c5-4a80-9114-4afb3a070322")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1cb0f11a-3d60-4bb6-b23d-40566fa35b51")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -6.1 -4.7)
+		(end 6.1 -4.7)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "1a94720a-6f5b-427c-8c7c-d5d7dedfe0a9")
+	)
+	(fp_line
+		(start -6.1 0.8)
+		(end -6.1 -4.7)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "ba458adf-3b08-4261-be1c-b88b0114bef3")
+	)
+	(fp_line
+		(start -6.1 8.3)
+		(end -6.1 3.8)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "8334ca91-97a0-46f7-8dd1-b843ddfa18ea")
+	)
+	(fp_line
+		(start 6.1 -4.7)
+		(end 6.1 0.8)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "62c8afce-d9df-41d4-aa7c-e0cdbd979639")
+	)
+	(fp_line
+		(start 6.1 3.8)
+		(end 6.1 8.3)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "ab5042e4-f483-4914-a434-90c12b71cd12")
+	)
+	(fp_line
+		(start 6.1 8.3)
+		(end -6.1 8.3)
+		(stroke
+			(width 0.1524)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "5f13f680-7bc9-44ac-b511-6b70197dd150")
+	)
+	(fp_rect
+		(start -7.35 -4.7)
+		(end 7.35 8.3)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "ff2943b5-0bc9-4268-8c15-06489627665c")
+	)
+	(fp_circle
+		(center 4.572 -2.54)
+		(end 4.953 -2.54)
+		(stroke
+			(width 0.508)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "c90d6f7b-9d64-4041-86de-5de4bd19368d")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "e3f3cbc7-0fa9-4983-8eb5-f7ec2a148d25")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -6 2.3)
+		(size 2.3 2.3)
+		(drill 2.3)
+		(layers "*.Cu" "*.Mask")
+		(uuid "27a4db12-9750-455a-9f21-6ae4185a76ab")
+	)
+	(pad "" np_thru_hole circle
+		(at 6 2.3)
+		(size 2.3 2.3)
+		(drill 2.3)
+		(layers "*.Cu" "*.Mask")
+		(uuid "395a777c-62f8-44f8-ae61-fe95774b8c09")
+	)
+	(pad "1" thru_hole circle
+		(at 2.54 -2.54)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "981014e6-bd01-483b-be2d-dd6f08901a9d")
+	)
+	(pad "2" thru_hole circle
+		(at 1.524 0)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "d3d5d28f-c1a6-44aa-b58f-491f57cf8777")
+	)
+	(pad "3" thru_hole circle
+		(at 0.508 -2.54)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "4d2eb3bc-18d0-4237-a909-8404fbaaa3a4")
+	)
+	(pad "4" thru_hole circle
+		(at -0.508 0)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "ca49b077-b14f-4e58-af16-13a5bd2e23ee")
+	)
+	(pad "5" thru_hole circle
+		(at -1.524 -2.54)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "b28781a0-2836-4169-a376-502c8ffedc93")
+	)
+	(pad "6" thru_hole circle
+		(at -2.54 0)
+		(size 1.397 1.397)
+		(drill 0.889)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "59ea2d0d-d709-40c9-92c2-72a7531372c0")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/library/MTJ-662BX2/MTJ-662BX2.stp"
+		(offset
+			(xyz 0 -8.3 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -0)
+		)
+	)
+)

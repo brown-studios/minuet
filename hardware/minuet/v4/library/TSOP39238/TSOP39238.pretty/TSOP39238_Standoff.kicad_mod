@@ -1,7 +1,7 @@
 (footprint "TSOP39238_Standoff"
-	(version 20240108)
+	(version 20241229)
 	(generator "pcbnew")
-	(generator_version "8.0")
+	(generator_version "9.0")
 	(layer "F.Cu")
 	(descr "Through hole straight pin header, 1x04, 1.27mm pitch, single row")
 	(tags "Through hole pin header THT 1x04 1.27mm single row")
@@ -23,19 +23,6 @@
 		(effects
 			(font
 				(size 1 1)
-				(thickness 0.15)
-			)
-		)
-	)
-	(property "Footprint" ""
-		(at 0 0 0)
-		(unlocked yes)
-		(layer "F.Fab")
-		(hide yes)
-		(uuid "4d528afc-5fe9-4248-a66f-ab05a9e1dc90")
-		(effects
-			(font
-				(size 1.27 1.27)
 				(thickness 0.15)
 			)
 		)
@@ -67,6 +54,46 @@
 		)
 	)
 	(attr through_hole)
+	(fp_line
+		(start -2.9 5.2)
+		(end -2.9 -1.4)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "9f40b2cc-bb25-4834-8c8e-da8d4cea4997")
+	)
+	(fp_line
+		(start -2.4 -1.9)
+		(end 2.4 -1.9)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "3742d41d-cb05-4db7-8cdd-56d9ab8301ec")
+	)
+	(fp_line
+		(start 2.4 5.7)
+		(end -2.4 5.7)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "a4dbe2b3-937f-4438-acd0-c632ecb73cdb")
+	)
+	(fp_line
+		(start 2.9 -1.4)
+		(end 2.9 5.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "a76083b9-2a44-4c85-b140-266ccf85affa")
+	)
 	(fp_rect
 		(start -1.27 -0.762)
 		(end 1.27 4.572)
@@ -74,9 +101,31 @@
 			(width 0.1)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.SilkS")
 		(uuid "202ff96a-5f73-44c6-9133-1d896c0cc091")
+	)
+	(fp_arc
+		(start -2.9 -1.4)
+		(mid -2.753553 -1.753553)
+		(end -2.4 -1.9)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "62714efb-abfa-4fe0-8c19-9df07bb75902")
+	)
+	(fp_arc
+		(start -2.4 5.7)
+		(mid -2.753553 5.553553)
+		(end -2.9 5.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "ae0e99ff-abe5-4611-9a28-d8792e4bb2fe")
 	)
 	(fp_arc
 		(start -0.6 1.5)
@@ -100,6 +149,28 @@
 		(layer "F.SilkS")
 		(uuid "a9ab0183-0a1e-4131-8177-a4b7d2de9e2d")
 	)
+	(fp_arc
+		(start 2.4 -1.9)
+		(mid 2.753553 -1.753553)
+		(end 2.9 -1.4)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "4d59a16d-1609-4d22-8fb1-8f59ccfe8358")
+	)
+	(fp_arc
+		(start 2.9 5.2)
+		(mid 2.753553 5.553553)
+		(end 2.4 5.7)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "7826d109-b92c-481a-a7b1-1461d81182cc")
+	)
 	(fp_rect
 		(start -3 -2)
 		(end 3 5.8)
@@ -107,7 +178,7 @@
 			(width 0.05)
 			(type default)
 		)
-		(fill none)
+		(fill no)
 		(layer "F.CrtYd")
 		(uuid "f68a845b-634d-4212-8b37-d7f9fca493f5")
 	)
@@ -204,15 +275,27 @@
 		(remove_unused_layers no)
 		(uuid "c4f5d6c7-f752-4c4f-9c22-a6e12d16c6e6")
 	)
-	(model "${KICAD8_3DMODEL_DIR}/Connector_PinHeader_1.27mm.3dshapes/PinHeader_1x04_P1.27mm_Vertical.wrl"
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/library/TSOP39238/82827TVCastnonSMD.stp"
 		(offset
-			(xyz 0 0 0)
+			(xyz -0.6 -1.9 19)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz 0 0 0)
+			(xyz 180 -0 90)
+		)
+	)
+	(model "${KIPRJMOD}/library/TSOP39238/IR Receiver Standoff.step"
+		(offset
+			(xyz 0 -1.9 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -90)
 		)
 	)
 )
