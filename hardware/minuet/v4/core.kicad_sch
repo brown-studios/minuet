@@ -4141,7 +4141,7 @@
 	)
 	(wire
 		(pts
-			(xy 34.29 81.28) (xy 39.37 81.28)
+			(xy 35.56 81.28) (xy 39.37 81.28)
 		)
 		(stroke
 			(width 0)
@@ -5338,8 +5338,8 @@
 		)
 	)
 	(global_label "GPIO2"
-		(shape passive)
-		(at 34.29 81.28 180)
+		(shape input)
+		(at 35.56 81.28 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -5349,7 +5349,7 @@
 		)
 		(uuid "227a07c9-8532-4138-b768-d07bab2103c6")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 26.7313 81.28 0)
+			(at 26.89 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6533,7 +6533,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "22c2512f-0ae0-4e49-91d5-b6b510808c54")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR036"
 			(at 260.35 119.38 0)
 			(effects
 				(font
@@ -6583,7 +6583,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR034")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -6678,7 +6678,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "24bc62cc-f36a-4531-a7c1-b411ac0366ac")
-		(property "Reference" "R20"
+		(property "Reference" "R21"
 			(at 104.14 54.61 90)
 			(effects
 				(font
@@ -6686,7 +6686,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1K"
+		(property "Value" "3.3K"
 			(at 104.14 57.15 90)
 			(effects
 				(font
@@ -6721,7 +6721,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C23186"
+		(property "LCSC" "C22978"
 			(at 97.79 55.88 90)
 			(effects
 				(font
@@ -6748,7 +6748,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R20")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -6764,7 +6764,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "35af8d0a-c824-4d58-a554-b122c5de1b5f")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR028"
 			(at 160.02 52.07 0)
 			(effects
 				(font
@@ -6814,7 +6814,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR026")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -6910,7 +6910,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4a3ed2d0-be73-4c62-b3fe-ce122448f7e2")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR025"
 			(at 160.02 38.1 0)
 			(effects
 				(font
@@ -6960,7 +6960,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR023")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -7082,7 +7082,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4ffb0e99-e0f7-44fa-a75e-86eaf5885e5b")
-		(property "Reference" "R19"
+		(property "Reference" "R20"
 			(at 104.14 48.26 90)
 			(effects
 				(font
@@ -7090,7 +7090,7 @@
 				)
 			)
 		)
-		(property "Value" "5.1K"
+		(property "Value" "3.3K"
 			(at 104.14 50.8 90)
 			(effects
 				(font
@@ -7125,7 +7125,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C23186"
+		(property "LCSC" "C22978"
 			(at 97.79 49.53 90)
 			(effects
 				(font
@@ -7152,7 +7152,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R19")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -7167,7 +7167,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "56708ef8-844f-4005-b265-f643658ef312")
-		(property "Reference" "R17"
+		(property "Reference" "R18"
 			(at 252.73 35.56 90)
 			(effects
 				(font
@@ -7236,7 +7236,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R17")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -7252,7 +7252,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5ba792f9-1df9-49e0-a792-8c1aca8186f0")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR039"
 			(at 106.68 166.37 0)
 			(effects
 				(font
@@ -7302,7 +7302,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR037")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -7318,7 +7318,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6568ec81-4bf8-400d-8769-409e22d2d6ec")
-		(property "Reference" "R21"
+		(property "Reference" "R22"
 			(at 53.848 166.4278 0)
 			(effects
 				(font
@@ -7390,7 +7390,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R21")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -7406,7 +7406,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6a9e9442-acb7-447b-a0fa-2f7d288c3217")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR040"
 			(at 30.48 194.31 0)
 			(effects
 				(font
@@ -7456,7 +7456,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR038")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -7472,7 +7472,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "74e115e9-0dcb-4a0c-9695-4c54c4d749fd")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR033"
 			(at 219.71 77.47 0)
 			(effects
 				(font
@@ -7522,7 +7522,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR031")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -7538,7 +7538,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7623f4ca-c29d-4491-b79b-293c22075562")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR029"
 			(at 102.87 49.53 0)
 			(effects
 				(font
@@ -7589,7 +7589,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR027")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -7604,7 +7604,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "76459931-b456-4bfc-b79b-d0aafbdfcce0")
-		(property "Reference" "C11"
+		(property "Reference" "C12"
 			(at 42.799 48.4335 0)
 			(effects
 				(font
@@ -7685,7 +7685,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "C11")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -7701,7 +7701,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7a4a69ed-8e90-468c-b9aa-d7c15986dbfa")
-		(property "Reference" "R22"
+		(property "Reference" "R23"
 			(at 108.458 166.4278 0)
 			(effects
 				(font
@@ -7773,7 +7773,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R22")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -7896,7 +7896,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8128a851-dcf8-49fd-b274-856c44ba784d")
-		(property "Reference" "R18"
+		(property "Reference" "R19"
 			(at 252.73 40.64 90)
 			(effects
 				(font
@@ -7965,7 +7965,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "R18")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -8138,7 +8138,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "90262a4d-c4a9-4668-82c4-be45378d3369")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR038"
 			(at 52.07 166.37 0)
 			(effects
 				(font
@@ -8188,7 +8188,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR036")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -8204,7 +8204,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "92740bba-34c4-4eb6-8fe1-add5356fe475")
-		(property "Reference" "#PWR039"
+		(property "Reference" "#PWR041"
 			(at 85.09 194.31 0)
 			(effects
 				(font
@@ -8254,7 +8254,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR039")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -8270,7 +8270,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9a53a0f6-c4b9-4700-8cdc-98ee053e0dda")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR031"
 			(at 102.87 55.88 0)
 			(effects
 				(font
@@ -8321,7 +8321,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR029")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -8336,7 +8336,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9c59dce3-6cc6-4afb-b51b-da62ca2ca14c")
-		(property "Reference" "C12"
+		(property "Reference" "C13"
 			(at 58.039 48.4335 0)
 			(effects
 				(font
@@ -8417,7 +8417,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "C12")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -8433,7 +8433,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9db318dd-09d0-4276-95e5-7d4211ef6456")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR034"
 			(at 227.33 99.06 0)
 			(effects
 				(font
@@ -8484,7 +8484,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR032")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -8501,7 +8501,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b4cb5d57-ae13-4627-8808-b3d8c498484b")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR027"
 			(at 60.96 49.53 0)
 			(effects
 				(font
@@ -8551,7 +8551,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR025")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -8566,7 +8566,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b8e6a9b4-ffe0-42a2-8955-2a2e3e460a78")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR026"
 			(at 275.59 38.1 0)
 			(effects
 				(font
@@ -8617,7 +8617,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR024")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -8633,7 +8633,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c57e8e97-02d5-4e5d-9222-2d114218cee0")
-		(property "Reference" "C10"
+		(property "Reference" "C11"
 			(at 157.099 37.0035 0)
 			(effects
 				(font
@@ -8714,7 +8714,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "C10")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -8730,7 +8730,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c954c56e-6d92-451d-9396-9e9a974e7bb6")
-		(property "Reference" "C13"
+		(property "Reference" "C14"
 			(at 54.991 176.7035 0)
 			(effects
 				(font
@@ -8811,7 +8811,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "C13")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -8873,6 +8873,15 @@
 			)
 		)
 		(property "LCSC" "C5736265"
+			(at 67.31 99.06 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Origin" "Center"
 			(at 67.31 99.06 0)
 			(effects
 				(font
@@ -9059,7 +9068,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "dd18d19a-207a-4277-95e3-8d2a64c47ea0")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR035"
 			(at 166.37 115.57 0)
 			(effects
 				(font
@@ -9109,7 +9118,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR033")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -9125,7 +9134,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e0ea414e-5eec-440e-9678-fbf0c230520e")
-		(property "Reference" "C14"
+		(property "Reference" "C15"
 			(at 109.601 176.7035 0)
 			(effects
 				(font
@@ -9206,7 +9215,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "C14")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -9221,7 +9230,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e84abc2b-c4b5-4101-ad9d-ff874e9404ee")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR030"
 			(at 275.59 49.53 0)
 			(effects
 				(font
@@ -9272,7 +9281,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR028")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -9429,7 +9438,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eb5aaca9-24ab-4e51-ab37-0a00aaab23fe")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR037"
 			(at 67.31 139.7 0)
 			(effects
 				(font
@@ -9479,7 +9488,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR035")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -9496,7 +9505,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f237f0fa-7fde-47af-99dc-b646f9ec6b5f")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR032"
 			(at 60.96 64.77 0)
 			(effects
 				(font
@@ -9546,7 +9555,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/b65c46c2-1b5f-4ded-9059-0376a6f8efd8"
-					(reference "#PWR030")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)

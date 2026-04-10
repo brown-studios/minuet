@@ -1728,7 +1728,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "28bff695-09e8-4546-8a24-1416dae0fdda")
-		(property "Reference" "#PWR062"
+		(property "Reference" "#PWR064"
 			(at 113.03 97.79 0)
 			(effects
 				(font
@@ -1779,7 +1779,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR062")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -1856,7 +1856,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_Alternate" "C77859"
+		(property "LCSC_Alternative" "C77859"
 			(at 200.66 100.33 0)
 			(effects
 				(font
@@ -1865,7 +1865,25 @@
 				(hide yes)
 			)
 		)
-		(property "Alternate" "DS1133-S60BPX"
+		(property "Alternative" "DS1133-S60BPX"
+			(at 200.66 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Rotation Offset" "90"
+			(at 200.66 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "FT Position Offset" "0,1.35"
 			(at 200.66 100.33 0)
 			(effects
 				(font
@@ -1989,6 +2007,15 @@
 				(hide yes)
 			)
 		)
+		(property "FT Position Offset" "0,3.5"
+			(at 156.21 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "2eae87d5-22d4-47df-bf95-69aced07a550")
 		)
@@ -2032,7 +2059,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f7d92af-f2cb-4b70-92f1-b0a52a24a1a9")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR065"
 			(at 147.32 97.79 0)
 			(effects
 				(font
@@ -2083,7 +2110,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR063")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -2100,7 +2127,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "969a0f0d-d51e-4be5-a832-f4b00329bb34")
-		(property "Reference" "#PWR064"
+		(property "Reference" "#PWR066"
 			(at 181.61 102.87 0)
 			(effects
 				(font
@@ -2151,7 +2178,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR064")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -2168,7 +2195,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "afd497da-0844-4621-9d6c-11cac217b9c2")
-		(property "Reference" "#PWR061"
+		(property "Reference" "#PWR063"
 			(at 191.77 95.25 0)
 			(effects
 				(font
@@ -2219,7 +2246,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR061")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)

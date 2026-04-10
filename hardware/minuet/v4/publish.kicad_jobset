@@ -71,7 +71,7 @@
         "rotation_y": 0.0,
         "rotation_z": 0.0,
         "side": "top",
-        "use_board_stackup_colors": true,
+        "use_board_stackup_colors": false,
         "width": 1200,
         "zoom": 1.0
       },
@@ -124,7 +124,7 @@
         "rotation_y": 0.0,
         "rotation_z": 0.0,
         "side": "bottom",
-        "use_board_stackup_colors": true,
+        "use_board_stackup_colors": false,
         "width": 1200,
         "zoom": 1.0
       },

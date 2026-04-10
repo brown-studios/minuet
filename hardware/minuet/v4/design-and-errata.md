@@ -75,6 +75,25 @@ You can safely omit certain components that you don't need including the IR rece
 
 To improve the circuit board's moisture resistance, you can spray it with an insulative conformal coating after taking care to mask off all connectors before spraying so they don't get coated unintentionally.
 
+## Fabrication
+
+Use the `JLCPCB fabrication toolkit` plug-in to generate files for JLCPCB.
+
+Fabrication parameters:
+
+- Material: 4 layers, FR4 TG155, ENIG, 1 oz outer copper, 0.5 oz inner copper
+- Via covering: plugged
+- Min via hole size: 0.3 mm (default)
+- Board outline tolerance: 0.2 mm (default)
+- Assembly side: top and bottom, or just the top if you plan to assemble the bottom connectors manually
+- Tooling holes: by customer
+- Parts selection: by customer
+- Solder paste: high temp (default)
+- Conformal coating: both sides
+  - Do not spray connectors
+  - Do not spray U1 pads (infrared receiver will be assembled later)
+  - Do not spray BZ1 sound hole
+
 ## Setup
 
 ### Temperature sensor
@@ -157,19 +176,52 @@ The `EXPANSION` header includes the following signals.  Refer to the Minuet sche
 - `I2C_SCL` and `I2C_SDA` provide the I2C bus (QWIIC)
 - `RESET` and `BOOT` are wired in parallel with their corresponding buttons (active low)
 - `LOCK` engages the safety lock (active low)
+- `ACC_ID` [identifies the accessory](#accessory-identification) that is plugged into the expansion port (see below)
 - 12 V supply is unregulated, 1 A current available
 - 3.3 V supply is regulated, 600 mA current available
 - Ground
 
-The accessory PCB should be no larger than 30 mm x 30 mm to ensure it fits within the housing.  It has a 16-pin 2-row pin header with 2.54 mm pitch centered 7.5 mm from the upper edge.  Refer to the [light accessory](../../light) as an example for the connector placement and PCB layout.
+The accessory PCB should be no larger than 30 mm x 30 mm to ensure it fits within the housing.  It has a 16-pin 2-row pin header with 2.54 mm pitch centered 7.5 mm from the upper edge.
 
-One pin on the expansion port is not connected to anything and it is labeled *(NC)* on the silkscreen.  This pin might be used for something in a future version of Minuet so please don't connect anything to it.
+> [!TIP]
+> Refer to the [light accessory](../../light) as an example for the connector placement and PCB layout.  And by closing the custom accessory ID solder jumper, you can also repurpose the circuit board to build custom accessories with the provided signal pin breakout and prototyping area.
+
+### Accessory identification
+
+Minuet needs to identify which accessory is plugged into the expansion port so it can configure the expansion port GPIO pins and ESPHome entities correctly.  On boot, the firmware measures the voltage of the `ACC_ID` pin with an ADC channel and sets things up accordingly.
+
+The `ACC_ID` pin forms the center terminal of a voltage divider.  The Minuet main circuit board has a `100K` resistor from `ACC_ID` to the 3.3 V supply.  The accessory circuit board identifies itself with a resistor `R_ACC_ID` from `ACC_ID` to ground as shown in the following table.  Use resistors with 1% tolerance to ensure accurate identification and allow for future expansion.
+
+| ID | Accessory resistor (`R_ACC_ID`) | Voltage at `ACC_ID` | Usage |
+| -- | ------------------------------- | ------------------- | ----- |
+| 0  | none (open circuit)             | 3.3 V               | no accessory connected |
+| 1  | 0 ohm (short circuit)           | 0 V                 | custom accessory |
+| 2  | 100 Kohm +/- 1%                 | 1.65 V              | light accessory |
+| 3  | 68 Kohm +/- 1%                  | 1.34 V              | reserved |
+| 4  | 47 Kohm +/- 1%                  | 1.06 V              | reserved |
+| 5  | 33 Kohm +/- 1%                  | 0.82 V              | reserved |
+| 6  | 22 Kohm +/- 1%                  | 0.60 V              | reserved |
+| 7  | 15 Kohm +/- 1%                  | 0.43 V              | reserved |
+| 8  | 10 Kohm +/- 1%                  | 0.30 V              | reserved |
+| 9  | 150 Kohm +/- 1%                 | 1.98 V              | reserved |
+| 10 | 220 Kohm +/- 1%                 | 2.27 V              | reserved |
+| 11 | 330 Kohm +/- 1%                 | 2.53 V              | reserved |
+| 12 | 470 Kohm +/- 1%                 | 2.72 V              | reserved |
+
+If you are developing a custom accessory for personal use, connect `ACC_ID` to ground to prevent the firmware from attempting to configure the accessory itself because your own customized ESPHome YAML configuration will take care of it.  We recommend using a zero ohm resistor so you can change the ID later.
+
+If you are developing an accessory for broader distribution, please open an issue in the Minuet firmware repository to allocate an ID for your accessory and provide an accessory driver to ensure a convenient plug-and-play experience for end-users.
+
+> [!NOTE]
+> We decided to use a resistor for accessory identification to keep it simple for folks who want to design their own expansion port accessories.  We also considered using an I2C EEPROM to store identification and configuration information but it didn't seem necessary.
 
 ### QWIIC port
 
 Connect [QWIIC](https://www.sparkfun.com/qwiic) peripherals to the `QWIIC` port, such as environmental sensors, to this port.
 
-## IO pins
+## Details
+
+### IO pins
 
 The ESP32-C6 microcontroller pins are assigned to usages that need special functions.  The expansion port pins have been chosen to have relatively few constraints on their usage to ease accessory development.
 
@@ -177,11 +229,11 @@ The ESP32-C6 microcontroller pins are assigned to usages that need special funct
 | ------ | -----------------------  | ----------- | -------- | ------- |
 | GPIO0  | Expansion port           | floating    | GPIO, ADC, XTAL+, etc. | |
 | GPIO1  | Expansion port           | floating    | GPIO, ADC, XTAL-, etc. | |
-| GPIO2  | Reserved for future use  | floating    | GPIO, ADC, etc. | |
-| GPIO3  | Rain sensor              | floating    | ADC | |
+| GPIO2  | Rain sensor              | floating    | ADC | |
+| GPIO3  | Thermistor               | floating    | ADC | |
 | GPIO4  | Lid motor current sensor | floating    | ADC | JTAG MTMS, strapping pin (irrelevant because SDIO not used) |
 | GPIO5  | Voltage sensor           | floating    | ADC | JTAG MTDI, strapping pin (irrelevant because SDIO not used) |
-| GPIO6  | Thermistor               | pull-up     | ADC | JTAG MTCK, internal pull-up active on boot unless EFUSE_DIS_PAD_JTAG = 1 |
+| GPIO6  | Accessory ID             | pull-up     | ADC | JTAG MTCK, internal pull-up active on boot unless EFUSE_DIS_PAD_JTAG = 1 |
 | GPIO7  | Piezo buzzer             | floating    | LEDC PWM | JTAG MTDO |
 | GPIO8  | I2C data                 | floating    | I2C SDA | external pull-up, strapping pin (high to allow download mode) |
 | GPIO9  | BOOT button              | floating    | GPIO | external pull-up, strapping pin (select boot / download mode) |
@@ -221,8 +273,6 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 
 Pins marked as reserved for future use are provided as test points on the circuit board.
 
-## Details
-
 ### Capacitor DC bias derating
 
 The ceramic bulk capacitors on the 12 V supply are sized to compensate for the loss of capacitance due to DC bias.  A typical 10 uF MLCC with a 12 V DC bias might be derated by as much as 80% in 0805 size but only by 25% in 1210 size so this design uses physically larger capacitors with an X5R or X7R dielectric for those applications.
@@ -257,3 +307,4 @@ Changes since v3:
 - Provide PWM signals to the lid motor driver to support soft start.
 - Use the ADC to detect rain instead of a comparator to reduce the bill of materials.
 - Change the footprint of the 6P6C connector to one that is more commonly available.
+- Define a method for identifying the accessory plugged into the expansion port

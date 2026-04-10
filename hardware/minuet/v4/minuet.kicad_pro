@@ -61,7 +61,7 @@
       "drc_exclusions": [
         [
           "lib_footprint_mismatch|50008839|81250000|5c9aec1f-8d18-4182-9b32-43da6e57daa2|00000000-0000-0000-0000-000000000000",
-          ""
+          "Spurious"
         ],
         [
           "text_thickness|77200000|70850000|20e404f7-bbe2-443f-a9e6-c25977310fc5|00000000-0000-0000-0000-000000000000",
@@ -138,7 +138,7 @@
       "rules": {
         "max_error": 0.005,
         "min_clearance": 0.1,
-        "min_connection": 0.0,
+        "min_connection": 0.1,
         "min_copper_edge_clearance": 0.4,
         "min_groove_width": 0.0,
         "min_hole_clearance": 0.2,
@@ -741,6 +741,9 @@
       "Net-(R13-Pad1)": [
         "Power"
       ],
+      "Net-(R14-Pad1)": [
+        "Power"
+      ],
       "Net-(U301-AVDD)": [
         "Power"
       ],
@@ -967,20 +970,8 @@
         },
         {
           "group_by": false,
-          "label": "LCSC_Alternate",
-          "name": "LCSC_Alternate",
-          "show": false
-        },
-        {
-          "group_by": false,
           "label": "Package",
           "name": "Package",
-          "show": false
-        },
-        {
-          "group_by": false,
-          "label": "Alternate",
-          "name": "Alternate",
           "show": false
         },
         {
@@ -1011,6 +1002,12 @@
           "group_by": false,
           "label": "PACKAGE",
           "name": "PACKAGE",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "FT Origin",
+          "name": "FT Origin",
           "show": false
         }
       ],
