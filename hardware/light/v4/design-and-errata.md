@@ -2,31 +2,23 @@
 
 **Status: UNDER DEVELOPMENT**
 
-The Minuet light accessory lets you attach a light to your fan.
-
-Suggested applications:
-
-- Attach a dimmable LED light (or other resistive load) with PWM or ON/OFF control.
-- Attach an addressable LED strip (WS2811, WS2812B, WS2814, SK6812, or similar), attach it to the inside of the fan cowling to make it light up pretty colors.
-- Use the accessory as a breakout board with access to all of the GPIO expansion port signals and power for making your own devices.
-
-Depending on your application, you may need to modify your Minuet ESPHome firmware YAML configuration to control the loads in the manner you desire.
+The Minuet light accessory attaches a ring of addressable LEDs to your fan.
 
 ## Design synopsis
 
-The board consists of a high side P-Channel MOSFET driver and a 5 V voltage shifter.  Using a high side driver ensures there is a common ground reference which is necessary for driving addressable LED lights.
+The [TPS22810](https://www.ti.com/lit/ds/symlink/tps22810.pdf) high side load switch supplies power to the LEDs.  It can also be used to drive other loads but it's not intended to be used for PWM.
 
-The on-board 5 V voltage regulator has an extremely small quiescent current: 71 uA with no load, 750 uA at full load so it won't drain your battery.
+The [SN74LVC1G17](https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf) buffer level shifts the addressable LED data signal to 5 V.
 
-The board is laid out to be amenable to hand soldering.  The components are fairly small to fit within the allotted space but the pads are fully exposed.
+The [LP2985-50DBVR](https://www.ti.com/lit/ds/symlink/lp2985.pdf) linear voltage regulator provides the 5 V reference for the addressable LED data signal.  It can also supply up to 150 mA for other purposes.  The voltage regulator has an extremely small quiescent current so it won't drain your battery and you can cut the `5V EN` jumper to disable it entirely if you don't need it.
+
+The board exposes the expansion port signals and includes a small prototyping area of 0.1" (2.54 mm) pitch through-hole pads for building your own circuits based on these components.
 
 The board gets its power from the Minuet fan controller board.  Please consider these specifications to appropriately size your loads to the available supply.
 
 - 12 V supply is unregulated, 1 A current available
-- 5 V supply is regulated, 150 mA current available
+- 5 V supply is regulated, 150 mA current available.
 - 3.3 V supply is regulated, 600 mA current available
-
-The board includes a small prototyping area of 0.1" (2.54 mm) pitch through-hole pads for building your own circuits.
 
 [View the schematics in PDF format](light.pdf)
 
@@ -36,27 +28,46 @@ The board includes a small prototyping area of 0.1" (2.54 mm) pitch through-hole
 
 ![Back side of circuit board](light-back.png)
 
+## Fabrication
+
+Use the `JLCPCB fabrication toolkit` plug-in to generate files for JLCPCB.
+
+Fabrication parameters:
+
+- Material: 2 layers, FR4 TG135, ENIG, 1 oz outer copper
+- Via covering: plugged
+- Min via hole size: 0.3 mm (default)
+- Board outline tolerance: 0.2 mm (default)
+- Assembly side: top
+- Tooling holes: by customer
+- Parts selection: by customer
+- Solder paste: high temp (default)
+- Conformal coating: optional (omit if board is intended to be used for prototyping)
+  - Do not spray connectors
+
 ## Installation
 
-Make sure your light is designed for 12 V!
+Make sure your addressable LED light strip is designed for 12 V and uses 3-wire signaling (WS2812B, SK6812, or similar).  The official Minuet firmware assumes an SK6812 RGBW LED strip with 57 pixels.  You may need to customize the firmware if you attach something else.
 
 Turn off power to the fan while making these connections.
 
 Connect the light to the [JST XH](https://www.jst.com/wp-content/uploads/2021/01/eXH-new.pdf) port labeled `LIGHT`.  Refer to the labels on the circuit board for the correct orientation.
 
 - pin 1 labeled `GND` is ground
-- pin 2 labeled `DAT` is 5 V data, controlled by `GPIO5`, 32 mA maximum output current
-- pin 3 labeled `PWR` is 12 V power, controlled by `GPIO6`, 1 A maximum output current
-
-When attaching a dimmable LED light, you only need to connect power and ground to the light; leave the data pin unconnected.
-
-When attaching an addressable LED strip, you need to connect power, data, and ground to the strip.
+- pin 2 labeled `DAT` is 5 V data, controlled by `GPIO14`, 32 mA maximum output current
+- pin 3 labeled `PWR` is 12 V power, controlled by `GPIO15`, 1 A maximum output current
 
 Plug the accessory into the Minuet `EXPANSION PORT`.  Take care that the pins are aligned with the socket.
 
 ## Usage
 
 Refer to the [user guide](../../../docs/user-guide.md) for how to operate the light accessory using the fan's keypad or an infrared remote.
+
+## Accessory identification
+
+By default, this circuit board identifies itself to Minuet as a "light accessory" when plugged into the expansion port.  If you repurpose this circuit board for a different function, close the `CUSTOM ACC ID` solder jumper to prevent the firmware from automatically configuring the expansion GPIOs.
+
+Refer to the [main board design](../../minuet/v4/design-and-errata.md) for details.
 
 ## The 12 V supply is unregulated
 
@@ -81,3 +92,12 @@ Recommendation: Use RGBW addressable LED strips with a warm white or cold white 
 ## Errata
 
 Nothing yet...
+
+## Changelog
+
+Changes in v4.0:
+
+- Replace the P-channel MOSFET output driver with a load switch.  It is more energy efficient, uses fewer components, and costs less to assemble.
+- Update expansion port signals and add accessory identification resistor.
+- Increase bulk capacitor physical size to compensate for DC bias derating.
+- Adjust fabrication parameters: board edge clearance, silkscreen height

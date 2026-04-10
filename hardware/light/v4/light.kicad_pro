@@ -43,9 +43,9 @@
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
-        "silk_text_size_h": 1.0,
-        "silk_text_size_v": 1.0,
-        "silk_text_thickness": 0.1,
+        "silk_text_size_h": 0.8,
+        "silk_text_size_v": 0.8,
+        "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
           "min_clearance": 0.5
@@ -133,11 +133,11 @@
       },
       "rules": {
         "max_error": 0.005,
-        "min_clearance": 0.127,
-        "min_connection": 0.0,
-        "min_copper_edge_clearance": 0.0,
+        "min_clearance": 0.1,
+        "min_connection": 0.1,
+        "min_copper_edge_clearance": 0.4,
         "min_groove_width": 0.0,
-        "min_hole_clearance": 0.25,
+        "min_hole_clearance": 0.2,
         "min_hole_to_hole": 0.5,
         "min_microvia_diameter": 0.2,
         "min_microvia_drill": 0.1,
@@ -146,9 +146,9 @@
         "min_text_height": 0.8,
         "min_text_thickness": 0.08,
         "min_through_hole_diameter": 0.3,
-        "min_track_width": 0.127,
-        "min_via_annular_width": 0.1,
-        "min_via_diameter": 0.5,
+        "min_track_width": 0.1,
+        "min_via_annular_width": 0.15,
+        "min_via_diameter": 0.25,
         "solder_mask_to_copper_clearance": 0.005,
         "use_height_for_length_calcs": true
       },
@@ -201,11 +201,7 @@
         0.2,
         0.3,
         0.4,
-        0.45,
-        0.5,
-        0.6,
-        1.0,
-        1.8
+        0.6
       ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
@@ -245,14 +241,6 @@
         {
           "diameter": 0.6,
           "drill": 0.3
-        },
-        {
-          "diameter": 1.0,
-          "drill": 0.6
-        },
-        {
-          "diameter": 1.8,
-          "drill": 1.0
         }
       ],
       "zones_allow_external_fillets": false
@@ -526,7 +514,6 @@
         "bus_width": 18,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
         "microvia_diameter": 0.3,
@@ -552,16 +539,34 @@
       "/LOAD": [
         "Power"
       ],
-      "/LOAD0": "Power",
-      "/LOAD1": "Power",
+      "/LOAD0": [
+        "Power"
+      ],
+      "/LOAD1": [
+        "Power"
+      ],
       "Net-(JP1-A)": [
         "Power"
       ],
-      "Net-(JP1-B)": "Power",
-      "Net-(JP2-B)": "Power",
-      "Net-(JP4-B)": "Power",
-      "Net-(JP5-B)": "Power",
+      "Net-(JP1-B)": [
+        "Power"
+      ],
+      "Net-(JP2-B)": [
+        "Power"
+      ],
+      "Net-(JP4-B)": [
+        "Power"
+      ],
+      "Net-(JP5-B)": [
+        "Power"
+      ],
       "Net-(U1-BP)": [
+        "Power"
+      ],
+      "Net-(U2-QOD)": [
+        "Power"
+      ],
+      "Net-(U3-QOD)": [
         "Power"
       ]
     },
@@ -697,6 +702,30 @@
           "group_by": false,
           "label": "Alternative",
           "name": "Alternative",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Part",
+          "name": "Part",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Datasheet_Alternative",
+          "name": "Datasheet_Alternative",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Package",
+          "name": "Package",
+          "show": false
+        },
+        {
+          "group_by": false,
+          "label": "LCSC_Alternative",
+          "name": "LCSC_Alternative",
           "show": false
         }
       ],
