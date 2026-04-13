@@ -307,4 +307,5 @@ Changes since v3:
 - Provide PWM signals to the lid motor driver to support soft start.
 - Use the ADC to detect rain instead of a comparator to reduce the bill of materials.
 - Change the footprint of the 6P6C connector to one that is more commonly available.
-- Define a method for identifying the accessory plugged into the expansion port
+- Identify the accessory plugged into the expansion port
+- Slightly adjust the position of the IR receiver
