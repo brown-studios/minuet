@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.4
+          "min_clearance": 0.0
         }
       },
       "diff_pair_dimensions": [
@@ -285,7 +285,12 @@
     "equivalence_files": []
   },
   "erc": {
-    "erc_exclusions": [],
+    "erc_exclusions": [
+      [
+        "lib_symbol_mismatch|2362200|990600|04a107b9-7b7b-43a2-94d1-b8ab53095a49|00000000-0000-0000-0000-000000000000|||",
+        "Spurious"
+      ]
+    ],
     "meta": {
       "version": 0
     },

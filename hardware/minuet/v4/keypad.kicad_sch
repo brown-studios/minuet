@@ -1728,7 +1728,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "28bff695-09e8-4546-8a24-1416dae0fdda")
-		(property "Reference" "#PWR064"
+		(property "Reference" "#PWR065"
 			(at 113.03 97.79 0)
 			(effects
 				(font
@@ -1779,7 +1779,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR064")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -2059,7 +2059,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7f7d92af-f2cb-4b70-92f1-b0a52a24a1a9")
-		(property "Reference" "#PWR065"
+		(property "Reference" "#PWR066"
 			(at 147.32 97.79 0)
 			(effects
 				(font
@@ -2110,7 +2110,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR065")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -2127,7 +2127,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "969a0f0d-d51e-4be5-a832-f4b00329bb34")
-		(property "Reference" "#PWR066"
+		(property "Reference" "#PWR067"
 			(at 181.61 102.87 0)
 			(effects
 				(font
@@ -2178,7 +2178,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR066")
+					(reference "#PWR067")
 					(unit 1)
 				)
 			)
@@ -2195,7 +2195,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "afd497da-0844-4621-9d6c-11cac217b9c2")
-		(property "Reference" "#PWR063"
+		(property "Reference" "#PWR064"
 			(at 191.77 95.25 0)
 			(effects
 				(font
@@ -2246,7 +2246,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/ecd3cea2-5b83-45e6-bc3a-38348e0ff880"
-					(reference "#PWR063")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)

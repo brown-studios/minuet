@@ -10,7 +10,7 @@ The microcontroller is an [ESP32-C6-MINI-1](https://documentation.espressif.com/
 
 The fan motor driver is a [MCF8316D](https://www.ti.com/lit/ds/symlink/mcf8316d.pdf).  It supports sensorless brushless DC motors with field oriented control with current limiting, built-in motor parameter estimation, and I2C interface.  The integrated buck converter is disabled as per this [application note](https://www.ti.com/lit/an/slla643/slla643.pdf).
 
-The lid motor driver is a [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf).  It has built-in current sensing which is used to detect stalls at the end-of-travel when the lid is completely opened or closed.
+The lid motor driver is a [DRV8876](https://www.ti.com/lit/ds/symlink/drv8876.pdf).  The current sense pin is connected to an ADC pin to detect lid end-of-travel.
 
 The [TCA9555](https://www.ti.com/lit/ds/symlink/tca9555.pdf) IO expander on-board provies an 16 additional IO pins with built-in pull-up resistors via I2C.
 
@@ -20,7 +20,7 @@ The [TSOP39238](https://www.vishay.com/docs/82778/tsop392.pdf) IR receiver suppo
 
 The `EXPANSION` port enables accessories and factory programming.  It exposes GPIOs, the serial port, the I2C bus, the safely lock signal, the reset and bootloader signals, and the 3.3 V and 12 V power rails.  You can make your own accessories to plug into this port.
 
-The `QWIIC` port allows readily available I2C accessories to be connected with ease.
+The `I2C` port allows readily available QWIIC compatible I2C accessories to be connected with ease.
 
 The `TEMP` port connects to the Maxxfan's built-in thermistor for use by the automatic thermostat.
 
@@ -82,10 +82,12 @@ Use the `JLCPCB fabrication toolkit` plug-in to generate files for JLCPCB.
 Fabrication parameters:
 
 - Material: 4 layers, FR4 TG155, ENIG, 1 oz outer copper, 0.5 oz inner copper
-- Via covering: plugged
+- Via covering: plugged (to improve moisture resistance)
 - Min via hole size: 0.3 mm (default)
 - Board outline tolerance: 0.2 mm (default)
+- PCBA type: standard or economic
 - Assembly side: top and bottom, or just the top if you plan to assemble the bottom connectors manually
+- Edge rails: by JLCPCB
 - Tooling holes: by customer
 - Parts selection: by customer
 - Solder paste: high temp (default)
@@ -147,7 +149,7 @@ Connect the Maxxfan's lid motor to the `LID MOTOR` port with a JST XH-2 plug.
 
 The lid motor driver automatically limits the motor current using current chopping with a fixed off-time.  If the current exceeds the driver chip's fixed overcurrent threshold (3.5 A to 5 A), the motor driver reports an overcurrent fault and latches the output off to prevent damage.  An overcurrent fault may indicate a physical problem with the motor or other components.
 
-The lid motor draws current proportional to the work it must do to move the lid.  As the lid begins to move, the motor draws more current to overcome friction and inertia in the mechanism, then the current reduces as the lid moves towards its final position, and finally the current increases dramatically once the lid reaches its end of travel and the motor stalls.
+The lid motor draws current proportional to the work it must do to move the lid.  As the lid begins to move, the motor draws more current to overcome friction and inertia in the mechanism, then the current reduces as the lid moves towards its final position, and finally the current increases significantly once the lid reaches its end of travel and the motor stalls.
 
 The Maxxfan does not have a limit switch to sense when the lid has reached end of travel so Minuet monitors the lid motor current and waits for the current to exceed a programmed stall current threshold `I_STALL` for a certain period of time then stops the motor.
 
@@ -184,7 +186,7 @@ The `EXPANSION` header includes the following signals.  Refer to the Minuet sche
 The accessory PCB should be no larger than 30 mm x 30 mm to ensure it fits within the housing.  It has a 16-pin 2-row pin header with 2.54 mm pitch centered 7.5 mm from the upper edge.
 
 > [!TIP]
-> Refer to the [light accessory](../../light) as an example for the connector placement and PCB layout.  And by closing the custom accessory ID solder jumper, you can also repurpose the circuit board to build custom accessories with the provided signal pin breakout and prototyping area.
+> Refer to the [light accessory](../../light) as an example for the connector placement and PCB layout.  And by closing the custom accessory ID solder jumper (labeled `CUSTOM ACC ID` on the board), you can also repurpose the circuit board to build completely custom accessories with the provided signal pin breakout and prototyping area.
 
 ### Accessory identification
 
@@ -208,16 +210,16 @@ The `ACC_ID` pin forms the center terminal of a voltage divider.  The Minuet mai
 | 11 | 330 Kohm +/- 1%                 | 2.53 V              | reserved |
 | 12 | 470 Kohm +/- 1%                 | 2.72 V              | reserved |
 
-If you are developing a custom accessory for personal use, connect `ACC_ID` to ground to prevent the firmware from attempting to configure the accessory itself because your own customized ESPHome YAML configuration will take care of it.  We recommend using a zero ohm resistor so you can change the ID later.
+If you are developing a custom accessory for personal use, please connect `ACC_ID` to ground to prevent the firmware from attempting to configure the accessory itself because your own customized ESPHome YAML configuration will take care of it.  We recommend using a zero ohm resistor so you can assign an ID later.
 
 If you are developing an accessory for broader distribution, please open an issue in the Minuet firmware repository to allocate an ID for your accessory and provide an accessory driver to ensure a convenient plug-and-play experience for end-users.
 
 > [!NOTE]
 > We decided to use a resistor for accessory identification to keep it simple for folks who want to design their own expansion port accessories.  We also considered using an I2C EEPROM to store identification and configuration information but it didn't seem necessary.
 
-### QWIIC port
+### I2C port
 
-Connect [QWIIC](https://www.sparkfun.com/qwiic) peripherals to the `QWIIC` port, such as environmental sensors, to this port.
+Connect [QWIIC](https://www.sparkfun.com/qwiic) compatible peripherals to the `I2C` port, such as the Minuet environmental sensor, to this port.
 
 ## Details
 
@@ -304,8 +306,10 @@ Changes since v3:
 - Add reverse polarity protection.
 - Add ESD protection to external signals.
 - Use the ADC to monitor the lid motor current to detect end of travel in software.
+- Remove trim potentiometer for the lid motor current limit.
 - Provide PWM signals to the lid motor driver to support soft start.
 - Use the ADC to detect rain instead of a comparator to reduce the bill of materials.
 - Change the footprint of the 6P6C connector to one that is more commonly available.
 - Identify the accessory plugged into the expansion port
-- Slightly adjust the position of the IR receiver
+- Adjust the position of the IR receiver slightly to center it over the control panel aperture
+- Add test points for fan motor parameter tuning with an oscilloscope

@@ -40,20 +40,20 @@
           0.0
         ],
         "light_camera_intensity": [
-          0.1,
-          0.1,
-          0.1
-        ],
-        "light_side_elevation": 60,
-        "light_side_intensity": [
-          0.4,
-          0.4,
-          0.4
-        ],
-        "light_top_intensity": [
           0.0,
           0.0,
           0.0
+        ],
+        "light_side_elevation": 60,
+        "light_side_intensity": [
+          0.6,
+          0.6,
+          0.6
+        ],
+        "light_top_intensity": [
+          0.2,
+          0.2,
+          0.2
         ],
         "output_filename": "minuet-front.png",
         "pan_x": 0.0,
@@ -93,20 +93,20 @@
           0.0
         ],
         "light_camera_intensity": [
-          0.1,
-          0.1,
-          0.1
-        ],
-        "light_side_elevation": 60,
-        "light_side_intensity": [
-          0.4,
-          0.4,
-          0.4
-        ],
-        "light_top_intensity": [
           0.0,
           0.0,
           0.0
+        ],
+        "light_side_elevation": 60,
+        "light_side_intensity": [
+          0.6,
+          0.6,
+          0.6
+        ],
+        "light_top_intensity": [
+          0.2,
+          0.2,
+          0.2
         ],
         "output_filename": "minuet-back.png",
         "pan_x": 0.0,

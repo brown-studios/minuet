@@ -2341,6 +2341,16 @@
 	)
 	(wire
 		(pts
+			(xy 196.85 93.98) (xy 198.12 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f95f6c09-e6a9-448e-a2b2-9c4b4ab1bbf3")
+	)
+	(wire
+		(pts
 			(xy 97.79 54.61) (xy 97.79 55.88)
 		)
 		(stroke
@@ -2736,7 +2746,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "26e38d0e-9444-4c99-a374-3da98a43f756")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR049"
 			(at 137.16 101.6 0)
 			(effects
 				(font
@@ -2787,7 +2797,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR048")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -2886,6 +2896,73 @@
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
 					(reference "C19")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 198.12 93.98 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3687f4c3-8ff1-480a-a066-7a0732d72aa0")
+		(property "Reference" "#PWR048"
+			(at 204.47 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 201.2949 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 198.12 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 198.12 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 198.12 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a646a18b-cc29-4776-acd9-90846f69e6c8")
+		)
+		(instances
+			(project "minuet"
+				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -3208,7 +3285,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "507c9398-6139-49e1-a5db-bee433150d6b")
-		(property "Reference" "TP7"
+		(property "Reference" "TP8"
 			(at 188.849 104.14 90)
 			(effects
 				(font
@@ -3260,7 +3337,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "TP7")
+					(reference "TP8")
 					(unit 1)
 				)
 			)
@@ -3276,7 +3353,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "63937f33-97d5-4c19-a2c3-05eb5ddfcfe5")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR051"
 			(at 137.16 106.68 0)
 			(effects
 				(font
@@ -3327,7 +3404,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR050")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -3614,7 +3691,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8f8a795f-aa74-4ecf-8915-12c29cb74331")
-		(property "Reference" "TP6"
+		(property "Reference" "TP7"
 			(at 188.849 101.6 90)
 			(effects
 				(font
@@ -3666,7 +3743,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "TP6")
+					(reference "TP7")
 					(unit 1)
 				)
 			)
@@ -3778,7 +3855,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9eb1dc0c-c908-4ad2-921e-9dbbe5396f1f")
-		(property "Reference" "TP5"
+		(property "Reference" "TP6"
 			(at 188.849 99.06 90)
 			(effects
 				(font
@@ -3830,7 +3907,7 @@
 		(instances
 			(project ""
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "TP5")
+					(reference "TP6")
 					(unit 1)
 				)
 			)
@@ -3936,7 +4013,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "abbf4875-2f66-4df8-9a71-55106d145ed6")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR052"
 			(at 137.16 111.76 0)
 			(effects
 				(font
@@ -3987,7 +4064,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR051")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -4347,7 +4424,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c0f84ead-dae9-4072-9a61-e7a550c09f79")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR053"
 			(at 190.5 114.3 0)
 			(effects
 				(font
@@ -4398,7 +4475,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR052")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -4511,7 +4588,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e7e14b8d-2035-4f3f-a4d3-77eb4f406b2e")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR054"
 			(at 190.5 121.92 0)
 			(effects
 				(font
@@ -4562,7 +4639,75 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR053")
+					(reference "#PWR054")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Alt")
+		(at 196.85 93.98 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "eb4bf7f5-ee1b-4ec7-82f5-deee8ac76a95")
+		(property "Reference" "TP5"
+			(at 192.151 93.98 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "TestPoint_Alt"
+			(at 192.151 92.7679 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
+			(at 196.85 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 196.85 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "test point (alternative shape)"
+			(at 196.85 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5c8150c2-7be3-4167-a7fa-d3bed2bb4ea7")
+		)
+		(instances
+			(project "minuet"
+				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
+					(reference "TP5")
 					(unit 1)
 				)
 			)
@@ -4712,7 +4857,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fe283a9f-de68-400d-be54-17c8ea257953")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR050"
 			(at 137.16 104.14 0)
 			(effects
 				(font
@@ -4763,7 +4908,7 @@
 		(instances
 			(project "minuet"
 				(path "/5bd7983a-3caa-4bb2-9dc5-1af533f31e50/26911c9c-0aba-4ac6-a40d-12dbad49caee"
-					(reference "#PWR049")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
