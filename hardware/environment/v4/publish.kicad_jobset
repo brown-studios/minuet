@@ -1,0 +1,148 @@
+{
+  "jobs": [
+    {
+      "description": "",
+      "id": "a1534b7c-7104-49b0-a300-1842bc00fc5e",
+      "settings": {
+        "black_and_white": false,
+        "color_theme": "Arcana",
+        "description": "",
+        "drawing_sheet": "",
+        "format": "pdf",
+        "hpgl_page_size": "default",
+        "hpgl_pen_size": 1.016,
+        "hpgl_plot_origin": "A3",
+        "min_pen_width": 847,
+        "output_dir": "",
+        "page_size": "auto",
+        "pdf_hierarchical_links": true,
+        "pdf_metadata": true,
+        "pdf_property_popups": true,
+        "plot_all": true,
+        "plot_drawing_sheet": true,
+        "use_background_color": true
+      },
+      "type": "sch_export_plot_pdf"
+    },
+    {
+      "description": "",
+      "id": "d34408e8-b8ab-4f33-8766-7f6f37f21357",
+      "settings": {
+        "anti_alias": true,
+        "bg_style": "transparent",
+        "description": "",
+        "floor": false,
+        "format": "png",
+        "height": 600,
+        "light_bottom_intensity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "light_camera_intensity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "light_side_elevation": 60,
+        "light_side_intensity": [
+          0.6,
+          0.6,
+          0.6
+        ],
+        "light_top_intensity": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "output_filename": "environment-front.png",
+        "pan_x": 0.0,
+        "pan_y": 0.0,
+        "pan_z": 0.0,
+        "perspective": false,
+        "pivot_x": 0.0,
+        "pivot_y": 0.0,
+        "pivot_z": 0.0,
+        "post_process": true,
+        "preset": "",
+        "procedural_textures": false,
+        "quality": "basic",
+        "rotation_x": 0.0,
+        "rotation_y": 0.0,
+        "rotation_z": 0.0,
+        "side": "top",
+        "use_board_stackup_colors": false,
+        "width": 600,
+        "zoom": 1.0
+      },
+      "type": "pcb_render"
+    },
+    {
+      "description": "",
+      "id": "830f5a5a-cfcd-40df-966a-e68f376fd0f1",
+      "settings": {
+        "anti_alias": true,
+        "bg_style": "transparent",
+        "description": "",
+        "floor": false,
+        "format": "png",
+        "height": 600,
+        "light_bottom_intensity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "light_camera_intensity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "light_side_elevation": 60,
+        "light_side_intensity": [
+          0.6,
+          0.6,
+          0.6
+        ],
+        "light_top_intensity": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "output_filename": "environment-back.png",
+        "pan_x": 0.0,
+        "pan_y": 0.0,
+        "pan_z": 0.0,
+        "perspective": false,
+        "pivot_x": 0.0,
+        "pivot_y": 0.0,
+        "pivot_z": 0.0,
+        "post_process": true,
+        "preset": "",
+        "procedural_textures": false,
+        "quality": "basic",
+        "rotation_x": 0.0,
+        "rotation_y": 0.0,
+        "rotation_z": 0.0,
+        "side": "bottom",
+        "use_board_stackup_colors": false,
+        "width": 600,
+        "zoom": 1.0
+      },
+      "type": "pcb_render"
+    }
+  ],
+  "meta": {
+    "version": 1
+  },
+  "outputs": [
+    {
+      "description": "Artifacts",
+      "id": "b17cfef7-e384-43bf-96a9-03450881c1ac",
+      "only": [],
+      "settings": {
+        "output_path": "."
+      },
+      "type": "folder"
+    }
+  ]
+}

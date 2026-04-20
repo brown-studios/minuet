@@ -1,0 +1,227 @@
+(footprint "STCC4"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -3.25 0)
+		(layer "F.SilkS")
+		(uuid "0e49ccfa-e3df-4c87-a318-a46881736949")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "STCC4"
+		(at 0 3 0)
+		(layer "F.Fab")
+		(uuid "a314ab14-2fda-489c-90a1-204c1f473c91")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3bed39c4-900e-44ce-a1e2-bd90c515e00b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ec6a09cf-e876-4382-b9d0-b472e4b1d814")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(solder_mask_margin 0.125)
+	(attr smd allow_soldermask_bridges)
+	(fp_line
+		(start -1.7 -2.2)
+		(end -1.4 -2.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "9cdaa5ab-1442-4340-9a9f-0376f99d952f")
+	)
+	(fp_line
+		(start -1.7 -1.9)
+		(end -1.7 -2.2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5c46ba7b-6042-47a9-9fe3-903e4a84b6c9")
+	)
+	(fp_line
+		(start 1.4 2.2)
+		(end 1.7 2.2)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "09d43a15-3b1b-46f9-8097-47ef1632ed2a")
+	)
+	(fp_line
+		(start 1.7 2.2)
+		(end 1.7 1.9)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "9467587a-e37e-409c-8dc3-e441c6103970")
+	)
+	(fp_circle
+		(center -2 -1.15)
+		(end -1.9 -1.15)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "85407798-9066-4823-97a0-784c3d673e02")
+	)
+	(fp_rect
+		(start -1.6 -2.1)
+		(end 1.6 2.1)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+		(uuid "c9f9528d-651f-40d9-b134-6a1841b490ef")
+	)
+	(fp_rect
+		(start -1.5 -2)
+		(end 1.5 2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+		(uuid "b82e01f3-0a17-4196-87de-1dc41c2ab74f")
+	)
+	(pad "1" smd roundrect
+		(at -1.025 -1.15)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(roundrect_rratio 0)
+		(chamfer_ratio 0.3)
+		(chamfer top_left)
+		(uuid "ef98cbf7-ed6c-43e3-8489-58ce787d9662")
+	)
+	(pad "2" smd rect
+		(at -1.025 0)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "d0a375f2-22ca-40c7-a5d6-465a2f3a8e82")
+	)
+	(pad "3" smd rect
+		(at -1.025 1.15)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "51cdb155-47d0-4ecf-af1e-b0fb77d9aa2f")
+	)
+	(pad "4" smd rect
+		(at 0 1.525)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "b4606fbc-14a8-4aa6-8e3a-257671a77f66")
+	)
+	(pad "5" smd rect
+		(at 1.025 1.15)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "8b04a00d-d5cd-4cb3-ba9b-e10ad3ad931c")
+	)
+	(pad "6" smd rect
+		(at 1.025 0)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "52f98c8f-950e-4a76-85d3-0cc0fd1bfae4")
+	)
+	(pad "7" smd rect
+		(at 1.025 -1.15)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "62979c4f-4975-43f9-9d17-112d27d59797")
+	)
+	(pad "8" smd rect
+		(at 0 -1.525)
+		(size 0.825 0.825)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "17e5e411-7cc7-4a6f-825b-6af71555712e")
+	)
+	(zone
+		(net 0)
+		(net_name "")
+		(layer "F.Cu")
+		(uuid "6fdf12be-882e-4f13-9af3-9f044090bb58")
+		(name "Keep out")
+		(hatch edge 0.5)
+		(connect_pads
+			(clearance 0)
+		)
+		(min_thickness 0.25)
+		(filled_areas_thickness no)
+		(keepout
+			(tracks not_allowed)
+			(vias not_allowed)
+			(pads not_allowed)
+			(copperpour not_allowed)
+			(footprints allowed)
+		)
+		(placement
+			(enabled no)
+			(sheetname "")
+		)
+		(fill
+			(thermal_gap 0.5)
+			(thermal_bridge_width 0.5)
+		)
+		(polygon
+			(pts
+				(xy -0.6125 0.7375) (xy -1.2 0.73) (xy -1.2 0.42) (xy -0.6125 0.4125) (xy -0.6125 -0.4125) (xy -1.2 -0.42)
+				(xy -1.2 -0.73) (xy -0.6125 -0.7375) (xy -0.6125 -1.5625) (xy -0.42 -1.56) (xy -0.4125 -1.1125)
+				(xy 0.4125 -1.1125) (xy 0.42 -1.5625) (xy 0.6125 -1.5625) (xy 0.6125 -0.7375) (xy 1.2 -0.73) (xy 1.2 -0.42)
+				(xy 0.6125 -0.4125) (xy 0.6125 0.4125) (xy 1.2 0.42) (xy 1.2 0.73) (xy 0.6125 0.7375) (xy 0.6125 1.5625)
+				(xy 0.42 1.56) (xy 0.4125 1.1125) (xy -0.4125 1.1125) (xy -0.42 1.56) (xy -0.6125 1.5625)
+			)
+		)
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/library/STCC4/STCC4-D-R3.STEP"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 -0 -0)
+		)
+	)
+)

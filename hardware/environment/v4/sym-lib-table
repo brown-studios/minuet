@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "BMP581")(type "KiCad")(uri "${KIPRJMOD}/library/BMP581/BMP581.kicad_sym")(options "")(descr ""))
+  (lib (name "STCC4")(type "KiCad")(uri "${KIPRJMOD}/library/STCC4/STCC4.kicad_sym")(options "")(descr ""))
+)
