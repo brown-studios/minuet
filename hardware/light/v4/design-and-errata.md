@@ -1,6 +1,6 @@
 # Minuet light accessory v4.0
 
-**Status: UNDER DEVELOPMENT**
+**Status: UNDER DEVELOPMENT, UNTESTED**
 
 The Minuet light accessory attaches a ring of addressable LEDs to your fan.
 
@@ -35,10 +35,12 @@ Use the `JLCPCB fabrication toolkit` plug-in to generate files for JLCPCB.
 Fabrication parameters:
 
 - Material: 2 layers, FR4 TG135, ENIG, 1 oz outer copper
-- Via covering: plugged
+- Via covering: tented or plugged
 - Min via hole size: 0.3 mm (default)
 - Board outline tolerance: 0.2 mm (default)
-- Assembly side: top
+- PCBA type: standard or economic
+- Assembly side: top and bottom, or just the top if you plan to assemble the bottom connectors manually
+- Edge rails: by JLCPCB
 - Tooling holes: by customer
 - Parts selection: by customer
 - Solder paste: high temp (default)
@@ -79,7 +81,7 @@ If you need voltage regulation for your load, consider connecting a 12 V DC buck
 
 ## How many addressable LED pixels can I use?
 
-It depends on the LED strip that you use.  Here's some general guidance.  If you're not already familiar with addressable LEDs, I suggest looking for a more thorough tutorial.
+It depends on the LED strip that you use.  Here's some general guidance.  If you're not already familiar with addressable LEDs, we suggest looking for a more thorough tutorial.
 
 As a rough estimate, a typical RGB LED pixel draws 0.3 W when red, green, and blue are at full brightness and a typical RGBW LED pixel draws an extra 0.1 W when the white channel is also lit at full brightness.  It adds up quickly when you multiply by the number of pixels!
 
