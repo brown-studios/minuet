@@ -85,6 +85,10 @@ Minuet is *not compatible* with the following Maxxfan models.
 | Maxxfan 4301K, 4401K, 4501K | manual lift |
 | Maxxfan Low Profile, Mini, Dome | different electronics |
 
+## Contributing
+
+We welcome thoughtful contributions to this project made without the use of generative AI / LLM tools.
+
 ## Notice
 
 The Minuet software, documentation, design, and all copyright protected artifacts are released under the terms of the [MIT license](LICENSE).
