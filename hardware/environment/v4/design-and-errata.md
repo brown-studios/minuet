@@ -73,6 +73,8 @@ Refer to the [user guide](../../../docs/user-guide.md) for how to view the senso
 
 ## Errata
 
-Nothing yet...
+Issues in v4.0:
+
+- The fab found the silkscreen markings for BMP580 and STCC4 ambiguous.  Pin 1 is indicated with a dot and there are also lines at two corners of the package.  The markings should be improved for clarity.
 
 ## Changelog

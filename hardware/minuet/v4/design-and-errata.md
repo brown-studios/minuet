@@ -143,6 +143,15 @@ The [MCF8316D](https://www.ti.com/lit/ds/symlink/mcf8316d.pdf)] is configured to
 
 Note: The MCF8316D has a [known issue](https://e2e.ti.com/support/motor-drivers-group/motor-drivers/f/motor-drivers-forum/1555307/mcf8316d-brake-triggers-watchdog_fault-when-watchdog-is-enabled/5991916) that causes a spurious watchdog timeout when tickling the watchdog over I2C.  Minuet uses the external watchdog pin to tickle the watchdog as a workaround.
 
+The design target for the maximum peak motor phase current under continuous operation of the fan with the circuit board mounted inside the Maxxfan enclosure is 4 A under typical ambient conditions.  Continous operation at higher current is not recommended and the motor's own current rating must also be considered.
+
+Some factors that influence the fan motor driver current rating:
+
+- The MCF8316D motor driver is rated for a maximum of 8 A per phase has integrated protection for overtemperature and overcurrent faults.
+- The PCB traces between the MCF8316D, motor connector, and power supply are short and wide and designed to handle at least 4 A DC continuous (5.6 A AC RMS) with a 10 °C temperature rise in ambient conditions.
+- The JST VH motor connector is rated for a maximum of 10 A per pin.
+- The driver's ceramic capacitors use X5R (85 °C) or X7R (125 °C) dielectric.
+
 ### Lid motor
 
 Connect the Maxxfan's lid motor to the `LID MOTOR` port with a JST XH-2 plug.
@@ -275,6 +284,37 @@ The TCA9555 IO expander handles the remaining low speed digital logic functions.
 
 Pins marked as reserved for future use are provided as test points on the circuit board.
 
+### Motor safety
+
+For safety, the motors should only operate under active control of the firmware and should stop if the firmware resets or becomes unresponsive.
+
+*At power-up:*
+
+  - `TCA9555` configures `LID.NSLEEP (XIO11)` and `FAN.WAKE (XIO13)` as inputs with internal weak pull-ups.  The external 10 Kohm pull-downs keep the motor drivers asleep (voltage should be below the logic high threshold).
+
+*At system reset:*
+
+  - `ESP32-C6` configures `LID.IN1 (GPIO21)` and `LID.IN2 (GPIO20)` as inputs with an internal weak-pull up.
+  - `TCA9555` retains its prior state until reconfigured by the firmware.
+  - Eventually the firmware reconfigures `LID.NSLEEP`, `FAN.WAKE`, `LID.IN1`, and `LID.IN2` as outputs and sets all of them low to put the motor drivers to sleep.
+
+*Hang during fan motor operation:*
+
+  - The firmware sets `FAN.WAKE` high, commands the motor driver over `I2C`, and pulses `FAN.EXT_WD` periodically to feed the watchdog timer.
+  - If the firmware becomes unresponsive while `FAN.WAKE` remains high, then the motor continues running until system reset or the `MCF8316D` watchdog timer expires, reports a watchdog fault, and stops the motor.
+
+*Hang during lid motor operation:*
+
+  - The firmware sets `LID.NSLEEP` high, commands the lid to move with `LID.IN1` and `LID2.IN2` in a high+low or a low+high state with PWM.
+  - If the firmware becomes unresponsive while `LID.NSLEEP` remains high, then the motor continues running until system reset or the `ESP32-C6` watchdog timer elapses and triggers a system reset (hopefully).
+  - Upon system reset in this condition, `LID.NSLEEP` remains high and `LID.IN1` and `LID.IN2` both become high so the motor driver remains awake in a brake condition which stops the motor (safe but not ideal).
+
+*Opportunities for improvement:*
+
+  - Consider moving `LID.NSLEEP` and `FAN.WAKE` to `ESP32-C6` GPIOs so the motor drivers go to sleep immediately when the pins are reconfigured as inputs on system reset.  Alternatively, could use one spare pin to gate both of these signals to achieve the same effect of "disarming" the hardware (might be useful for accessories too).
+  - Consider implementing a watchdog timer for the lid motor driver either in hardware or with a one-shot timer in software.
+  - Consider replacing `TCA9555` with `TCA9535` to eliminate the unwanted weak pull-ups on `LID.NSLEEP` and `FAN.WAKE` although it would complicate the board layout.
+
 ### Capacitor DC bias derating
 
 The ceramic bulk capacitors on the 12 V supply are sized to compensate for the loss of capacitance due to DC bias.  A typical 10 uF MLCC with a 12 V DC bias might be derated by as much as 80% in 0805 size but only by 25% in 1210 size so this design uses physically larger capacitors with an X5R or X7R dielectric for those applications.
@@ -293,6 +333,11 @@ Parameters for the plug-in:
 - Pattern: rectangular
 
 ## Errata
+
+Issues in v4.0:
+
+- The filter capacitor on the voltage divider for ACC_ID should be removed or reduced to ensure an accurate reading soon after boot.  Given C = 100 nF, R = 470 kOhm, RC = 47 ms, which leads to a slow settling time at power up.  Consider using 10 nF instead.
+- Same issue for rain and battery monitor?
 
 Nothing yet...
 
