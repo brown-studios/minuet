@@ -33,7 +33,7 @@ Refer to each circuit board's design document for specific fabrication notes.
 
 This repository does not contain fabrication files; you can generate them from the KiCad project in whatever format you need.
 
-The KiCad projects contain part numbers and placement information for the JLCPCB PCBA service.  Use the [Fabrication Toolkit](https://github.com/bennymeg/Fabrication-Toolkit) plugin for KiCad to generate the fabrication files for JLCPCB including the gerber files, bill of materials, and part positions.  Many of the parts in the design were selected to reduce fabrication cost at JLCPCB.  At the time of this writing, the MCF8316D motor driver chip had to be sourced from the global supply chain because was not a regularly stocked item at JLCPCB.
+The KiCad projects contain part numbers and placement information for the JLCPCB PCBA service.  Use the [Fabrication Toolkit](https://github.com/bennymeg/Fabrication-Toolkit) plugin for KiCad to generate the fabrication files for JLCPCB including the gerber files, bill of materials, and part positions.  Many of the parts in the design were selected to reduce fabrication cost at JLCPCB.  At the time of this writing, the MCF8316D motor driver chip had to be sourced from the global supply chain because it was not a regularly stocked item at JLCPCB.
 
 If you're using a different PCBA service, you'll need to select equivalent parts.
 
@@ -356,7 +356,7 @@ TODO: Add a photo
 - 1x normally-open reed switch with axial leads, such as [this one](https://www.amazon.com/dp/B07YFBQ4HS)
 - 1x JST XH series XHP-2 2-pin housing
 - 2x JST XH series SXH-001T-P0.6(N) contacts plus a few spares just in case
-- 22 AWG 2 conductor ribbon cable
+- 30 AWG 2 conductor ribbon cable
 - wire crimping tools
 - heat shrink tubing
 

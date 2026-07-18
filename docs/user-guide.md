@@ -209,9 +209,9 @@ Hold `auto` and `open/close` (`up` and `down` together) for 5 seconds to toggle 
 | `rain` | solid red | the rain sensor is disabled (only for models with rain sensors) |
 | `rain` | blinking red | the rain sensor detected rain and stopped the fan (only for models with rain sensors)
 
-When keypad indicators are suppressed, they will illuminate for just a few seconds when their condition becomes active and will illuminate again after pressing any key on the keypad while their condition remains active.  Minuet confirms by slow blinking all indicators twice.
+When keypad indicators are suppressed, they will illuminate for just a few seconds when their condition becomes active and will illuminate again after pressing any key on the keypad while their condition remains active.  Minuet confirms this setting by slow blinking all indicators twice.
 
-When keypad indicators are not suppressed (default), they will illuminate indefinitely while their condition is active.  Minuet confirms by slow blinking all indicators three times.
+When keypad indicators are not suppressed (default), they will illuminate indefinitely while their condition is active.  Minuet confirms this setting by slow blinking all indicators three times.
 
 ### Factory reset
 
