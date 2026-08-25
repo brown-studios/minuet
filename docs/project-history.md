@@ -50,20 +50,30 @@ The [Light accessory v2.5 circuit board](https://github.com/j9brown/minuet/blob/
 
 Minuet v2.1 worked very well except that the motor wasn't operating as quietly as I liked.  It didn't squeak but it make a soft ticking sound due to uneven torque produced by trapezoidal commutation.  I felt that I needed to solve this problem if I was going to claim that Minuet really was a quiet fan upgrade.
 
-## May 2025: Minuet v3.0 (current release)
+## May 2025: Minuet v3.0
 
-Minuet v3 is a big step towards making a real product that can be manufactured and continues improving beyond the feature set of the original Maxxfan.  This is the first version of Minuet to be fabricated with JLCPCB's PCBA service (no more tedious hand-soldering).
+The Minuet v3 prototype was the first version to be fabricated with JLCPCB's PCBA service (no more tedious hand-soldering).
 
-The [Minuet v3 circuit board](../hardware/minuet/v3/design-and-errata.md) uses a MCF8316D fan motor driver with field-oriented control that makes the fan motor run much quieter than before.  It solves the commutation noise problem and it no longer needs hall effect sensors so a wider range of motors can be used.  The expansion port has been expanded with more GPIO pins for accessories.  The new safety lock feature stops the fan and shuts off the light when engaged.
+The [Minuet v3 circuit board](../hardware/minuet/v3/design-and-errata.md) was upgraded with a MCF8316D fan motor driver with field-oriented control that makes the fan motor run much quieter than before.  It solved the commutation noise problem and it no longer needed a motor with hall effect sensors.  The expansion port was expanded with more GPIO pins for accessories.  Added the safety lock feature.
 
-The [Light accessory v3 circuit board](../hardware/light/v3/design-and-errata.md) is an incremental upgrade to the previous light accessory for the new expansion port and it added a small through-hole prototyping area for customization.
+The [Light accessory v3 circuit board](../hardware/light/v3/design-and-errata.md) added a small through-hole prototyping area for customization.
 
-The cover sensor accessory detects that an insulated vent cover has been attached using a normally-open reed switch attached to the safety lock port.  It is very convenient!
+The new cover sensor accessory improved convenience when using the fan with an insulated vent cover.
 
-Overall, Minuet v3.0 is approaching the quality of a finished product.
+However this version still had some issues that made it unsuitable for mass production.
+
+## July 2026: Minuet v4.0 (current prototype)
+
+The Minuet v4 prototype addressed all known errata of Minuet v3 and added numerous quality of life improvements.  The PCB stackup was increased to 4 layers to improve heat dissipation.  The microcontroller was changed to an ESP32-C6 to have extra pins for more robust lid end of travel detection and motor braking functions.  A conformal coating was applied to the PCB and ESD protection was added for robustness.  The PCB jumpers and trim pots were removed from the board because no manual tuning would be needed any longer.
+
+The new environmental sensor accessory allowed Minuet to automatically start the fan when CO2 or humidity exceeds a configurable threshold.
+
+A custom motor was produced to fit into the fan housing with fewer adapters.
+
+It's looking like a product!
 
 ## What comes next
 
-Our next tasks are finalizing the design, working with manufacturers to fabricate kits with everything you will need to upgrade your Maxxfan, and planning for order fulfillment.  We are also investigating the possibility of manufacturing custom brushless fan motors that will fit into the fan housing with fewer adapters.
+Our next tasks are finalizing the design, working with manufacturers to fabricate kits with everything you will need to upgrade your Maxxfan, and planning for order fulfillment.
 
 Please contact us if you would like to contribute your manufacturing experience to this project.

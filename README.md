@@ -8,8 +8,9 @@ Improve your quality of life in your campervan, RV, trailer, or truck!
 * Install Minuet with simple hand tools. You can revert back to the original equipment later if you want.
 * Connect your fan to your home automation system if you have one. Works with your original infrared remote control and wired wall controls too.
 * Install the light accessory to add a ring of lights to your fan for illumination and ambiance.
+* Install the environmental sensor accessory to measure CO₂, temperature, humidity, and barometric pressure and automatically provide ventilation when it gets stuffy inside.
 * Install the cover sensor accessory to stop the fan and turn off the lights automatically when you attach an insulated vent cover.
-* Enjoy a more polished user experience with enhanced thermostat controls and less beeping.
+* Enjoy a more polished user experience with enhanced controls, more automation, and less beeping.
 * Customize your fan as you like because the firmware and hardware are open source!
   * Expand the [ESPHome](https://esphome.io/)-based [firmware](https://github.com/brown-studios/minuet-firmware).
   * Connect off-the-shelf I2C environmental sensors and devices to the [QWIIC](https://www.sparkfun.com/qwiic) port.

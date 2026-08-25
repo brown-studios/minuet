@@ -24,8 +24,9 @@ The [hardware](../hardware/) folder contains all of the Minuet circuit board des
 
 Each circuit board major revision resides in its own subfolder and includes a KiCad project, design document with errata, PDF plot of the schematics, and 3D renderings.  Refer to the `design-and-errata.md` for each circuit board to learn how it's supposed work, how the design has evolved through each minor revision, what was learned from that revision, and workarounds for known issues.
 
-- [Minuet v3 design and errata](../hardware/minuet/v3/design-and-errata.md)
-- [Light accessory v3 design and errata](../hardware/light/v3/design-and-errata.md)
+- [Minuet v4 design and errata](../hardware/minuet/v4/design-and-errata.md)
+- [Light accessory v4 design and errata](../hardware/light/v4/design-and-errata.md)
+- [Environment accessory v4 design and errata](../hardware/environment/v4/design-and-errata.md)
 
 ## Fabricating circuit boards
 
@@ -72,9 +73,7 @@ The Minuet fan controller circuit board drives the show.
 
 It is a drop-in replacement for the original Maxxfan circuit board with the original fasteners in the same screw positions and it supports all of the built-in Maxxfan hardware (except the fan motor because that's been replaced by a brushless motor).  Of course, it can do a whole lot more in the same space!
 
-This circuit board has special assembly instructions for the infrared receiver and for adjusting the lid motor current limit trim potentiomer.
-
-Circuit board details: [Minuet v3 design and errata](../hardware/minuet/v3/design-and-errata.md)
+This circuit board has special assembly instructions for the infrared receiver.
 
 Once you've fabricated the circuit board, install the [Minuet firmware](https://github.com/brown-studios/minuet-firmware).
 
@@ -86,9 +85,17 @@ Here's how to choose a fan motor and make adapters to fit the motor to the fan h
 
 ### Compatible motors
 
+#### Minuet kit motor
+
+**This is the only motor currently supported out-of-the-box by Minuet.  Other motors may require tuning.**
+
+The Minuet kit includes a custom motor and adapters to fit the Maxxfan motor housing out-of-the-box.
+
+The custom motor is based on the 57BYA54 but has been upgraded for reliable quiet operation in a fan.  It has a longer shaft, stepped D profile, larger bearings, and a custom wire harness.
+
 #### StepperOnline 57BYA54-12-01 ([supplier](https://www.omc-stepperonline.com/12v-3000rpm-0-16nm-50w-5-90a-57x57x53-5mm-brushless-dc-motor-57bya54-12-01))
 
-**This is the only motor currently supported out-of-the-box by Minuet.**
+If you can't obtain the Minuet kit motor, you can also use this one but it will require adapters.
 
 - Runs quietly and continuously from about 100 RPM to over 1200 RPM.
 - Readily available, compact, and inexpensive.
@@ -133,7 +140,7 @@ The motor should have a minimum current rating of 4 A per phase.  You can use a 
 
 The motor should not have hall sensors.  It's ok to have them but Minuet v3 does not use them (previous versions of Minuet did).
 
-You are unlikely to find a suitable motor that is a perfect drop-in replacement for the original motor's dimensions.  That's just physics.  Brushless DC motors are generally more efficient than brushed DC motors of equivalent power so they tend to be smaller.  So you will likely need to make adapters to compensate for the different motor body size, mounting hole pattern, shaft diameter, shaft length, and shaft keying.
+You are unlikely to find a suitable off-the-shelf motor that is a perfect drop-in replacement for the original motor's dimensions.  That's just physics.  Brushless DC motors are generally more efficient than brushed DC motors of equivalent power so they tend to be smaller.  So you will likely need to make adapters to compensate for the different motor body size, mounting hole pattern, shaft diameter, shaft length, and shaft keying.
 
 #### Motor tuning
 
@@ -316,8 +323,6 @@ The Minuet light accessory lets you attach a light to your fan.  It plugs into t
 
 You can use this accessory as a break-out board for your own circuits and it includes a prototyping area for mounting through-hole components.
 
-Circuit board details: [Minuet light accessory v3 design and errata](../hardware/light/v3/design-and-errata.md)
-
 ### LED strip
 
 This section section describes how to build an addressable LED strip with a connector that works with Minuet out-of-the-box.  You can use a different LED strip instead but you may need to customize the firmware to interface with it correctly.
@@ -342,6 +347,14 @@ TODO: Add a photo
 - Strip 1.5 mm off from the other end of each wire.
 - Crimp a JST XH series pin to one end of each wire.
 - Insert the pins into the JST XH series housing such that pin 1 connects to `GND`, pin 2 connects to `DIN`, and pin 3 connects to `12V`.
+
+## Environment accessory
+
+The Minuet environmental sensor accessory measures CO₂, temperature, humidity, and barometric pressure.  It is designed to start the fan for ventilation when it gets stuffy inside.  An elevated CO₂ measurement often indicates inadequate ventilation in occupied spaces.
+
+The surface mount parts used in this accessory require special handling and soldering so it's not practical to assemble by hand.
+
+You'll need a long QWIIC I2C cable to connect the sensor to the board.
 
 ## Cover sensor accessory
 
@@ -378,7 +391,7 @@ Minuet gets better when you take advantage of its place in the middle of your ve
 - Use the [Light accessory](#light-accessory) as a break-out board for your own circuits and it includes a prototyping area for mounting through-hole components.
 - Make your own circuit board that plugs into the `EXPANSION` port.
 
-Refer to the [Minuet v3 design and errata](../hardware/minuet/v3/design-and-errata.md) and schematics for the electrical parameters of these ports.
+Refer to the [Minuet v4 design and errata](../hardware/minuet/v4/design-and-errata.md) and schematics for the electrical parameters of these ports.
 
 > [!TIP]
 > You will likely need to customize the [Minuet firmware](https://github.com/brown-studios/minuet-firmware) for your accessory.  We recommend consulting the list of [ESPHome components](https://esphome.io/components/) to help choose your peripherals so you won't need to write as much code to get them working.
