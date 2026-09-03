@@ -249,13 +249,13 @@ The thermostat function calls for ventilation when the ambient temperature rises
 
 The *thermostat fan mode* determines the fan speed.  The `AUTO` fan mode sets the fan speed proportional to the difference between the ambient temperature and the *thermostat setpoint* and it achieves its maximum speed when the difference meets or exceeds the *thermostat fan speed range*.  The `QUIET` fan mode is similar to `AUTO` and has a lower maximum speed.  Proportional control helps cool the occupants faster because increasing air flow when it's hotter evaporates sweat from the skin more effectively.  The remaining fan modes specify a fixed fan speed: `OFF`, `MINIMUM`, `LOW`, `MEDIUM`, or `HIGH`.
 
-The *thermostat mode* can be in one of three states: `OFF` when auto mode is disabled, `FAN` when auto mode and the thermostat function are enabled, or `AUTO` when auto mode is enabled and the thermostat function is disabled.  When you toggle auto mode with the keypad or IR remote, the thermostat mode is set to `FAN` or `OFF`.  You can use an app to set the thermostat mode to `AUTO` to disable the thermostat function (ignore the target temperature) and preserve other auto mode functions such as the lid position, humidistat, and CO₂ monitor while other independent climate systems are operating, such as a heater or air conditioner.
+The *thermostat climate mode* can be in one of three states: `OFF` when auto mode is disabled, `FAN` when auto mode and the thermostat function are enabled, or `AUTO` when auto mode is enabled and the thermostat function is disabled.  When you toggle auto mode with the keypad or IR remote, the thermostat mode is set to `FAN` or `OFF`.  You can use an app to set the thermostat mode to `AUTO` to disable the thermostat function (ignore the target temperature) and preserve other auto mode functions such as the lid position, humidistat, and CO₂ monitor while other independent climate systems are operating, such as a heater or air conditioner.
 
 By default, the thermostat measures the ambient temperature with the built-in thermistor that is embedded in the fan trim.  You can configure the thermostat to use a different temperature sensor when a suitable accessory is installed.
 
 | Setting                           | Default        | Range                                        | Where to configure     |
 | --------------------------------- | -------------- | -------------------------------------------- | ---------------------- |
-| auto thermostat mode              | OFF            | OFF, FAN, AUTO                               | keypad, IR remote, app |
+| auto thermostat climate mode      | OFF            | OFF, FAN, AUTO                               | keypad, IR remote, app |
 | auto thermostat setpoint          | 25.5°C / 78°F  | -5°C to 50°C / 23°F to 122°F                 | keypad, IR remote, app |
 | auto thermostat fan mode          | AUTO           | AUTO, QUIET, OFF, MINIMUM, LOW, MEDIUM, HIGH | keypad, app            |
 | auto thermostat fan speed range   | 5°C            | 0°C to 20°C                                  | app                    |
@@ -267,19 +267,19 @@ By default, the thermostat measures the ambient temperature with the built-in th
 
 ### Humidistat function
 
-The humidistat (also known as hygrostat) function calls for ventilation when the ambient humidity rises above the *humidistat trigger threshold* while the ambient temperature is above the *humidistat minimum temperature*.  Conversely, it stops calling for ventilation when the ambient humidity drops below the *humidistat clear threshold* after the *humidistat minimum runtime* has elapsed; or unconditionally after the *humidistat maximum runtime* has elapsed (if limited).
+The humidistat (also known as a hygrostat) function calls for ventilation when the ambient humidity rises above the *humidistat trigger threshold* while the ambient temperature is above the *humidistat minimum temperature*.  Conversely, it stops calling for ventilation when the ambient humidity drops below the *humidistat clear threshold* after the *humidistat minimum runtime* has elapsed; or unconditionally after the *humidistat maximum runtime* has elapsed (if limited).
 
 The *humidistat fan mode* determines the fan speed.  The fan modes are: `OFF`, `MINIMUM`, `LOW`, `MEDIUM`, or `HIGH`.  When configuring these settings, choose a fan speed and runtime that is sufficient for removing moist air from the cabin without chilling the occupants.
 
-One typical use-case for the humidistat is automatically venting the cabin after showering indoors.  Set the humidistat's minimum temperature near what it would be while the cabin is occupied (and perhaps heated for comfort) to prevent the humidistat from calling for ventilation when it is foggy or freezing outside because relative humidity increases as ambient temperature decreases.  In especially humid climates, you may need to disable the humidistat to prevent false triggering.
+The humidistat may be useful for automatically venting the cabin after showering indoors.  Set the humidistat's minimum temperature near what it would be while the cabin is occupied (and perhaps heated for comfort) to prevent the humidistat from calling for ventilation when it is foggy or freezing outside because relative humidity increases as ambient temperature decreases.  In especially humid climates, you may need to disable the humidistat to prevent false triggering.
 
-To disable the humidistat while leaving other auto mode functions enabled, set the *humidistat mode* to `OFF`.
+To disable the humidistat while leaving other auto mode functions enabled, turn off the *humidistat* switch.
 
 You must install an accessory with a humidity sensor to use this function.
 
 | Setting                             | Default           | Range                                | Where to configure     |
 | ----------------------------------- | ----------------- | ------------------------------------ | ---------------------- |
-| auto humidistat mode                | ON                | ON or OFF                            | app                    |
+| auto humidistat                     | ON                | ON or OFF                            | app                    |
 | auto humidistat trigger threshold   | 90%               | 5% to 100%                           | app                    |
 | auto humidistat clear threshold     | 60%               | 5% to 100%                           | app                    |
 | auto humidistat fan mode            | LOW               | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
@@ -294,13 +294,13 @@ Carbon dioxide accumulates in enclosed spaces occupied by people.  Elevated CO�
 
 The CO₂ monitor function calls for ventilation when the ambient CO₂ concentration rises above the *CO₂ monitor level 1, 2, or 3 threshold*, each of which has an associated fan mode.  Conversely, it stops calling for ventilation when the ambient CO₂ concentration falls below the *CO₂ monitor clear threshold*; or unconditionally after the *CO₂ monitor maximum runtime* has elapsed (if limited).
 
-To disable the CO₂ monitor while leaving other auto mode functions enabled, set the *CO₂ monitor mode* to `OFF`.
+To disable the CO₂ monitor while leaving other auto mode functions enabled, turn off the *CO₂ monitor* switch.
 
 You must install an accessory with a CO₂ sensor to use this function.
 
 | Setting                            | Default           | Range                                | Where to configure     |
 | ---------------------------------- | ----------------- | ------------------------------------ | ---------------------- |
-| auto CO₂ monitor mode              | ON                | ON or OFF                            | app                    |
+| auto CO₂ monitor                   | ON                | ON or OFF                            | app                    |
 | auto CO₂ monitor clear threshold   | 500 ppm           | 400 to 5000 ppm                      | app                    |
 | auto CO₂ monitor level 1 threshold | 800 ppm           | 400 to 5000 ppm                      | app                    |
 | auto CO₂ monitor level 1 fan mode  | OFF               | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
@@ -322,11 +322,11 @@ Each preset has the following settings:
 | ----------------------------------------- | -------------------------------------------- | ------------------ |
 | auto preset (name) fan direction          | AUTO, AIR OUT, AIR IN                        | app                |
 | auto preset (name) lid position           | AUTO, OPEN, CLOSED                           | app                |
-| auto preset (name) thermostat mode        | OFF, FAN, AUTO                               | app                |
+| auto preset (name) thermostat             | ON, OFF                                      | app                |
 | auto preset (name) thermostat setpoint    | -5°C to 50°C / 23°F to 122°F                 | app                |
 | auto preset (name) thermostat fan mode    | AUTO, QUIET, OFF, MINIMUM, LOW, MEDIUM, HIGH | app                |
-| auto preset (name) humidistat mode        | OFF, MINIMUM, LOW, MEDIUM, HIGH              | app                |
-| auto preset (name) CO₂ monitor mode       | ON, OFF                                      | app                |
+| auto preset (name) humidistat             | ON, OFF                                      | app                |
+| auto preset (name) CO₂ monitor            | ON, OFF                                      | app                |
 
 Here's how the presets are configured by default:
 
@@ -350,17 +350,15 @@ When the rain sensor detects moisture, it stops the fan, closes the lid, makes t
 
 ## Safety lock
 
-The safety lock feature closes the lid and prevents the fan and some accessories from operating whenever one or more of the following conditions occur:
+The safety lock feature closes the lid and prevents the fan and some accessories from operating in certain conditions.  When a safety lock condition blocks an action, you will hear three quick tones followed by a number of lower pitch tones as a warning.  Count the number of lower pitch tones and consult the following table to identify the cause.
 
-| Reason                 | Condition                                                         | How to release                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Battery safety lock    | The battery voltage is too low to too high.                       | Wait for the battery voltage to return to the normal operating range or adjust the low or high battery voltage thresholds.                                               |
-| Rain safety lock       | The rain sensor is enabled and detected moisture.                 | Press the `rain sensor` button to reset or turn off the rain sensor.                                                                                                    |
-| Accessory safety lock  | An accessory triggered the `LOCK` signal.                         | Consult the documentation of your accessories for details. For example, if you have a sensor to detect the presence of an insulated vent cover then remove the cover. |
-| Manual safety lock     | The [manual safety lock](#manual-safety-lock) is enabled.         | Disable the [manual safety lock](#manual-safety-lock).                                                                                              |
-| Automation safety lock | The [automation safety lock](#automation-safety-lock) is enabled. | Disable the [automation safety lock](#automation-safety-lock).                                                                                          |
-
-If you try to perform an action that is disallowed by the safety lock, it will not work, and you will hear three quick tones as a warning.
+| Safety lock | Condition                                                         | Resolution                                                                                                                     | Tones |
+| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----- |
+| Battery     | The battery voltage is too low to too high.                       | Wait for the battery voltage to return to the normal operating range or adjust the low or high battery voltage thresholds.     | 1     |
+| Rain        | The rain sensor is enabled and detected moisture.                 | Press the `rain sensor` button to reset or turn off the rain sensor.                                                           | 2     |
+| Accessory   | An accessory triggered the `LOCK` signal.                         | Consult the documentation of your accessories for details. For example, if you have a vent cover sensor then remove the cover. | 3     |
+| Manual      | The [manual safety lock](#manual-safety-lock) is enabled.         | Disable the [manual safety lock](#manual-safety-lock).                                                                         | 4     |
+| Automation  | The [automation safety lock](#automation-safety-lock) is enabled. | Disable the [automation safety lock](#automation-safety-lock).                                                                 | 5     |
 
 ### Manual safety lock
 
@@ -552,6 +550,9 @@ Use the built-in keypad to control the light as follows.
 - Hold `in/out` for 1 second: toggle the light on or off, the light's default color is white
 - Hold `in/out` and press `up`: increase the brightness by one step, does nothing if the light is off or is already at maximum brightness
 - Hold `in/out` and press `down`: decrease the brightness by one step, does nothing if the light is off or is already at minimum brightness
+- Hold `in/out` and press `open/close` (`up` and `down` together): cycle through preset modes, turns the light on if it is off
+
+The preset modes are: white, red, violet, and rainbow.
 
 ### Using the 24-key RGBW LED infrared remote control
 
