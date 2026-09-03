@@ -8,7 +8,13 @@ This guide explains how to use Minuet.
   - [Using the Maxxfan infrared remote](#using-the-maxxfan-infrared-remote)
 - [Features](#features)
   - [Auto mode](#auto-mode)
+    - [Thermostat](#thermostat-function)
+    - [Humidistat](#humidistat-function)
+    - [CO₂ monitor](#co-monitor-function)
+    - [AQI monitor](#aqi-monitor-function)
+    - [Presets](#presets)
   - [Rain sensor](#rain-sensor)
+  - [Battery monitor](#battery-monitor)
   - [Safety lock](#safety-lock)
   - [Power on restore](#power-on-restore)
   - [Suppress keypad indiciators](#suppress-keypad-indicators)
@@ -46,16 +52,16 @@ These buttons combinations work differently with [enhanced controls](#enhanced-c
 
 | Button combination                 | Enhanced controls (default)    | Standard controls in manual mode | Standard controls in auto mode |
 | ---------------------------------- | ------------------------------ | -------------------------------- | ------------------------------ |
-| press `up`                         | fan speed up                   | fan speed up                     | auto thermostat setpoint up    |
+| press `up`                         | fan speed up                   | fan speed up                     | auto thermostat target up      |
 | hold `up` for 1 second             | fan speed maximum              | fan speed maximum                |                                |
-| press `down`                       | fan speed down                 | fan speed down                   | auto thermostat setpoint down  |
+| press `down`                       | fan speed down                 | fan speed down                   | auto thermostat target down    |
 | hold `down` for 1 second           | fan speed minimum              | fan speed mimimum                |                                |
 | press `on/off`                     | fan on/off toggle              | fan on/off toggle                | activate manual mode           |
 | press `open/close`                 | lid position toggle            | lid position toggle              |                                |
 | press `auto`                       | auto/manual mode toggle        | activate auto mode               | activate manual mode           |
 | hold `auto` for 3 seconds          | reset auto mode settings       |                                  | reset auto mode settings       |
-| hold `auto` and press `up`         | auto thermostat setpoint up    |                                  |                                |
-| hold `auto` and press `down`       | auto thermostat setpoint down  |                                  |                                |
+| hold `auto` and press `up`         | auto thermostat target up      |                                  |                                |
+| hold `auto` and press `down`       | auto thermostat target down    |                                  |                                |
 | hold `auto` and press `on/off`     | auto fan mode toggle           |                                  |                                |
 | hold `auto` and press `in/out`     | auto fan direction toggle      |                                  |                                |
 | hold `auto` and press `open/close` | auto lid position toggle       |                                  |                                |
@@ -78,11 +84,12 @@ These button combinations work the same in all modes.
 
 These button combinations become available when you have the corresponding accessory installed.
 
-| Button combination               | Light accessory       |
-| -------------------------------- | --------------------- |
-| hold `in/out` for 1 second       | light on/off toggle   |
-| hold `in/out` for press `up`     | light brightness up   |
-| hold `in/out` for press `down`   | light brightness down |
+| Button combination               | Light accessory         |
+| -------------------------------- | ----------------------- |
+| hold `in/out` for 1 second       | light on/off toggle     |
+| hold `in/out` for press `up`     | light brightness up     |
+| hold `in/out` for press `down`   | light brightness down   |
+| hold `in/out` for press `on/off` | light preset mode cycle |
 
 ### Enhanced controls
 
@@ -102,46 +109,41 @@ You can easily take control of the fan when you need more ventilation right away
 - Press `on/off`: toggle the fan off or turn it on the fan speed last used in manual mode
 - Press `open/close` (`up` and `down` together): toggle the lid position open or closed
 - Press `auto`: toggle between auto and manual mode
-- Hold `auto` for 3 seconds: reset keypad accessible auto mode settings to defaults, listen for a quick rising, falling, and rising tone
-  - Auto thermostat setpoint: 78 °F (approx. 25.5 °C)
-  - Auto thermostat fan mode: *auto*
-  - Auto fan direction: *auto*
-  - Auto lid position: *auto*
-- Hold `auto` and press `up`: increase the auto thermostat setpoint by 1 °F (approx. 0.5 °C), listen for a quick rising tone
-- Hold `auto` and press `down`: decrease the auto thermostat setpoint by 1 °F (approx. 0.5 °C), listen for a quick falling tone
-- Hold `auto` and press `on/off` one or more times then release: change the auto fan mode setting according to the number of presses of `on/off` as indicated in the *auto thermostat fan mode* table, listen for one long tone and a number of quick tones equal to the key presses for the setting
+- Hold `auto` for 3 seconds: reset auto mode settings to the [default preset](#presets) (with the auto thermostat target set to 78 °F or 26 °C), listen for a quick rising, falling, and rising tone
+- Hold `auto` and press `up`: increase the auto thermostat target by 1 °F or 0.5 °C, listen for a quick rising tone
+- Hold `auto` and press `down`: decrease the auto thermostat target by 1 °F or 0.5 °C, listen for a quick falling tone
+- Hold `auto` and press `on/off` one or more times then release: change the thermostat settings according to the number of presses of `on/off` as indicated in the following table, listen for one long tone and a number of quick tones equal to the key presses for the setting
 
-  | Auto thermostat fan mode | Key presses | Behavior                                                |
-  | ------------------------ | ----------- | ------------------------------------------------------- |
-  | *auto*                   | 1           | choose fan speed for optimal ventilation                |
-  | *quiet*                  | 2           | choose fan speed to balance quietness and ventilation   |
-  | *off*                    | 3           | keep the fan off for passive ventilation (saves power)  |
-  | *minimum*                | 4           | run the fan at minimum speed                            |
-  | *low*                    | 5           | run the fan at low speed                                |
-  | *medium*                 | 6           | run the fan at medium speed                             |
-  | *high*                   | 7           | run the fan at high speed                               |
+  | Presses | Auto thermostat settings      | Behavior                                                |
+  | ------- | ----------------------------- | ------------------------------------------------------- |
+  | 1       | fan mode `AUTO`, fan speed 10 | adjust fan speed for optimal ventilation (default)      |
+  | 2       | fan mode `AUTO`, fan speed 3  | adjust fan speed to balance quietness and ventilation   |
+  | 3       | fan mode `OFF`                | keep fan off for passive ventilation to save power      |
+  | 4       | fan mode `ON`, fan speed 3    | operate fan at low speed                                |
+  | 5       | fan mode `ON`, fan speed 7    | operate fan at medium speed                             |
+  | 6       | fan mode `ON`, fan speed 10   | operate fan at high speed                               |
 
-- Hold `auto` and press `in/out` one or more times then release: change the auto fan direction setting according to the number of presses of `in/out` as indicated in the *auto fan direction* table, listen for one long tone and a number of quick tones equal to the key presses for the setting
+- Hold `auto` and press `in/out` one or more times then release: change the auto fan direction setting according to the number of presses of `in/out` as indicated in the following table, listen for one long tone and a number of quick tones equal to the key presses for the setting
 
-  | Auto fan direction | Key presses | Behavior                                                     |
-  | ------------------ | ----------- | ------------------------------------------------------------ |
-  | *auto*             | 1           | keep the same fan direction as was used in manual mode       |
-  | *air out*          | 2           | change the fan direction to air out when auto mode activates |
-  | *air in*           | 3           | change the fan direction to air in when auto mode activates  |
+  | Presses | Auto fan direction | Behavior                                                         |
+  | ------- | ------------------ | ---------------------------------------------------------------- |
+  | 1       | `AUTO`             | keep the same fan direction as was used in manual mode (default) |
+  | 2       | `AIR OUT`          | change the fan direction to air out when auto mode activates     |
+  | 3       | `AIR IN`           | change the fan direction to air in when auto mode activates      |
 
-- Hold `auto` and press `open/close` one or more times then release: change the auto lid position setting according to the number of presses of `open/close` as indicated in the *auto lid position* table, listen for one long tone and a number of quick tones equal to the key presses for the setting
+- Hold `auto` and press `open/close` one or more times then release: change the auto lid position setting according to the number of presses of `open/close` as indicated in the following table, listen for one long tone and a number of quick tones equal to the key presses for the setting
 
-  | Auto lid position | Key presses | Behavior                                                                   |
-  | ----------------- | ----------- | -------------------------------------------------------------------------- |
-  | *auto*            | 1           | open the lid when auto mode calls for ventilation, close the lid otherwise |
-  | *open*            | 2           | open the lid when auto mode activates and keep it open                     |
-  | *closed*          | 3           | close the lid when auto mode activates and keep it closed                  |
+  | Presses | Auto lid position | Behavior                                                         |
+  | ------- | ----------------- | ---------------------------------------------------------------- |
+  | 1       | `AUTO`            | open the lid only when auto mode calls for ventilation (default) |
+  | 2       | `OPEN`            | open the lid when auto mode activates and keep it open           |
+  | 3       | `CLOSED`          | close the lid when auto mode activates and keep it closed        |
 
 ### Standard controls
 
 When using the standard controls, the buttons behave differently depending on whether the device is in manual or auto mode like the original Maxxfan controls.
 
-Check the state of the `auto` indicator light before pressing buttons to avoid surprises like accidentally changing the thermostat setpoint instead of the fan speed.  The manual override feature is not available.
+Check the state of the `auto` indicator light before pressing buttons to avoid surprises like accidentally changing the thermostat target instead of the fan speed.  The manual override feature is not available.
 
 *To activate the standard controls, press and hold `auto` and `down` simultaneously for 5 seconds, listen for three quick tones followed by a long long tone.*
 
@@ -160,19 +162,15 @@ In manual mode, the `up` and `down` buttons control the fan speed and the `on/of
 
 #### Buttons in auto mode (`auto` indicator is lit)
 
-In auto mode, the `up` and `down` buttons control the auto thermostat setpoint, the `on/off` button exits auto mode.
+In auto mode, the `up` and `down` buttons control the auto thermostat target, the `on/off` button exits auto mode.
 
-- Press `up`: increase the auto thermostat setpoint by 1 °F (approx. 0.5 °C), listen for a quick rising tone
-- Press `down`: decrease the auto thermostat setpoint by 1 °F (approx. 0.5 °C), listen for a quick falling tone
+- Press `up`: increase the auto thermostat target by 1 °F or 0.5 °C, listen for a quick rising tone
+- Press `down`: decrease the auto thermostat target by 1 °F or 0.5 °C, listen for a quick falling tone
 - Press `in/out`: toggle the fan direction between air in and air out
 - Press `on/off`: return to manual mode from auto mode
 - Press `open/close` (`up` and `down` together): *inoperable because the lid cannot be controlled in auto mode*
 - Press `auto`: return to manual mode from auto mode
-- Hold `auto` for 3 seconds: reset keypad accessible auto mode settings to defaults, listen for a quick rising, falling, and rising tone
-  - Auto thermostat setpoint: 78 °F (approx. 25.5 °C)
-  - Auto fan mode: *auto*
-  - Auto fan direction: *auto*
-  - Auto lid position: *auto*
+- Hold `auto` for 3 seconds: reset auto mode settings to the [default preset](#presets) (with the auto thermostat target set to 78 °F / 26 °C), listen for a quick rising, falling, and rising tone
 
 ## Using the Maxxfan 4 key wall remote
 
@@ -193,8 +191,8 @@ Point the infrared remote at the transparent dome in the Maxxfan keypad and pres
 - Press `fan on/off`: toggle the fan off or turn it on at its last configured manual fan speed
 - Press `fan speed up`: increase the fan speed by one step
 - Press `fan speed down`: decrease the fan speed by one step
-- Press `temperature up`: increase the auto thermostat setpoint by one degree
-- Press `temperature down`: increase the auto thermostat setpoint by one degree
+- Press `temperature up`: increase the auto thermostat target by one unit
+- Press `temperature down`: increase the auto thermostat target by one unit
 - Press `temperature up` and `temperature down` together: toggle the temperature units shown on the remote between Celsius and Fahrenheit
 - Press `auto`: toggle between auto and manual mode
 - Press `open/close` (`up` and `down` together): toggle the lid position open or closed
@@ -208,137 +206,159 @@ Refer to the instructions originally provided with the Maxxfan infrared remote f
 
 ## Auto mode
 
-Minuet's auto mode feature provides ventilation when needed based on the temperature, humidity, and CO₂ level within the cabin.  It combines the functions of a thermostat, humidistat, and CO₂ monitor all in one.
+Minuet's auto mode feature provides ventilation when needed based on the ambient conditions including temperature, humidity, CO₂ (carbon dioxide) concentration, and AQI (air quality index).
 
 Press the `auto` button on the [keypad](#using-the-built-in-keypad) to toggle between auto and manual mode.  The `auto` LED turns green when you activate auto mode and turns off when you activate manual mode.  You can also control auto mode with the [infrared remote](#using-the-maxxfan-infrared-remote).
 
 In auto mode, an algorithm automatically controls the fan speed, fan direction, and lid position according to the ambient conditions and settings.  If you change the fan speed or lid position manually while auto mode is active, the device reverts to manual mode and returns control to you.
 
-Auto mode has thermostat, humidistat, and CO₂ monitor functions that work together to provide ventilation in response to different conditions.  When multiple functions call for ventilation at the same time, the fan speed is determined by the greatest of their demands.
+Auto mode consists of several functions that work together to provide ventilation in response to different conditions.  When multiple functions call for ventilation at the same time, the fan speed is determined by the greatest of their demands.
 
   - The [thermostat function](#thermostat-function) calls for ventilation when the ambient temperature is too high.
   - The [humidistat function](#humidistat-function) calls for ventilation when the ambient humidity is too high.
   - The [CO₂ monitor function](#co-monitor-function) calls for ventilation when the ambient CO₂ concentration is too high.
+  - The [AQI monitor function](#aqi-monitor-function) pauses ventilation when the outdoor air quality is poor.
 
-You can configure a few basic settings including the thermostat setpoint, fan direction, and lid position with the keypad.  To access other settings and [presets](#presets), you must use an app.
+You can configure a few basic settings including the thermostat target, fan direction, and lid position with the keypad.  To access other settings and [presets](#presets), you must use an app.
 
 ### Common settings
 
 The following settings apply to all auto mode functions.
 
-| Setting                           | Default        | Range                 | Where to configure     |
-| --------------------------------- | -------------- | --------------------- | ---------------------- |
-| auto fan direction                | AUTO           | AUTO, AIR OUT, AIR IN | keypad, app            |
-| auto lid position                 | AUTO           | AUTO, OPEN, CLOSED    | keypad, app            |
+| Setting name         | Default | Range                       | Where to configure     |
+| -------------------- | ------- | --------------------------- | ---------------------- |
+| `auto fan direction` | `AUTO`  | `AUTO`, `AIR OUT`, `AIR IN` | keypad, app            |
+| `auto lid position`  | `AUTO`  | `AUTO`, `OPEN`, `CLOSED`    | keypad, app            |
 
 | Auto fan direction | Behavior                                                     |
 | ------------------ | ------------------------------------------------------------ |
-| *auto*             | keep the same fan direction as was used in manual mode       |
-| *air out*          | change the fan direction to air out when auto mode activates |
-| *air in*           | change the fan direction to air in when auto mode activates  |
+| `AUTO`             | keep the same fan direction as was used in manual mode       |
+| `AIR OUT`          | change the fan direction to air out when auto mode activates |
+| `AIR IN`           | change the fan direction to air in when auto mode activates  |
 
 | Auto lid position | Behavior                                                                   |
 | ----------------- | -------------------------------------------------------------------------- |
-| *auto*            | open the lid when auto mode calls for ventilation, close the lid otherwise |
-| *open*            | open the lid when auto mode activates and keep it open                     |
-| *closed*          | close the lid when auto mode activates and keep it closed                  |
+| `AUTO`            | open the lid when auto mode calls for ventilation, close the lid otherwise |
+| `OPEN`            | open the lid when auto mode activates and keep it open                     |
+| `CLOSED`          | close the lid when auto mode activates and keep it closed                  |
 
 ### Thermostat function
 
-The thermostat function calls for ventilation when the ambient temperature rises above the *thermostat setpoint* by the *thermostat upper hysteresis* threshold.  Conversely, it stops calling for ventilation when the ambient temperature drops below the *thermostat setpoint* by the *thermostat lower hysteresis* threshold after the *thermostat minimum runtime* has elapsed; or unconditionally after the *thermostat maximum runtime* has elapsed (if limited).
+The thermostat function calls for ventilation when the ambient temperature rises above the `auto thermostat target` temperature by the `auto thermostat hysteresis upper` threshold.  Conversely, it stops calling for ventilation when the ambient temperature drops below the `auto thermostat target` temperature by the `auto thermostat hysteresis lower`.
 
-The *thermostat fan mode* determines the fan speed.  The `AUTO` fan mode sets the fan speed proportional to the difference between the ambient temperature and the *thermostat setpoint* and it achieves its maximum speed when the difference meets or exceeds the *thermostat fan speed range*.  The `QUIET` fan mode is similar to `AUTO` and has a lower maximum speed.  Proportional control helps cool the occupants faster because increasing air flow when it's hotter evaporates sweat from the skin more effectively.  The remaining fan modes specify a fixed fan speed: `OFF`, `MINIMUM`, `LOW`, `MEDIUM`, or `HIGH`.
+Enable or disable the thermostat function by setting `auto thermostat mode` to `COOL` or `OFF`.
 
-The *thermostat mode* can be in one of three states: `OFF` when auto mode is disabled, `FAN` when auto mode and the thermostat function are enabled, or `AUTO` when auto mode is enabled and the thermostat function is disabled.  When you toggle auto mode with the keypad or IR remote, the thermostat mode is set to `FAN` or `OFF`.  You can use an app to set the thermostat mode to `AUTO` to disable the thermostat function (ignore the target temperature) and preserve other auto mode functions such as the lid position, humidistat, and CO₂ monitor while other independent climate systems are operating, such as a heater or air conditioner.
+When `auto thermostat fan mode` is `AUTO`, the thermostat sets the fan speed proportional to the difference between the ambient temperature and the `auto thermostat target` temperature and it achieves the `auto thermostat fan speed` when the difference meets or exceeds the `auto thermostat dynamic range`.  Proportional control helps cool the occupants faster because increasing air flow when it's hotter evaporates sweat from the skin more effectively.  When the fan mode is `ON`, the thermostat sets the fan speed to `auto thermostat fan speed` without proportional control.  When the fan mode is `OFF`, the thermostat keeps the fan off and may still open the lid for passive ventilation.
 
-By default, the thermostat measures the ambient temperature with the built-in thermistor that is embedded in the fan trim.  You can configure the thermostat to use a different temperature sensor when a suitable accessory is installed.
+Minuet always uses Celsius temperature units for its thermostat calculations and converts temperatures from Fahrenheit to Celsius when needed.  Configure the `auto thermostat step` setting to choose whether the temperature changes in units of *1 °F* or *0.5 °C* when you adjust the target with the keypad controls or the IR remote.  The default step is *1 °F* to emulate the original Maxxfan controls more accurately.  We recommend changing the step to *0.5 °C* if you use Home Assistant.
 
-| Setting                           | Default        | Range                                        | Where to configure     |
-| --------------------------------- | -------------- | -------------------------------------------- | ---------------------- |
-| auto thermostat mode              | OFF            | OFF, FAN, AUTO                               | keypad, IR remote, app |
-| auto thermostat setpoint          | 25.5°C / 78°F  | -5°C to 50°C / 23°F to 122°F                 | keypad, IR remote, app |
-| auto thermostat fan mode          | AUTO           | AUTO, QUIET, OFF, MINIMUM, LOW, MEDIUM, HIGH | keypad, app            |
-| auto thermostat fan speed range   | 5°C            | 0°C to 20°C                                  | app                    |
-| auto thermostat upper hysteresis  | 1°C            | 0°C to 5°C                                   | app                    |
-| auto thermostat lower hysteresis  | 1°C            | 0°C to 5°C                                   | app                    |
-| auto thermostat minimum runtime   | 1 minute       | 0 to 60 minutes                              | app                    |
-| auto thermostat maximum runtime   | unlimited      | 1 to 1440 minutes or 0 for unlimited         | app                    |
-| auto temperature sensor           | best available | built-in thermistor or installed accessories | app                    |
+By default, the thermostat measures the ambient temperature with the built-in thermistor that is embedded in the fan trim.  You can pick a different `auto temperature sensor` when a suitable accessory is installed.
+
+| Setting name                        | Default        | Range                                        | Where to configure     |
+| ----------------------------------- | -------------- | -------------------------------------------- | ---------------------- |
+| `auto thermostat mode`              | `COOL`         | `COOL`, `OFF`                                | keypad, IR remote, app |
+| `auto thermostat target`            | 26 °C / 78 °F  | -5 °C to 50 °C / 23 °F to 122 °F             | keypad, IR remote, app |
+| `auto thermostat fan mode`          | `AUTO`         | `AUTO`, `ON`, `OFF`                          | keypad, app            |
+| `auto thermostat fan speed`         | 10             | 0 to 10                                      | keypad, app            |
+| `auto thermostat dynamic range`     | 5 °C           | 0 °C to 10 °C                                | app                    |
+| `auto thermostat hysteresis upper`  | 0.5 °C         | 0 °C to 2 °C                                 | app                    |
+| `auto thermostat hysteresis lower`  | 0.5 °C         | 0 °C to 2 °C                                 | app                    |
+| `auto thermostat step`              | 1 °F           | 1 °F, 0.5 °C                                 | app                    |
+| `auto temperature sensor`           | best available | built-in thermistor or installed accessories | app                    |
+
+Note: In the API, the `mode`, `target`, and `fan mode` settings are part of the `auto thermostat` climate entity.
 
 ### Humidistat function
 
-The humidistat (also known as hygrostat) function calls for ventilation when the ambient humidity rises above the *humidistat trigger threshold* while the ambient temperature is above the *humidistat minimum temperature*.  Conversely, it stops calling for ventilation when the ambient humidity drops below the *humidistat clear threshold* after the *humidistat minimum runtime* has elapsed; or unconditionally after the *humidistat maximum runtime* has elapsed (if limited).
+The humidistat function calls for ventilation when the ambient humidity rises above the `auto humidistat trigger threshold` while the ambient temperature is above the `auto humidistat minimum temperature`.  Conversely, it stops calling for ventilation when the ambient humidity drops below the `auto humidistat clear threshold` or the `auto humidistat maximum runtime` has elapsed.
 
-The *humidistat fan mode* determines the fan speed.  The fan modes are: `OFF`, `MINIMUM`, `LOW`, `MEDIUM`, or `HIGH`.  When configuring these settings, choose a fan speed and runtime that is sufficient for removing moist air from the cabin without chilling the occupants.
+Enable or disable the humidistat function by setting `auto humidistat mode` to `AUTO` or `OFF`.
 
-One typical use-case for the humidistat is automatically venting the cabin after showering indoors.  Set the humidistat's minimum temperature near what it would be while the cabin is occupied (and perhaps heated for comfort) to prevent the humidistat from calling for ventilation when it is foggy or freezing outside because relative humidity increases as ambient temperature decreases.  In especially humid climates, you may need to disable the humidistat to prevent false triggering.
+The `auto humidistat fan speed` determines the fan speed.  Choose a fan speed, clear threshold, and runtime that is sufficient for removing moist air from the cabin without chilling the occupants.
 
-To disable the humidistat while leaving other auto mode functions enabled, set the *humidistat mode* to `OFF`.
+The humidistat may be useful for automatically venting the cabin after showering indoors.  Set the humidistat's minimum temperature near what it would be while the cabin is occupied (and perhaps heated for comfort) to prevent the humidistat from calling for ventilation when it is foggy or freezing outside because relative humidity increases as ambient temperature decreases.  In especially humid climates, you may need to disable the humidistat to prevent false triggering.
 
 You must install an accessory with a humidity sensor to use this function.
 
-| Setting                             | Default           | Range                                | Where to configure     |
-| ----------------------------------- | ----------------- | ------------------------------------ | ---------------------- |
-| auto humidistat mode                | ON                | ON or OFF                            | app                    |
-| auto humidistat trigger threshold   | 90%               | 5% to 100%                           | app                    |
-| auto humidistat clear threshold     | 60%               | 5% to 100%                           | app                    |
-| auto humidistat fan mode            | LOW               | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
-| auto humidistat minimum temperature | 15°C              | -5°C to 50°C / 23°F to 122°F         | app                    |
-| auto humidistat minimum runtime     | 5 minutes         | 0 to 60 minutes                      | app                    |
-| auto humidistat maximum runtime     | 20 minutes        | 1 to 1440 minutes or 0 for unlimited | app                    |
-| auto humidity sensor                | best available    | installed accessories                | app                    |
+| Setting name                          | Default           | Range                                | Where to configure     |
+| ------------------------------------- | ----------------- | ------------------------------------ | ---------------------- |
+| `auto humidistat mode`                | `OFF`             | `AUTO` or `OFF`                      | app                    |
+| `auto humidistat clear threshold`     | 60%               | 5% to 100%                           | app                    |
+| `auto humidistat trigger threshold`   | 90%               | 5% to 100%                           | app                    |
+| `auto humidistat fan speed`           | 3                 | 0 to 10                              | app                    |
+| `auto humidistat minimum temperature` | 15 °C             | -5 °C to 50 °C / 23 °F to 122 °F     | app                    |
+| `auto humidistat maximum runtime`     | 15 minutes        | 0 to 60 minutes                      | app                    |
+| `auto humidity sensor`                | best available    | installed accessories                | app                    |
 
 ### CO₂ monitor function
 
-Carbon dioxide accumulates in enclosed spaces occupied by people.  Elevated CO₂ concentration may indicate that the space has insufficient ventilation and may be harmful to the health of the occupants.
+Carbon dioxide accumulates in enclosed spaces occupied by people.  Elevated CO₂ concentration may indicate that the space has insufficient ventilation which may be harmful to the health of the occupants.
 
-The CO₂ monitor function calls for ventilation when the ambient CO₂ concentration rises above the *CO₂ monitor level 1, 2, or 3 threshold*, each of which has an associated fan mode.  Conversely, it stops calling for ventilation when the ambient CO₂ concentration falls below the *CO₂ monitor clear threshold*; or unconditionally after the *CO₂ monitor maximum runtime* has elapsed (if limited).
+The CO₂ monitor function calls for ventilation when the ambient CO₂ concentration rises above the `CO₂ monitor level N threshold`.  You can configure threshold for two levels of increasing CO₂, each of which has an associated `auto CO₂ monitor level N fan speed`.  Conversely, the function stops calling for ventilation when the ambient CO₂ concentration falls below the `CO₂ monitor clear threshold`.
 
-To disable the CO₂ monitor while leaving other auto mode functions enabled, set the *CO₂ monitor mode* to `OFF`.
+Enable or disable the CO₂ monitor function by setting `auto CO₂ monitor mode` to `AUTO` or `OFF`.
 
 You must install an accessory with a CO₂ sensor to use this function.
 
-| Setting                            | Default           | Range                                | Where to configure     |
-| ---------------------------------- | ----------------- | ------------------------------------ | ---------------------- |
-| auto CO₂ monitor mode              | ON                | ON or OFF                            | app                    |
-| auto CO₂ monitor clear threshold   | 500 ppm           | 400 to 5000 ppm                      | app                    |
-| auto CO₂ monitor level 1 threshold | 800 ppm           | 400 to 5000 ppm                      | app                    |
-| auto CO₂ monitor level 1 fan mode  | OFF               | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
-| auto CO₂ monitor level 2 threshold | 1200 ppm          | 400 to 5000 ppm                      | app                    |
-| auto CO₂ monitor level 2 fan mode  | MINIMUM           | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
-| auto CO₂ monitor level 3 threshold | 2000 ppm          | 400 to 5000 ppm                      | app                    |
-| auto CO₂ monitor level 3 fan mode  | LOW               | OFF, MINIMUM, LOW, MEDIUM, HIGH      | app                    |
-| auto CO₂ monitor minimum runtime   | 5 minutes         | 0 to 60 minutes                      | app                    |
-| auto CO₂ monitor maximum runtime   | unlimited         | 1 to 1440 minutes or 0 for unlimited | app                    |
-| auto CO₂ monitor sensor            | best available    | installed accessories                | app                    |
+| Setting name                         | Default           | Range                                | Where to configure     |
+| ------------------------------------ | ----------------- | ------------------------------------ | ---------------------- |
+| `auto CO₂ monitor mode`              | `OFF`             | `AUTO` or `OFF`                      | app                    |
+| `auto CO₂ monitor clear threshold`   | 500 ppm           | 400 to 5000 ppm                      | app                    |
+| `auto CO₂ monitor level 1 threshold` | 800 ppm           | 400 to 5000 ppm                      | app                    |
+| `auto CO₂ monitor level 1 fan speed` | 0                 | 0 to 10                              | app                    |
+| `auto CO₂ monitor level 2 threshold` | 1200 ppm          | 400 to 5000 ppm                      | app                    |
+| `auto CO₂ monitor level 2 fan speed` | 3                 | 0 to 10                              | app                    |
+| `auto CO₂ sensor`                    | best available    | installed accessories                | app                    |
+
+### AQI monitor function
+
+The [Air Quality Index (AQI)](https://en.wikipedia.org/wiki/Air_quality_index) is a measure of ambient air pollution to provide guidance about the health risk of airborne pollutants such as smoke and fine dust particles.  This auto mode function reduces contamination within the cabin by closing the vent when the air quality is poor.  It is particularly useful when the vehicle is unattended and you cannot react to close the vent yourself.
+
+Minuet implements the US EPA AQI scale (which may differ from that of your local jurisdiction).  It is defined as follows:
+
+| AQI Range  | Category                        |
+| ---------- | ------------------------------- |
+| 0 to 50    | Good                            |
+| 51 to 100  | Moderate                        |
+| 101 to 150 | Unhealthy for Sensitive Groups  |
+| 151 to 200 | Unhealthy                       |
+| 201 to 300 | Very Unhealthy                  |
+| 301 to 500 | Hazardous                       |
+
+The AQI monitor function inhibits ventilation (stops the fan and closes the lid) when the Air Quality Index (AQI) rises above the `AQI monitor trigger threshold` for at least `AQI monitor trigger duration`.  It resumes ventilation when the AQI falls below the `AQI monitor clear threshold` for at least `AQI monitor clear duration`.
+
+Enable or disable the AQI monitor function by setting `auto AQI monitor mode` to `AUTO` or `OFF`.
+
+You must install an accessory with an AQI sensor to use this function.  The sensor should be positioned so that it can sample the air outside of the vehicle at all times or at least while the lid is open.  When the sensor is positioned under the lid, we recommended setting a relatively long `AQI monitor clear duration` to prevent the lid from reopening soon after it closes and obstructs the sensor.  Similarly, if the AQI monitor function triggers while cooking indoors, consider extending the `auto AQI monitor trigger duration` to reduce its sensitivity.
+
+| Setting name                         | Default           | Range                                | Where to configure     |
+| ------------------------------------ | ----------------- | ------------------------------------ | ---------------------- |
+| `auto AQI monitor mode`              | `OFF`             | `AUTO` or `OFF`                      | app                    |
+| `auto AQI monitor clear threshold`   | 100               | 0 to 500                             | app                    |
+| `auto AQI monitor clear duration`    | 120 minutes       | 0 to 1440 minutes                    | app                    |
+| `auto AQI monitor trigger threshold` | 151               | 0 to 500                             | app                    |
+| `auto AQI monitor trigger duration`  | 5 minutes         | 0 to 60 minutes                      | app                    |
+| `auto AQI sensor`                    | best available    | installed accessories                | app                    |
 
 ### Presets
 
-Minuet can remember 4 auto mode presets (called *Home*, *Sleep*, *Away*, and *Eco*) that you can configure for different situations and quickly recall with an app.
+Minuet lets you customize four auto mode presets for common situations and quickly recall them with an app.  They are called `HOME`, `SLEEP`, `AWAY`, and `ECO`.  The `DEFAULT` preset applies the factory default settings and cannot be customized.
 
-Each preset has the following settings:
+The following table shows default settings for each preset.
 
-| Setting                                   | Range                                        | Where to configure |
-| ----------------------------------------- | -------------------------------------------- | ------------------ |
-| auto preset (name) fan direction          | AUTO, AIR OUT, AIR IN                        | app                |
-| auto preset (name) lid position           | AUTO, OPEN, CLOSED                           | app                |
-| auto preset (name) thermostat mode        | OFF, FAN, AUTO                               | app                |
-| auto preset (name) thermostat setpoint    | -5°C to 50°C / 23°F to 122°F                 | app                |
-| auto preset (name) thermostat fan mode    | AUTO, QUIET, OFF, MINIMUM, LOW, MEDIUM, HIGH | app                |
-| auto preset (name) humidistat mode        | OFF, MINIMUM, LOW, MEDIUM, HIGH              | app                |
-| auto preset (name) CO₂ monitor mode       | ON, OFF                                      | app                |
-
-Here's how the presets are configured by default:
-
-| Preset | Fan direction | Lid position | Thermostat                 | Humidistat | CO₂ monitor |
-| ------ | ------------- | ------------ | -------------------------- | ---------- | ----------- |
-| Home   | AUTO          | OPEN         | ON, 25°C / 77°F, FAN AUTO  | ON         | ON          |
-| Sleep  | AUTO          | OPEN         | ON, 25°C / 77°F, FAN QUIET | ON         | ON          |
-| Away   | AUTO          | AUTO         | ON, 30°C / 86°F, FAN LOW   | OFF        | OFF         |
-| Eco    | AUTO          | AUTO         | ON, 35°C / 95°F, FAN OFF   | OFF        | OFF         |
+| Setting name                         | Preset `DEFAULT` | Preset `HOME` | Preset `SLEEP` | Preset `AWAY` | Preset `ECO`  |
+| ------------------------------------ | ---------------- | ------------- | -------------- | ------------- | ------------- |
+| `auto (preset) fan direction`        | `AUTO`           | `AUTO`        | `AUTO`         | `AUTO`        | `AUTO`        |
+| `auto (preset) lid position`         | `AUTO`           | `OPEN`        | `OPEN`         | `AUTO`        | `AUTO`        |
+| `auto (preset) thermostat on`        | `ON`             | `ON`          | `ON`           | `ON`          | `ON`          |
+| `auto (preset) thermostat target`    | 26 °C / 78 °F    | 25 °C / 77 °F | 25 °C / 77 °F  | 30 °C / 86 °F | 35 °C / 95 °F |
+| `auto (preset) thermostat fan mode`  | `AUTO`           | `AUTO`        | `AUTO`         | `ON`          | `OFF`         |
+| `auto (preset) thermostat fan speed` | 10               | 10            | 3              | 3             | 1             |
+| `auto (preset) humidistat on`        | `OFF`            | `ON`          | `ON`           | `OFF`         | `OFF`         |
+| `auto (preset) CO₂ monitor on`       | `OFF`            | `ON`          | `ON`           | `OFF`         | `OFF`         |
 
 > [!TIP]
-> The default presets for *Home* and *Sleep* keep the lid open for passive ventilation while the space is occupied and reduces noisy disruptions by the lid motor.
+> By default, the `HOME` and `SLEEP` presets keep the lid open for passive ventilation to minimize lid motor noise while the vehicle is presumed to be occupied.
 
 ## Rain sensor
 
@@ -348,19 +368,31 @@ To enable or disable the rain sensor, press the `rain sensor` button.  Look for 
 
 When the rain sensor detects moisture, it stops the fan, closes the lid, makes the LED flash red, and activates the rain sensor [safety lock](#safety-lock) to disallow operation.  Press the `rain sensor` button again to reset the flashing LED and release the rain sensor safety lock to allow operation.
 
+## Battery monitor
+
+The battery monitor checks whether the supply voltage is within Minuet's normal operating range.  If not, it stops the fan, closes the lid, and activates the battery [safety lock](#safety-lock) until the battery voltage recovers (with a hysteresis of 0.4 V).
+
+The battery monitor has the following settings.
+
+| Setting name                  | Default | Range                       | Where to configure     |
+| ----------------------------- | ------- | --------------------------- | ---------------------- |
+| `battery voltage low limit`   | 10.6 V  | 10.0 to 15.0 V              | app                    |
+| `battery voltage high limit`  | 15.0 V  | 10.0 to 15.0 V              | app                    |
+
+> [!IMPORTANT]
+> The voltage that the battery monitor observes may be less than what you measure directly at the battery terminals because it accounts for the voltage drop in the wiring between the battery and the control board.  The observed voltage may be further reduced while the fan motor, lid motor, and accessories are operating and it could trigger the battery safety lock (because the voltage drop increases in proportion to the current consumed by the device).
+
 ## Safety lock
 
-The safety lock feature closes the lid and prevents the fan and some accessories from operating whenever one or more of the following conditions occur:
+The safety lock feature closes the lid and prevents the fan and some accessories from operating in certain conditions.  When a safety lock condition blocks an action, you will hear three quick tones followed by a number of lower pitch tones as a warning.  Count the number of lower pitch tones and consult the following table to identify the cause.
 
-| Reason                 | Condition                                                         | How to release                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Battery safety lock    | The battery voltage is too low to too high.                       | Wait for the battery voltage to return to the normal operating range or adjust the low or high battery voltage thresholds.                                               |
-| Rain safety lock       | The rain sensor is enabled and detected moisture.                 | Press the `rain sensor` button to reset or turn off the rain sensor.                                                                                                    |
-| Accessory safety lock  | An accessory triggered the `LOCK` signal.                         | Consult the documentation of your accessories for details. For example, if you have a sensor to detect the presence of an insulated vent cover then remove the cover. |
-| Manual safety lock     | The [manual safety lock](#manual-safety-lock) is enabled.         | Disable the [manual safety lock](#manual-safety-lock).                                                                                              |
-| Automation safety lock | The [automation safety lock](#automation-safety-lock) is enabled. | Disable the [automation safety lock](#automation-safety-lock).                                                                                          |
-
-If you try to perform an action that is disallowed by the safety lock, it will not work, and you will hear three quick tones as a warning.
+| Safety lock | Condition                                                         | Resolution                                                                                                                     | Tones |
+| ----------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----- |
+| Battery     | The battery voltage is too low to too high.                       | Wait for the battery voltage to return to the normal operating range or adjust the low or high battery voltage thresholds.     | 1     |
+| Rain        | The rain sensor is enabled and detected moisture.                 | Press the `rain sensor` button to reset or turn off the rain sensor.                                                           | 2     |
+| Accessory   | An accessory triggered the `LOCK` signal.                         | Consult the documentation of your accessories for details. For example, if you have a vent cover sensor then remove the cover. | 3     |
+| Manual      | The [manual safety lock](#manual-safety-lock) is enabled.         | Disable the [manual safety lock](#manual-safety-lock).                                                                         | 4     |
+| Automation  | The [automation safety lock](#automation-safety-lock) is enabled. | Disable the [automation safety lock](#automation-safety-lock).                                                                 | 5     |
 
 ### Manual safety lock
 
@@ -411,7 +443,9 @@ To factory reset the device, hold `on/off`, listen for a beep after 5 seconds, k
 
 ## Fan motor health monitoring
 
-Minuet monitors the health of the fan motor and automatically stops the fan when it detects a problem.  These problems should be rare and they are often resolved by waiting for the device to cool, starting the fan again, or by performing occasional cleaning and maintenance of the components.
+Minuet monitors the health of the fan motor and automatically slows down or stops the fan when it detects a problem.  These problems should be rare and they are often resolved by waiting for the device to cool, starting the fan again, or by performing occasional cleaning and maintenance of the components.
+
+Running the fan at high speeds for a long time in a hot environment can produce an overtemperature warning from the motor driver chip.  When this happens, Minuet will keep running the fan and temporarily limit its maximum speed.  If the chip keeps get hotter then eventually it may report an overtemperature fault and the fan will stop.
 
 When a fan motor fault occurs, you will hear three quick tones.  The *fan status* entity in the app shows the cause of the fault and you may find additional information in the internal logs.
 
@@ -422,6 +456,20 @@ When a fan motor fault occurs, you will hear three quick tones.  The *fan status
 | overcurrent fault                 | ensure that the fan motor wires are intact (no short-circuit)                  |
 | overtemperature fault             | allow the device to cool then resume operation at a lower speed                |
 | undervoltage or overvoltage fault | ensure that the power supply can provide at least 5 amps at 10 to 16 volts     |
+
+If the issue persists, please ask for support.
+
+## Lid motor health monitoring
+
+Minuet monitors the health of the lid motor and automatically stops the lid when it detects a problem.  These problems should be rare and they are often resolved by performing occasional cleaning and maintenance of the components.
+
+When a lid motor fault occurs, you will hear four quick tones.  The *lid status* entity in the app shows the cause of the fault and you may find additional information in the internal logs.
+
+| Possible cause                    | Resolution                                                                     |
+| --------------------------------- | ------------------------------------------------------------------------------ |
+| lid motor disconnected            | ensure that the lid motor is plugged in and that its wires are intact          |
+| lid stuck or movement too slow    | ensure that the lid can travel freely when you turn the knob                   |
+| overcurrent fault                 | ensure that the lid motor wires are intact (no short-circuit)                  |
 
 If the issue persists, please ask for support.
 
@@ -552,6 +600,9 @@ Use the built-in keypad to control the light as follows.
 - Hold `in/out` for 1 second: toggle the light on or off, the light's default color is white
 - Hold `in/out` and press `up`: increase the brightness by one step, does nothing if the light is off or is already at maximum brightness
 - Hold `in/out` and press `down`: decrease the brightness by one step, does nothing if the light is off or is already at minimum brightness
+- Hold `in/out` and press `open/close` (`up` and `down` together): cycle through preset modes, turns the light on if it is off
+
+The preset modes are: white, red, violet, and rainbow.
 
 ### Using the 24-key RGBW LED infrared remote control
 

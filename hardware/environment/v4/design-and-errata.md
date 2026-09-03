@@ -76,5 +76,6 @@ Refer to the [user guide](../../../docs/user-guide.md) for how to view the senso
 Issues in v4.0:
 
 - The fab found the silkscreen markings for BMP580 and STCC4 ambiguous.  Pin 1 is indicated with a dot and there are also lines at two corners of the package.  The markings should be improved for clarity.
+- Changing the address should be easier and not require cutting a trace or risk shorting the power rails.  Perhaps a pull-down resistor would be appropriate.
 
 ## Changelog
