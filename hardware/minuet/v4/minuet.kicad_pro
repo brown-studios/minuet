@@ -854,7 +854,7 @@
       "plot": "fab/",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "minuet.step",
       "svg": "",
       "vrml": ""
     },
