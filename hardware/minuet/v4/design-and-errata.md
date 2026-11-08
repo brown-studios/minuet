@@ -337,17 +337,16 @@ Parameters for the plug-in:
 Issues in v4.0:
 
 - The filter capacitor on the voltage divider for ACC_ID should be removed or reduced to ensure an accurate reading soon after boot.  Given C = 100 nF, R = 470 kOhm, RC = 47 ms, which leads to a slow settling time at power up.  Consider using 10 nF instead.
-- Same issue for rain and battery monitor?
+- There may be a similar filter capacitor issue for rain and battery monitor?
 - Having a second QWIIC connector would make it easier to attach more accessories.
-- The PESD3V3S2UT ESD diode on the USB data lines has too much capacitance and causes connectivity to be intermittent (USB works when plugged into a hub but not a laptop).  Should replace this with a part with less capacitance such as PESD3V3X2UT.
+- The PESD3V3S2UT ESD diode on the USB data lines has too much capacitance and may cause connectivity issues (USB works when plugged into a hub but not a laptop) although it generally works fine.  Should replace this with a part with less capacitance such as PESD3V3X2UT.
+- Need more thermal relief on the IR receiver GND pads for hand soldering.
+- After adding several QWIIC accessories on long cables, the increased I2C bus capacitance could interfere with on-board peripherals.  Consider adding an active pull-up such as LTC4311 or a repeater such as PCA9515A.
 
 ## Patches
 
 v4.0 patch A:
-- Remove C9
-
-v4.0 patch B:
-- Remove D6 and replace with PESD3V3X2UT or PESD5V0X2UT
+- Remove C9 filter capacitor from ACC_ID.
 
 ## Changelog
 
