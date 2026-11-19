@@ -170,7 +170,7 @@ First we consider the range of the ADC.  According to the datasheet, the ESP32-C
 
 Next we consider the trip current for current limiting, `I_TRIP`.  The Maxxfan lid motor (P/N 10-20270) needs about 300 mA at 12 V to start moving, draws less than 100 mA while coasting to a closed position, may draw as much as 600 mA or more when it encounters significant resistance, and may draw more current to operate with increasing age and wear.  The maximum current rating of the motor is unknown but it does not appear to be damaged when driven with 1.5 A for a few seconds.  For convenience, choose `I_TRIP` to 1 A and set `I_STALL` to 800 mA.
 
-`R_PROPI` = 1000 * `V_REF` / `I_TRIP` = 1000 * 3.3 V / 1 A = 3.3 Kohm
+`R_PROPI = 1000 * V_REF / I_TRIP = 1000 * 3.3 V / 1 A = 3.3 Kohm`
 
 If your lid motor stalls prematurely while opening or closing the lid, try cleaning the motor first.  If that doesn't help, try increasing the `I_STALL` threshold in the firmware.  If all else fails, you can try increasing `I_TRIP` to 1.5 A by reducing `R_PROPI` to 2.21 Kohm.
 
@@ -203,21 +203,21 @@ Minuet needs to identify which accessory is plugged into the expansion port so i
 
 The `ACC_ID` pin forms the center terminal of a voltage divider.  The Minuet main circuit board has a `100K` resistor from `ACC_ID` to the 3.3 V supply.  The accessory circuit board identifies itself with a resistor `R_ACC_ID` from `ACC_ID` to ground as shown in the following table.  Use resistors with 1% tolerance to ensure accurate identification and allow for future expansion.
 
-| ID | Accessory resistor (`R_ACC_ID`) | Voltage at `ACC_ID` | Usage |
-| -- | ------------------------------- | ------------------- | ----- |
+| ID | Accessory resistor (`R_ACC_ID`) | Voltage at `ACC_ID` | Usage                  |
+| -- | ------------------------------- | ------------------- | ---------------------- |
 | 0  | none (open circuit)             | 3.3 V               | no accessory connected |
-| 1  | 0 ohm (short circuit)           | 0 V                 | custom accessory |
-| 2  | 100 Kohm +/- 1%                 | 1.65 V              | light accessory |
-| 3  | 68 Kohm +/- 1%                  | 1.34 V              | reserved |
-| 4  | 47 Kohm +/- 1%                  | 1.06 V              | reserved |
-| 5  | 33 Kohm +/- 1%                  | 0.82 V              | reserved |
-| 6  | 22 Kohm +/- 1%                  | 0.60 V              | reserved |
-| 7  | 15 Kohm +/- 1%                  | 0.43 V              | reserved |
-| 8  | 10 Kohm +/- 1%                  | 0.30 V              | reserved |
-| 9  | 150 Kohm +/- 1%                 | 1.98 V              | reserved |
-| 10 | 220 Kohm +/- 1%                 | 2.27 V              | reserved |
-| 11 | 330 Kohm +/- 1%                 | 2.53 V              | reserved |
-| 12 | 470 Kohm +/- 1%                 | 2.72 V              | reserved |
+| 1  | 0 ohm (short circuit)           | 0 V                 | custom accessory       |
+| 2  | 100 Kohm +/- 1%                 | 1.65 V              | light accessory        |
+| 3  | 68 Kohm +/- 1%                  | 1.34 V              | reserved               |
+| 4  | 47 Kohm +/- 1%                  | 1.06 V              | reserved               |
+| 5  | 33 Kohm +/- 1%                  | 0.82 V              | reserved               |
+| 6  | 22 Kohm +/- 1%                  | 0.60 V              | reserved               |
+| 7  | 15 Kohm +/- 1%                  | 0.43 V              | reserved               |
+| 8  | 10 Kohm +/- 1%                  | 0.30 V              | reserved               |
+| 9  | 150 Kohm +/- 1%                 | 1.98 V              | reserved               |
+| 10 | 220 Kohm +/- 1%                 | 2.27 V              | reserved               |
+| 11 | 330 Kohm +/- 1%                 | 2.53 V              | reserved               |
+| 12 | 470 Kohm +/- 1%                 | 2.72 V              | reserved               |
 
 If you are developing a custom accessory for personal use, please connect `ACC_ID` to ground to prevent the firmware from attempting to configure the accessory itself because your own customized ESPHome YAML configuration will take care of it.  We recommend using a zero ohm resistor so you can assign an ID later.
 
@@ -236,51 +236,51 @@ Connect [QWIIC](https://www.sparkfun.com/qwiic) compatible peripherals to the `I
 
 The ESP32-C6 microcontroller pins are assigned to usages that need special functions.  The expansion port pins have been chosen to have relatively few constraints on their usage to ease accessory development.
 
-| Pin    | Usage                    | Reset state | Function | Remarks |
-| ------ | -----------------------  | ----------- | -------- | ------- |
-| GPIO0  | Expansion port           | floating    | GPIO, ADC, XTAL+, etc. | |
-| GPIO1  | Expansion port           | floating    | GPIO, ADC, XTAL-, etc. | |
-| GPIO2  | Rain sensor              | floating    | ADC | |
-| GPIO3  | Thermistor               | floating    | ADC | |
-| GPIO4  | Lid motor current sensor | floating    | ADC | JTAG MTMS, strapping pin (irrelevant because SDIO not used) |
-| GPIO5  | Voltage sensor           | floating    | ADC | JTAG MTDI, strapping pin (irrelevant because SDIO not used) |
-| GPIO6  | Accessory ID             | pull-up     | ADC | JTAG MTCK, internal pull-up active on boot unless EFUSE_DIS_PAD_JTAG = 1 |
-| GPIO7  | Piezo buzzer             | floating    | LEDC PWM | JTAG MTDO |
-| GPIO8  | I2C data                 | floating    | I2C SDA | external pull-up, strapping pin (high to allow download mode) |
-| GPIO9  | BOOT button              | floating    | GPIO | external pull-up, strapping pin (select boot / download mode) |
-| GPIO12 | USB data                 | floating    | USB D- | |
-| GPIO13 | USB data                 | pull-up     | USB D+ | |
-| GPIO14 | Expansion port           | floating    | GPIO, etc. | |
-| GPIO15 | Expansion port           | floating    | GPIO, etc. | strapping pin (irrelevant because EFUSE_JTAG_SEL_ENABLE = 0) |
-| GPIO16 | Console serial port TX   | pull-up     | UART0 TX | |
-| GPIO17 | Console serial port RX   | pull-up     | UART0 RX | |
-| GPIO18 | I2C clock                | pull-up     | I2C SCL | external pull-up |
-| GPIO19 | IR receiver              | pull-up     | RMT | receiver has integrated pull-up |
-| GPIO20 | Lid motor driver IN2     | pull-up     | GPIO | |
-| GPIO21 | Lid motor driver IN1     | pull-up     | GPIO | |
-| GPIO22 | Fan driver watchdog      | pull-up     | GPIO | |
-| GPIO23 | Reserved for future use  | pull-up     | GPIO | |
+| Pin    | Usage                    | Reset state | Function               | Remarks                                                                  |
+| ------ | -----------------------  | ----------- | ---------------------- | ------------------------------------------------------------------------ |
+| GPIO0  | Expansion port           | floating    | GPIO, ADC, XTAL+, etc. |                                                                          |
+| GPIO1  | Expansion port           | floating    | GPIO, ADC, XTAL-, etc. |                                                                          |
+| GPIO2  | Rain sensor              | floating    | ADC                    |                                                                          |
+| GPIO3  | Thermistor               | floating    | ADC                    |                                                                          |
+| GPIO4  | Lid motor current sensor | floating    | ADC                    | JTAG MTMS, strapping pin (irrelevant because SDIO not used)              |
+| GPIO5  | Voltage sensor           | floating    | ADC                    | JTAG MTDI, strapping pin (irrelevant because SDIO not used)              |
+| GPIO6  | Accessory ID             | pull-up     | ADC                    | JTAG MTCK, internal pull-up active on boot unless EFUSE_DIS_PAD_JTAG = 1 |
+| GPIO7  | Piezo buzzer             | floating    | LEDC PWM               | JTAG MTDO                                                                |
+| GPIO8  | I2C data                 | floating    | I2C SDA                | external pull-up, strapping pin (high to allow download mode)            |
+| GPIO9  | BOOT button              | floating    | GPIO                   | external pull-up, strapping pin (select boot / download mode)            |
+| GPIO12 | USB data                 | floating    | USB D-                 |                                                                          |
+| GPIO13 | USB data                 | pull-up     | USB D+                 |                                                                          |
+| GPIO14 | Expansion port           | floating    | GPIO, etc.             |                                                                          |
+| GPIO15 | Expansion port           | floating    | GPIO, etc.             | strapping pin (irrelevant because EFUSE_JTAG_SEL_ENABLE = 0)             |
+| GPIO16 | Console serial port TX   | pull-up     | UART0 TX               |                                                                          |
+| GPIO17 | Console serial port RX   | pull-up     | UART0 RX               |                                                                          |
+| GPIO18 | I2C clock                | pull-up     | I2C SCL                | external pull-up                                                         |
+| GPIO19 | IR receiver              | pull-up     | RMT                    | receiver has integrated pull-up                                          |
+| GPIO20 | Lid motor driver IN2     | pull-up     | GPIO                   |                                                                          |
+| GPIO21 | Lid motor driver IN1     | pull-up     | GPIO                   |                                                                          |
+| GPIO22 | Fan driver watchdog      | pull-up     | GPIO                   |                                                                          |
+| GPIO23 | Reserved for future use  | pull-up     | GPIO                   |                                                                          |
 
 The TCA9555 IO expander handles the remaining low speed digital logic functions.  These pins are designated with the `XIO` prefix in the schematics.  They have always-on internal 100 Kohm pull-ups and are configured as inputs at reset.
 
-| Pin    | Usage                    | Remarks |
-| ------ | -----------------------  | ------- |
-| XIO0   | Keypad LED "auto"        | active low |
-| XIO1   | Keypad LED "rain"        | active low |
-| XIO2   | Keypad column 3          | |
-| XIO3   | Keypad row 2             | |
-| XIO4   | Keypad column 4          | |
-| XIO5   | Keypad column 2          | |
-| XIO6   | Keypad row 1             | |
-| XIO7   | Keypad column 1          | |
-| XIO8   | Safety lock              | active low |
+| Pin    | Usage                    | Remarks     |
+| ------ | -----------------------  | ----------- |
+| XIO0   | Keypad LED "auto"        | active low  |
+| XIO1   | Keypad LED "rain"        | active low  |
+| XIO2   | Keypad column 3          |             |
+| XIO3   | Keypad row 2             |             |
+| XIO4   | Keypad column 4          |             |
+| XIO5   | Keypad column 2          |             |
+| XIO6   | Keypad row 1             |             |
+| XIO7   | Keypad column 1          |             |
+| XIO8   | Safety lock              | active low  |
 | XIO9   | Thermistor power         | active high |
-| XIO10  | Lid motor driver fault   | active low |
-| XIO11  | Lid motor driver sleep   | active low |
-| XIO12  | Fan motor driver fault   | active low |
+| XIO10  | Lid motor driver fault   | active low  |
+| XIO11  | Lid motor driver sleep   | active low  |
+| XIO12  | Fan motor driver fault   | active low  |
 | XIO13  | Fan motor driver wake    | active high |
-| XIO14  | Reserved for future use  | |
-| XIO15  | Reserved for future use  | |
+| XIO14  | Reserved for future use  |             |
+| XIO15  | Reserved for future use  |             |
 
 Pins marked as reserved for future use are provided as test points on the circuit board.
 
@@ -290,30 +290,30 @@ For safety, the motors should only operate under active control of the firmware 
 
 *At power-up:*
 
-  - `TCA9555` configures `LID.NSLEEP (XIO11)` and `FAN.WAKE (XIO13)` as inputs with internal weak pull-ups.  The external 10 Kohm pull-downs keep the motor drivers asleep (voltage should be below the logic high threshold).
+- `TCA9555` configures `LID.NSLEEP (XIO11)` and `FAN.WAKE (XIO13)` as inputs with internal weak pull-ups.  The external 10 Kohm pull-downs keep the motor drivers asleep (voltage should be below the logic high threshold).
 
 *At system reset:*
 
-  - `ESP32-C6` configures `LID.IN1 (GPIO21)` and `LID.IN2 (GPIO20)` as inputs with an internal weak-pull up.
-  - `TCA9555` retains its prior state until reconfigured by the firmware.
-  - Eventually the firmware reconfigures `LID.NSLEEP`, `FAN.WAKE`, `LID.IN1`, and `LID.IN2` as outputs and sets all of them low to put the motor drivers to sleep.
+- `ESP32-C6` configures `LID.IN1 (GPIO21)` and `LID.IN2 (GPIO20)` as inputs with an internal weak-pull up.
+- `TCA9555` retains its prior state until reconfigured by the firmware.
+- Eventually the firmware reconfigures `LID.NSLEEP`, `FAN.WAKE`, `LID.IN1`, and `LID.IN2` as outputs and sets all of them low to put the motor drivers to sleep.
 
 *Hang during fan motor operation:*
 
-  - The firmware sets `FAN.WAKE` high, commands the motor driver over `I2C`, and pulses `FAN.EXT_WD` periodically to feed the watchdog timer.
-  - If the firmware becomes unresponsive while `FAN.WAKE` remains high, then the motor continues running until system reset or the `MCF8316D` watchdog timer expires, reports a watchdog fault, and stops the motor.
+- The firmware sets `FAN.WAKE` high, commands the motor driver over `I2C`, and pulses `FAN.EXT_WD` periodically to feed the watchdog timer.
+- If the firmware becomes unresponsive while `FAN.WAKE` remains high, then the motor continues running until system reset or the `MCF8316D` watchdog timer expires, reports a watchdog fault, and stops the motor.
 
 *Hang during lid motor operation:*
 
-  - The firmware sets `LID.NSLEEP` high, commands the lid to move with `LID.IN1` and `LID2.IN2` in a high+low or a low+high state with PWM.
-  - If the firmware becomes unresponsive while `LID.NSLEEP` remains high, then the motor continues running until system reset or the `ESP32-C6` watchdog timer elapses and triggers a system reset (hopefully).
-  - Upon system reset in this condition, `LID.NSLEEP` remains high and `LID.IN1` and `LID.IN2` both become high so the motor driver remains awake in a brake condition which stops the motor (safe but not ideal).
+- The firmware sets `LID.NSLEEP` high, commands the lid to move with `LID.IN1` and `LID2.IN2` in a high+low or a low+high state with PWM.
+- If the firmware becomes unresponsive while `LID.NSLEEP` remains high, then the motor continues running until system reset or the `ESP32-C6` watchdog timer elapses and triggers a system reset (hopefully).
+- Upon system reset in this condition, `LID.NSLEEP` remains high and `LID.IN1` and `LID.IN2` both become high so the motor driver remains awake in a brake condition which stops the motor (safe but not ideal).
 
 *Opportunities for improvement:*
 
-  - Consider moving `LID.NSLEEP` and `FAN.WAKE` to `ESP32-C6` GPIOs so the motor drivers go to sleep immediately when the pins are reconfigured as inputs on system reset.  Alternatively, could use one spare pin to gate both of these signals to achieve the same effect of "disarming" the hardware (might be useful for accessories too).
-  - Consider implementing a watchdog timer for the lid motor driver either in hardware or with a one-shot timer in software.
-  - Consider replacing `TCA9555` with `TCA9535` to eliminate the unwanted weak pull-ups on `LID.NSLEEP` and `FAN.WAKE` although it would complicate the board layout.
+- Consider moving `LID.NSLEEP` and `FAN.WAKE` to `ESP32-C6` GPIOs so the motor drivers go to sleep immediately when the pins are reconfigured as inputs on system reset.  Alternatively, could use one spare pin to gate both of these signals to achieve the same effect of "disarming" the hardware (might be useful for accessories too).
+- Consider implementing a watchdog timer for the lid motor driver either in hardware or with a one-shot timer in software.
+- Consider replacing `TCA9555` with `TCA9535` to eliminate the unwanted weak pull-ups on `LID.NSLEEP` and `FAN.WAKE` although it would complicate the board layout.
 
 ### Capacitor DC bias derating
 

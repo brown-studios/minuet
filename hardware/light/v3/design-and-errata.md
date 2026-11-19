@@ -81,4 +81,3 @@ Recommendation: Use RGBW addressable LED strips with a warm white or cold white 
 ## Errata
 
 When the `5V EN` jumper is cut, the LDO's `ON/OFF' pin is left floating and the LDO turns on.  So a pull-down resistor is needed to turn it off properly although it may be best to simply remove the jumper altogether.
-
