@@ -1,90 +1,84 @@
-# Minuet fan controller
+# Minuet hardware
 
-Minuet upgrades your [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/) with a brushless DC motor, home automation features, and accessories.
+[Minuet](https://minuet.brownstudios.dev) upgrades your [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/) with a brushless DC motor, home automation features, and accessories.
 
-Improve your quality of life in your campervan, RV, trailer, or truck!
+This repository contains the Minuet hardware design files.  You are welcome to modify the Minuet firmware and hardware subject to the [license terms](#notice) and we encourage you to make your own accessories.  We welcome thoughtful contributions.
 
-* Replace your fan's original motor with a quieter brushless motor. No more cleaning squeaky motor brushes!
-* Install Minuet with simple hand tools. You can revert back to the original equipment later if you want.
-* Connect your fan to your home automation system if you have one. Works with your original infrared remote control and wired wall controls too.
-* Install the light accessory to add a ring of lights to your fan for illumination and ambiance.
-* Install the environmental sensor accessory to measure CO₂, temperature, humidity, and barometric pressure and automatically provide ventilation when it gets stuffy inside.
-* Install the cover sensor accessory to stop the fan and turn off the lights automatically when you attach an insulated vent cover.
-* Enjoy a more polished user experience with enhanced controls, more automation, and less beeping.
-* Customize your fan as you like because the firmware and hardware are open source!
-  * Expand the [ESPHome](https://esphome.io/)-based [firmware](https://github.com/brown-studios/minuet-firmware).
-  * Connect off-the-shelf I2C environmental sensors and devices to the [QWIIC](https://www.sparkfun.com/qwiic) port.
-  * Make your own hardware accessories for the expansion port.
-  * Share your work with the community!
+*Refer to the [Minuet website](https://minuet.brownstudios.dev) for documentation and project updates.*
 
-This repository contains the Minuet documentation and hardware design files.  You are welcome to modify the Minuet firmware and hardware subject to the [license terms](#notice) and we encourage you to make your own accessories.  We welcome thoughtful contributions.
-
-*Refer to the [Minuet firmware repository](https://github.com/brown-studios/minuet-firmware) for source code.*
-
-## Get to know Minuet
-
-Watch Minuet in action and follow along with how it was made with these videos:
-
-* [Minuet showcase](https://vimeo.com/showcase/11857354)
-* [Minuet build log](https://vimeo.com/showcase/11858950)
+*Refer to the [Minuet firmware repository](https://github.com/brown-studios/minuet-firmware) for the source code.*
 
 ## Project status
 
-Minuet is in active development.
+Please support this project by subscribing to our funding campaign at [CrowdSupply](https://www.crowdsupply.com/brown-studios/minuet) and by pre-ordering a Minuet upgrade kit once they become available. 💜
 
-The latest prototype is feature complete, works well, and is being tested by a few volunteers.
+> [!IMPORTANT]
+> Minuet is in active development and it is not yet ready for production.  There may still be bugs and some features may not work as intended.  We do not recommend assembling your own kit from scratch at this time.
 
-Our next tasks are finalizing the design, working with manufacturers to fabricate kits with everything you will need to upgrade your Maxxfan, and planning for order fulfillment.  We are also investigating the possibility of manufacturing custom brushless fan motors that will fit into the fan housing with fewer adapters.  Please contact us if you would like to contribute your manufacturing experience to this project.
+## Printed circuit boards
 
-Watch this space for updates on our progress.  We're thrilled by your interest in Minuet and we look forward to offering you a great upgrade for your Maxxfan!
+### Design files
 
-See [project history](./docs/project-history.md) for the story of how we got here.
+The [hardware](./hardware/) directory contains all of the Minuet printed circuit board designs.
 
-## Author's note
+Each board major revision resides in its own subdirectory and includes a [KiCad](https://www.kicad.org/) project, design document with errata, PDF plot of the schematics, and 3D renderings of the PCBs.  Refer to the `design-and-errata.md` for each board to learn how it's supposed work, how the design has evolved through each minor revision, what was learned from that revision, and workarounds for known issues.
 
-Hey folks, I'm Jeff!
+- [Minuet fan controller v4 design and errata](./hardware/minuet/v4/design-and-errata.md)
+- [Light accessory v4 design and errata](./hardware/light/v4/design-and-errata.md)
+- [Environment accessory v4 design and errata](./hardware/environment/v4/design-and-errata.md)
 
-I started building my campervan in 2023 after some delightful adventures in New Zealand.  Like many of you, I installed a Maxxfan in my campervan because it was the most popular fan for van builders.  It worked well for a while but less than a year after I installed it, the fan started making some awful squeaking noises.  I tried the usual advice: clean the motor brushes, replace the bearings, run the motor on high for a day, and nothing helped for long.  I tried to ignore the problem.
+> [!IMPORTANT]
+> Always read the errata.
 
-When the winter rainy season arrived and interrupted my van build, I started the squeaking fan again.  I had already started designing a circuit board to synchronize the Maxxfan with my home automation system and I found it tedious to work around the existing logic of the Maxxfan circuit board.  It occurred to me that it might be easier to design my own controller from scratch... and then I could use a brushless fan motor and solve my fan squeaking problem too!
+### Design guidelines
 
-So here we are.  I've made several prototypes, enjoyed the quiet, added quality of life features, made some friends, and learned a lot along the way.  I'm satisfied with how Minuet has improved my comfort and I hope you'll like it too.
+Here are a few guidelines to consider when contributing design files:
 
-## Getting started
+- Do not check in fabrication files because they're hard to keep in sync with the design files.
+- Include links to datasheets for each chip in the KiCad symbols.
+- Prefer two-layer or four-layer boards to keep the designs accessible for hobbyists.
+- Prefer SMT parts no smaller than 0603 and keep the layout somewhat sparse to facilitate hand assembly.
+- Place SMT parts on the front side of the board only.
+- Place through-hole parts on either side as needed for mechanical reasons.
+- Place prominent silk screen labels next to each connector and reference them consistently in the documentation.
+- Assign net classes to nets that need special consideration when routing.
+- Record test results and errata in the design document along the way.
 
-Read these guides to learn how to build, install, and use Minuet and its accessories.
+### KiCad requirements
 
-1. [Hardware guide](docs/hardware-guide.md): How to build Minuet hardware.
-1. [Installation guide](docs/installation-guide.md): How to install Minuet into your Maxxfan.
-1. [User guide](docs/user-guide.md): How to use Minuet.
+To edit the hardware projects, you will need the following:
 
-Good luck and enjoy your fan!
+- KiCad version 9.0 or newer
+- KiCad add-ons installed using the Plugin and content manager
+  - [Espressif Library](https://github.com/espressif/kicad-libraries): symbols and footprints
+  - [JLCPCB Fabrication Toolkit](https://github.com/bennymeg/Fabrication-Toolkit): exports files for manufacturing
 
-## Compatibility
+### Fabrication
 
-Minuet is anticipated to be *compatible* with the following Maxxfan models.  Some models have yet to be specifically tested and are shown as unverified in the table.
+Refer to each board's design document for specific fabrication notes.
 
-| Compatible model | Lid type | Lid color | Temperature sensor | Rain sensor | Infrared receiver | Verified |
-| ---------------- | -------- | --------- | ------------------ | ----------- | ----------------- | -------- |
-| Maxxfan Deluxe 7500K | rain cover | smoke | yes | no | yes | yes |
-| Maxxfan Deluxe 7000K | rain cover | white | yes | no | yes | no |
-| Maxxfan Deluxe 6200K | rain cover | smoke | yes | no | no † | no |
-| Maxxfan Deluxe 5100K | rain cover | white | yes | no | no † | no |
-| Maxxfan Plus 4500K‡ | low profile | smoke | yes | yes | yes | yes |
+This repository does not contain fabrication files (such as gerbers); you can generate them from the KiCad project in whatever format your fab needs.
 
-†: When you install Minuet in a Maxxfan whose keypad does not have a window for an infrared receiver, you will be unable to use Minuet's infrared remote control features. (It may be possible to replace or punch a hole through the keypad to make a window for the infrared receiver and use its features.)
+The KiCad projects contain part numbers and placement information for the [JLCPCB](https://jlcpcb.com/) PCBA service.  Use the [Fabrication Toolkit](https://github.com/bennymeg/Fabrication-Toolkit) plugin for KiCad to generate the fabrication files for JLCPCB including the gerber files, bill of materials, and part positions.  Many of the parts in the design were selected to reduce fabrication cost at JLCPCB.  At the time of this writing, the MCF8316D motor driver chip had to be sourced from the global supply chain because it was not a regularly stocked item at JLCPCB.
 
-‡: The Maxxfan Plus 4500K lid takes longer to open and close so the firmware must be modified to account for the extra duration as of Minuet v3.0.  This difference will be resolved by improving end-of-travel detection.
+If you're using a different PCBA service, you'll need to select equivalent parts.
 
-Minuet is *not compatible* with the following Maxxfan models.
+Some of the SMT parts on the main circuit board have fine pitch QFN pads that are not accessible to a soldering iron.  You may need a solder stencil and reflow equipment to assemble these parts reliably.  You may find it more cost effective to have the factory assemble front-side SMT and through-hole parts and then install the remaining back-side through-hole parts by hand.
 
-| Incompatible models | Reason |
-| ------------------- | ------ |
-| Maxxfan Deluxe 5101K, 6201K, 7001K, 7501K, 8001K, 8501K | exhaust only keypad (no in/out button) |
-| Maxxfan Deluxe 5301K, 6401K | 4 speed keypad (different buttons) |
-| Maxxfan Plus 4000K, 4002K, 4050K | manual lift |
-| Maxxfan 4301K, 4401K, 4501K | manual lift |
-| Maxxfan Low Profile, Mini, Dome | different electronics |
+## Making your own accessories
+
+Minuet's place in the middle of you vehicle's ceiling makes it a great platform for installing smart accessories.
+
+- Attach many off-the-shelf [QWIIC](https://www.sparkfun.com/qwiic) compatible I2C peripherals to Minuet with just a wire.
+- Use the light accessory as a break-out board for your own circuits and it includes a prototyping area for mounting through-hole components.
+- Make your own circuit board that plugs into the `EXPANSION` port of the main fan controller board.
+
+> [!TIP]
+> We recommend choosing peripherals that are already supported by [ESPHome components](https://esphome.io/components/) to save time when customizing the [Minuet firmware](https://github.com/brown-studios/minuet-firmware) to support your accessory.
+
+## Documentation
+
+- [Assembly guide](./docs/assembly-guide.md)
 
 ## Contributing
 

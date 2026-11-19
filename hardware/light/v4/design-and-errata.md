@@ -1,6 +1,6 @@
 # Minuet light accessory v4.0
 
-**Status: UNDER DEVELOPMENT, UNTESTED**
+**Status: UNDER DEVELOPMENT, TESTING IN PROGRESS**
 
 The Minuet light accessory attaches a ring of addressable LEDs to your fan.
 

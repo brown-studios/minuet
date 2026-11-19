@@ -1,6 +1,6 @@
 # Minuet environmental sensor accessory v4.0
 
-**Status: UNDER DEVELOPMENT, UNTESTED**
+**Status: UNDER DEVELOPMENT, TESTING IN PROGRESS**
 
 The Minuet environmental sensor accessory measures CO₂, temperature, humidity, and barometric pressure.  It is designed to start the fan for ventilation when it gets stuffy inside.  An elevated CO₂ measurement often indicates inadequate ventilation in occupied spaces.
 

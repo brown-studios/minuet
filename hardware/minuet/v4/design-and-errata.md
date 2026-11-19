@@ -1,6 +1,6 @@
 # Minuet v4.0
 
-**Status: UNDER DEVELOPMENT, UNTESTED**
+**Status: UNDER DEVELOPMENT, TESTING IN PROGRESS**
 
 The Minuet fan controller circuit board upgrades the Maxxfan with a quiet brushless fan motor driver and home automation features.
 
