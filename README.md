@@ -109,4 +109,4 @@ Please use the Github issue tracker to suggest improvements to Minuet and consul
 
 The Minuet software, documentation, design, and all copyright protected artifacts are released under the terms of the [MIT license](LICENSE).
 
-The Minuet hardware is released under the terms of the [CERN-OHL-W license](hardware/LICENSE).
+The Minuet hardware is released under the terms of the [CERN-OHL-S license](hardware/LICENSE).
