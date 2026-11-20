@@ -2,7 +2,7 @@
 
 [Minuet](https://minuet.brownstudios.dev) upgrades your [MAXXAIR Maxxfan](https://www.maxxair.com/products/fans/maxxfan-deluxe/) with a brushless DC motor, home automation features, and accessories.
 
-This repository contains the Minuet hardware design files.  You are welcome to modify the Minuet firmware and hardware subject to the [license terms](#notice) and we encourage you to make your own accessories.  We welcome thoughtful contributions.
+This repository contains the Minuet hardware design files.  You are welcome to modify the Minuet firmware and hardware subject to the [license terms](#notice) and we encourage you to make your own accessories.  We welcome your thoughtful contributions.
 
 *Refer to the [Minuet website](https://minuet.brownstudios.dev) for documentation and project updates.*
 
@@ -96,9 +96,14 @@ To check all files:
 uv run pre-commit run --all-files
 ```
 
-## Contributing
+## Contributing to Minuet
 
-We welcome thoughtful contributions to this project made without the use of generative AI / LLM tools.
+There's a lot you can do when you have control over your appliances and we welcome your thoughtful contributions.
+
+Please use the Github issue tracker to suggest improvements to Minuet and consult the project maintainers for guidance before sending large pull requests.  We reserve the right to refuse contributions for any reason.
+
+> [!IMPORTANT]
+> We will not accept contributions that have been substantially produced with generative AI tools.  As an open-source project, we expect you to warrant that your contributions are your own work and that they comply with all applicable licenses.
 
 ## Notice
 
