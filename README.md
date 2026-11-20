@@ -80,6 +80,22 @@ Minuet's place in the middle of you vehicle's ceiling makes it a great platform 
 
 - [Assembly guide](./docs/assembly-guide.md)
 
+## Development
+
+This project uses [pre-commit](https://pre-commit.com/) for linting.
+
+To install the git hooks:
+
+```bash
+uv run pre-commit install
+```
+
+To check all files:
+
+```bash
+uv run pre-commit run --all-files
+```
+
 ## Contributing
 
 We welcome thoughtful contributions to this project made without the use of generative AI / LLM tools.
